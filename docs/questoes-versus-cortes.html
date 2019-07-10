@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 4 Questões versus Cortes | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics</title>
+  <meta name="description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
+  <meta name="generator" content="bookdown 0.11.3 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 4 Questões versus Cortes | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 4 Questões versus Cortes | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics" />
+  
+  <meta name="twitter:description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
+  
+
+<meta name="author" content="R6 e Aretí" />
+
+
+<meta name="date" content="2019-07-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="descritivas-das-questoes.html">
+<link rel="next" href="construtos.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.7/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R6 Consultoria</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Projeto</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#escopo"><i class="fa fa-check"></i><b>1.1</b> Escopo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="descritivas-dos-atributos-de-perfil.html"><a href="descritivas-dos-atributos-de-perfil.html"><i class="fa fa-check"></i><b>2</b> Descritivas dos Atributos de Perfil</a></li>
+<li class="chapter" data-level="3" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html"><i class="fa fa-check"></i><b>3</b> Descritivas das Questões</a><ul>
+<li class="chapter" data-level="3.1" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#geral"><i class="fa fa-check"></i><b>3.1</b> Geral</a></li>
+<li class="chapter" data-level="3.2" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-posicao-eu-sou"><i class="fa fa-check"></i><b>3.2</b> Questões por Posição (Eu sou…)</a></li>
+<li class="chapter" data-level="3.3" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-area"><i class="fa fa-check"></i><b>3.3</b> Questões por Área</a></li>
+<li class="chapter" data-level="3.4" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-genero"><i class="fa fa-check"></i><b>3.4</b> Questões por Gênero</a></li>
+<li class="chapter" data-level="3.5" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-tempo-de-empresa"><i class="fa fa-check"></i><b>3.5</b> Questões por Tempo de Empresa</a></li>
+<li class="chapter" data-level="3.6" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-faixa-etaria"><i class="fa fa-check"></i><b>3.6</b> Questões por Faixa Etária</a></li>
+<li class="chapter" data-level="3.7" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-alocacao"><i class="fa fa-check"></i><b>3.7</b> Questões por Alocação</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html"><i class="fa fa-check"></i><b>4</b> Questões versus Cortes</a><ul>
+<li class="chapter" data-level="4.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-9"><i class="fa fa-check"></i><b>4.1</b> Questão 9</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou"><i class="fa fa-check"></i><b>4.1.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.1.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area"><i class="fa fa-check"></i><b>4.1.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.1.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero"><i class="fa fa-check"></i><b>4.1.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.1.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics"><i class="fa fa-check"></i><b>4.1.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria"><i class="fa fa-check"></i><b>4.1.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.1.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao"><i class="fa fa-check"></i><b>4.1.6</b> 6. Alocação:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="construtos.html"><a href="construtos.html"><i class="fa fa-check"></i><b>5</b> Construtos</a><ul>
+<li class="chapter" data-level="5.1" data-path="construtos.html"><a href="construtos.html#rapidez-antes-de-qualidade"><i class="fa fa-check"></i><b>5.1</b> Rapidez Antes de Qualidade</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial"><i class="fa fa-check"></i><b>5.1.1</b> Análise Fatorial</a></li>
+<li class="chapter" data-level="5.1.2" data-path="construtos.html"><a href="construtos.html#diagnostico-e-qualidade"><i class="fa fa-check"></i><b>5.1.2</b> Diagnóstico e Qualidade</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="construtos.html"><a href="construtos.html#exploracao"><i class="fa fa-check"></i><b>5.2</b> Exploração</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hipoteses.html"><a href="hipoteses.html"><i class="fa fa-check"></i><b>6</b> Hipóteses</a><ul>
+<li class="chapter" data-level="6.1" data-path="hipoteses.html"><a href="hipoteses.html#existe-mais-foco-em-rapidez-por-parte-da-lideranca-versus-foco-em-qualidade-por-parte-dos-liderados"><i class="fa fa-check"></i><b>6.1</b> “Existe mais foco em rapidez por parte da Liderança versus foco em qualidade por parte dos liderados?”</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="hipoteses.html"><a href="hipoteses.html#estatisticas-descritivas"><i class="fa fa-check"></i><b>6.1.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.1.2" data-path="hipoteses.html"><a href="hipoteses.html#testes-de-hipotese"><i class="fa fa-check"></i><b>6.1.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hipoteses.html"><a href="hipoteses.html#existe-necessidade-de-uma-cultura-de-gente"><i class="fa fa-check"></i><b>6.2</b> Existe necessidade de uma Cultura de Gente?</a></li>
+<li class="chapter" data-level="6.3" data-path="hipoteses.html"><a href="hipoteses.html#a-falta-de-sistemas-formais-de-preparacao-e-acompanhamento-impacta-desempenho"><i class="fa fa-check"></i><b>6.3</b> A falta de sistemas formais de preparacão e acompanhamento impacta desempenho?</a></li>
+<li class="chapter" data-level="6.4" data-path="hipoteses.html"><a href="hipoteses.html#existe-alto-foco-em-qualidade-do-servico-prestado-ao-cliente"><i class="fa fa-check"></i><b>6.4</b> Existe alto foco em qualidade do serviço prestado ao cliente?</a></li>
+<li class="chapter" data-level="6.5" data-path="hipoteses.html"><a href="hipoteses.html#foco-no-cliente-e-um-potencial-facilitador-da-cultura-de-inovacao"><i class="fa fa-check"></i><b>6.5</b> Foco no Cliente é um potencial facilitador da Cultura de Inovação?</a></li>
+<li class="chapter" data-level="6.6" data-path="hipoteses.html"><a href="hipoteses.html#existe-uma-cultura-de-apoio-entre-os-liderados-que-inexiste-entre-a-lideranca"><i class="fa fa-check"></i><b>6.6</b> Existe uma Cultura de Apoio entre os liderados que inexiste entre a Liderança</a></li>
+<li class="chapter" data-level="6.7" data-path="hipoteses.html"><a href="hipoteses.html#aprendizagem-e-um-valor"><i class="fa fa-check"></i><b>6.7</b> Aprendizagem é um valor?</a></li>
+<li class="chapter" data-level="6.8" data-path="hipoteses.html"><a href="hipoteses.html#existem-culturas-distintas-de-liderados-x-lideres"><i class="fa fa-check"></i><b>6.8</b> Existem culturas distintas de Liderados X Líderes</a></li>
+<li class="chapter" data-level="6.9" data-path="hipoteses.html"><a href="hipoteses.html#existem-outros-valores-que-aparecem-nos-dados"><i class="fa fa-check"></i><b>6.9</b> Existem outros valores que aparecem nos dados?</a></li>
+<li class="chapter" data-level="6.10" data-path="hipoteses.html"><a href="hipoteses.html#a-lideranca-senior-e-distante-da-base"><i class="fa fa-check"></i><b>6.10</b> A liderança sênior é distante da base?</a></li>
+<li class="chapter" data-level="6.11" data-path="hipoteses.html"><a href="hipoteses.html#imediatismo-e-equacionado-a-rapidez"><i class="fa fa-check"></i><b>6.11</b> Imediatismo é equacionado a rapidez?</a></li>
+<li class="chapter" data-level="6.12" data-path="hipoteses.html"><a href="hipoteses.html#imediatismo-impacta-qualidade"><i class="fa fa-check"></i><b>6.12</b> Imediatismo impacta qualidade?</a></li>
+<li class="chapter" data-level="6.13" data-path="hipoteses.html"><a href="hipoteses.html#os-colaboradores-se-sentem-abandonados-sem-respaldo-da-lideranca-sem-preparo-sem-reconhecimento"><i class="fa fa-check"></i><b>6.13</b> Os colaboradores se sentem abandonados (sem respaldo da liderança, sem preparo, sem reconhecimento)?</a></li>
+<li class="chapter" data-level="6.14" data-path="hipoteses.html"><a href="hipoteses.html#quais-as-principais-dores-dos-colaboradores"><i class="fa fa-check"></i><b>6.14</b> Quais as principais dores dos colaboradores?</a></li>
+<li class="chapter" data-level="6.15" data-path="hipoteses.html"><a href="hipoteses.html#o-que-os-colaboradores-mais-apreciam-na-empresa"><i class="fa fa-check"></i><b>6.15</b> O que os colaboradores mais apreciam na empresa?</a></li>
+<li class="chapter" data-level="6.16" data-path="hipoteses.html"><a href="hipoteses.html#a-enfase-em-rapidez-impacta-o-foco-no-cliente"><i class="fa fa-check"></i><b>6.16</b> A ênfase em rapidez impacta o foco no cliente?</a></li>
+<li class="chapter" data-level="6.17" data-path="hipoteses.html"><a href="hipoteses.html#inovacao-esta-associada-a-necessidades-de-clientes"><i class="fa fa-check"></i><b>6.17</b> Inovação está associada a necessidades de clientes?</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Feito com bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="questoes-versus-cortes" class="section level1">
+<h1><span class="header-section-number">Capítulo 4</span> Questões versus Cortes</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(</a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">echo =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">message =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">error =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">warning =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="dt">fig.width =</span> <span class="dv">12</span></a>
+<a class="sourceLine" id="cb1-7" title="7">)</a></code></pre></div>
+<div id="htmlwidget-733bfe6a319c16ddddd6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-733bfe6a319c16ddddd6">{"x":{"filter":"none","data":[["8a","8a","8a","8a","8a","8a","8b","8b","8b","8b","8b","8b","8c","8c","8c","8c","8c","8c","9","9","9","9","9","9","10a","10a","10a","10a","10a","10a","10d","10d","10d","10d","10d","10d","10e","10e","10e","10e","10e","10e","10f","10f","10f","10f","10f","10f","10g","10g","10g","10g","10g","10g","10b","10b","10b","10b","10b","10b","10c","10c","10c","10c","10c","10c","14","14","14","14","14","14","11a","11a","11a","11a","11a","11a","11b","11b","11b","11b","11b","11b","11c","11c","11c","11c","11c","11c","11d","11d","11d","11d","11d","11d","11e","11e","11e","11e","11e","11e","13a","13a","13a","13a","13a","13a","13b","13b","13b","13b","13b","13b","13c","13c","13c","13c","13c","13c","13d","13d","13d","13d","13d","13d","13e","13e","13e","13e","13e","13e","13f","13f","13f","13f","13f","13f","15a","15a","15a","15a","15a","15a","15b","15b","15b","15b","15b","15b","15c","15c","15c","15c","15c","15c","15d","15d","15d","15d","15d","15d","15e","15e","15e","15e","15e","15e","15f","15f","15f","15f","15f","15f","16a","16a","16a","16a","16a","16a","16b","16b","16b","16b","16b","16b","16c","16c","16c","16c","16c","16c","16d","16d","16d","16d","16d","16d","16e","16e","16e","16e","16e","16e","16f","16f","16f","16f","16f","16f","17a","17a","17a","17a","17a","17a","17b","17b","17b","17b","17b","17b","17c","17c","17c","17c","17c","17c","17d","17d","17d","17d","17d","17d","17e","17e","17e","17e","17e","17e","18a","18a","18a","18a","18a","18a","18b","18b","18b","18b","18b","18b","18c","18c","18c","18c","18c","18c","18d","18d","18d","18d","18d","18d","18e","18e","18e","18e","18e","18e","19a","19a","19a","19a","19a","19a","19b","19b","19b","19b","19b","19b","19c","19c","19c","19c","19c","19c","19d","19d","19d","19d","19d","19d","19e","19e","19e","19e","19e","19e","19f","19f","19f","19f","19f","19f","19g","19g","19g","19g","19g","19g","19h","19h","19h","19h","19h","19h","20a","20a","20a","20a","20a","20a","20b","20b","20b","20b","20b","20b","20c","20c","20c","20c","20c","20c","20d","20d","20d","20d","20d","20d","20e","20e","20e","20e","20e","20e","20f","20f","20f","20f","20f","20f","20g","20g","20g","20g","20g","20g","20h","20h","20h","20h","20h","20h","21a","21a","21a","21a","21a","21a","21b","21b","21b","21b","21b","21b","21c","21c","21c","21c","21c","21c","21d","21d","21d","21d","21d","21d","21e","21e","21e","21e","21e","21e","21f","21f","21f","21f","21f","21f","21g","21g","21g","21g","21g","21g"],["8. Na Inmetrics: [O reconhecimento (na forma de promoções, elogios, aumentos) é justo e eficiente]","8. Na Inmetrics: [O reconhecimento (na forma de promoções, elogios, aumentos) é justo e eficiente]","8. Na Inmetrics: [O reconhecimento (na forma de promoções, elogios, aumentos) é justo e eficiente]","8. Na Inmetrics: [O reconhecimento (na forma de promoções, elogios, aumentos) é justo e eficiente]","8. Na Inmetrics: [O reconhecimento (na forma de promoções, elogios, aumentos) é justo e eficiente]","8. Na Inmetrics: [O reconhecimento (na forma de promoções, elogios, aumentos) é justo e eficiente]","8. Na Inmetrics: [O sistema de avaliação de desempenho da empresa é justo e eficiente]","8. Na Inmetrics: [O sistema de avaliação de desempenho da empresa é justo e eficiente]","8. Na Inmetrics: [O sistema de avaliação de desempenho da empresa é justo e eficiente]","8. Na Inmetrics: [O sistema de avaliação de desempenho da empresa é justo e eficiente]","8. Na Inmetrics: [O sistema de avaliação de desempenho da empresa é justo e eficiente]","8. Na Inmetrics: [O sistema de avaliação de desempenho da empresa é justo e eficiente]","8. Na Inmetrics: [Os sistemas de acompanhamento de indicadores dos projetos e metas são justos e eficientes]","8. Na Inmetrics: [Os sistemas de acompanhamento de indicadores dos projetos e metas são justos e eficientes]","8. Na Inmetrics: [Os sistemas de acompanhamento de indicadores dos projetos e metas são justos e eficientes]","8. Na Inmetrics: [Os sistemas de acompanhamento de indicadores dos projetos e metas são justos e eficientes]","8. Na Inmetrics: [Os sistemas de acompanhamento de indicadores dos projetos e metas são justos e eficientes]","8. Na Inmetrics: [Os sistemas de acompanhamento de indicadores dos projetos e metas são justos e eficientes]","9. Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [->]","9. Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [->]","9. Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [->]","9. Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [->]","9. Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [->]","9. Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [->]","10. Ao iniciar o trabalho, os colaboradores: [Entendem o contexto e os objetivos do cliente]","10. Ao iniciar o trabalho, os colaboradores: [Entendem o contexto e os objetivos do cliente]","10. Ao iniciar o trabalho, os colaboradores: [Entendem o contexto e os objetivos do cliente]","10. Ao iniciar o trabalho, os colaboradores: [Entendem o contexto e os objetivos do cliente]","10. Ao iniciar o trabalho, os colaboradores: [Entendem o contexto e os objetivos do cliente]","10. Ao iniciar o trabalho, os colaboradores: [Entendem o contexto e os objetivos do cliente]","10. Ao iniciar o trabalho, os colaboradores: [Utilizam efetivamente suas habilidades e conhecimentos]","10. Ao iniciar o trabalho, os colaboradores: [Utilizam efetivamente suas habilidades e conhecimentos]","10. Ao iniciar o trabalho, os colaboradores: [Utilizam efetivamente suas habilidades e conhecimentos]","10. Ao iniciar o trabalho, os colaboradores: [Utilizam efetivamente suas habilidades e conhecimentos]","10. Ao iniciar o trabalho, os colaboradores: [Utilizam efetivamente suas habilidades e conhecimentos]","10. Ao iniciar o trabalho, os colaboradores: [Utilizam efetivamente suas habilidades e conhecimentos]","10. Ao iniciar o trabalho, os colaboradores: [Sentem-se capacitados para a função]","10. Ao iniciar o trabalho, os colaboradores: [Sentem-se capacitados para a função]","10. Ao iniciar o trabalho, os colaboradores: [Sentem-se capacitados para a função]","10. Ao iniciar o trabalho, os colaboradores: [Sentem-se capacitados para a função]","10. Ao iniciar o trabalho, os colaboradores: [Sentem-se capacitados para a função]","10. Ao iniciar o trabalho, os colaboradores: [Sentem-se capacitados para a função]","10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]","10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]","10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]","10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]","10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]","10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]","10. Ao iniciar o trabalho, os colaboradores: [Têm espaço físico de trabalho e equipamentos adequados]","10. Ao iniciar o trabalho, os colaboradores: [Têm espaço físico de trabalho e equipamentos adequados]","10. Ao iniciar o trabalho, os colaboradores: [Têm espaço físico de trabalho e equipamentos adequados]","10. Ao iniciar o trabalho, os colaboradores: [Têm espaço físico de trabalho e equipamentos adequados]","10. Ao iniciar o trabalho, os colaboradores: [Têm espaço físico de trabalho e equipamentos adequados]","10. Ao iniciar o trabalho, os colaboradores: [Têm espaço físico de trabalho e equipamentos adequados]","10. Ao iniciar o trabalho, os colaboradores: [Compreendem o propósito de suas entregas]","10. Ao iniciar o trabalho, os colaboradores: [Compreendem o propósito de suas entregas]","10. Ao iniciar o trabalho, os colaboradores: [Compreendem o propósito de suas entregas]","10. Ao iniciar o trabalho, os colaboradores: [Compreendem o propósito de suas entregas]","10. Ao iniciar o trabalho, os colaboradores: [Compreendem o propósito de suas entregas]","10. Ao iniciar o trabalho, os colaboradores: [Compreendem o propósito de suas entregas]","10. Ao iniciar o trabalho, os colaboradores: [Conhecem seu/sua líder]","10. Ao iniciar o trabalho, os colaboradores: [Conhecem seu/sua líder]","10. Ao iniciar o trabalho, os colaboradores: [Conhecem seu/sua líder]","10. Ao iniciar o trabalho, os colaboradores: [Conhecem seu/sua líder]","10. Ao iniciar o trabalho, os colaboradores: [Conhecem seu/sua líder]","10. Ao iniciar o trabalho, os colaboradores: [Conhecem seu/sua líder]","14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo. [->]","14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo. [->]","14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo. [->]","14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo. [->]","14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo. [->]","14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo. [->]","11. O ambiente na Inmetrics é: [Informal]","11. O ambiente na Inmetrics é: [Informal]","11. O ambiente na Inmetrics é: [Informal]","11. O ambiente na Inmetrics é: [Informal]","11. O ambiente na Inmetrics é: [Informal]","11. O ambiente na Inmetrics é: [Informal]","11. O ambiente na Inmetrics é: [De pressão]","11. O ambiente na Inmetrics é: [De pressão]","11. O ambiente na Inmetrics é: [De pressão]","11. O ambiente na Inmetrics é: [De pressão]","11. O ambiente na Inmetrics é: [De pressão]","11. O ambiente na Inmetrics é: [De pressão]","11. O ambiente na Inmetrics é: [Flexível]","11. O ambiente na Inmetrics é: [Flexível]","11. O ambiente na Inmetrics é: [Flexível]","11. O ambiente na Inmetrics é: [Flexível]","11. O ambiente na Inmetrics é: [Flexível]","11. O ambiente na Inmetrics é: [Flexível]","11. O ambiente na Inmetrics é: [Desorganizado]","11. O ambiente na Inmetrics é: [Desorganizado]","11. O ambiente na Inmetrics é: [Desorganizado]","11. O ambiente na Inmetrics é: [Desorganizado]","11. O ambiente na Inmetrics é: [Desorganizado]","11. O ambiente na Inmetrics é: [Desorganizado]","11. O ambiente na Inmetrics é: [Leve]","11. O ambiente na Inmetrics é: [Leve]","11. O ambiente na Inmetrics é: [Leve]","11. O ambiente na Inmetrics é: [Leve]","11. O ambiente na Inmetrics é: [Leve]","11. O ambiente na Inmetrics é: [Leve]","13. Na Inmetrics, o que mais importa é (são): [O ambiente de trabalho]","13. Na Inmetrics, o que mais importa é (são): [O ambiente de trabalho]","13. Na Inmetrics, o que mais importa é (são): [O ambiente de trabalho]","13. Na Inmetrics, o que mais importa é (são): [O ambiente de trabalho]","13. Na Inmetrics, o que mais importa é (são): [O ambiente de trabalho]","13. Na Inmetrics, o que mais importa é (são): [O ambiente de trabalho]","13. Na Inmetrics, o que mais importa é (são): [O resultado financeiro da empresa]","13. Na Inmetrics, o que mais importa é (são): [O resultado financeiro da empresa]","13. Na Inmetrics, o que mais importa é (são): [O resultado financeiro da empresa]","13. Na Inmetrics, o que mais importa é (são): [O resultado financeiro da empresa]","13. Na Inmetrics, o que mais importa é (são): [O resultado financeiro da empresa]","13. Na Inmetrics, o que mais importa é (são): [O resultado financeiro da empresa]","13. Na Inmetrics, o que mais importa é (são): [A satisfação do cliente]","13. Na Inmetrics, o que mais importa é (são): [A satisfação do cliente]","13. Na Inmetrics, o que mais importa é (são): [A satisfação do cliente]","13. Na Inmetrics, o que mais importa é (são): [A satisfação do cliente]","13. Na Inmetrics, o que mais importa é (são): [A satisfação do cliente]","13. Na Inmetrics, o que mais importa é (são): [A satisfação do cliente]","13. Na Inmetrics, o que mais importa é (são): [A opinião dos líderes]","13. Na Inmetrics, o que mais importa é (são): [A opinião dos líderes]","13. Na Inmetrics, o que mais importa é (são): [A opinião dos líderes]","13. Na Inmetrics, o que mais importa é (são): [A opinião dos líderes]","13. Na Inmetrics, o que mais importa é (são): [A opinião dos líderes]","13. Na Inmetrics, o que mais importa é (são): [A opinião dos líderes]","13. Na Inmetrics, o que mais importa é (são): [Qualidade técnica da entrega]","13. Na Inmetrics, o que mais importa é (são): [Qualidade técnica da entrega]","13. Na Inmetrics, o que mais importa é (são): [Qualidade técnica da entrega]","13. Na Inmetrics, o que mais importa é (são): [Qualidade técnica da entrega]","13. Na Inmetrics, o que mais importa é (são): [Qualidade técnica da entrega]","13. Na Inmetrics, o que mais importa é (são): [Qualidade técnica da entrega]","13. Na Inmetrics, o que mais importa é (são): [As equipes]","13. Na Inmetrics, o que mais importa é (são): [As equipes]","13. Na Inmetrics, o que mais importa é (são): [As equipes]","13. Na Inmetrics, o que mais importa é (são): [As equipes]","13. Na Inmetrics, o que mais importa é (são): [As equipes]","13. Na Inmetrics, o que mais importa é (são): [As equipes]","15. A Inmetrics valoriza: [Inovação]","15. A Inmetrics valoriza: [Inovação]","15. A Inmetrics valoriza: [Inovação]","15. A Inmetrics valoriza: [Inovação]","15. A Inmetrics valoriza: [Inovação]","15. A Inmetrics valoriza: [Inovação]","15. A Inmetrics valoriza: [Desempenho]","15. A Inmetrics valoriza: [Desempenho]","15. A Inmetrics valoriza: [Desempenho]","15. A Inmetrics valoriza: [Desempenho]","15. A Inmetrics valoriza: [Desempenho]","15. A Inmetrics valoriza: [Desempenho]","15. A Inmetrics valoriza: [Qualidade]","15. A Inmetrics valoriza: [Qualidade]","15. A Inmetrics valoriza: [Qualidade]","15. A Inmetrics valoriza: [Qualidade]","15. A Inmetrics valoriza: [Qualidade]","15. A Inmetrics valoriza: [Qualidade]","15. A Inmetrics valoriza: [Rapidez]","15. A Inmetrics valoriza: [Rapidez]","15. A Inmetrics valoriza: [Rapidez]","15. A Inmetrics valoriza: [Rapidez]","15. A Inmetrics valoriza: [Rapidez]","15. A Inmetrics valoriza: [Rapidez]","15. A Inmetrics valoriza: [Satisfação do cliente]","15. A Inmetrics valoriza: [Satisfação do cliente]","15. A Inmetrics valoriza: [Satisfação do cliente]","15. A Inmetrics valoriza: [Satisfação do cliente]","15. A Inmetrics valoriza: [Satisfação do cliente]","15. A Inmetrics valoriza: [Satisfação do cliente]","15. A Inmetrics valoriza: [Colaboradores]","15. A Inmetrics valoriza: [Colaboradores]","15. A Inmetrics valoriza: [Colaboradores]","15. A Inmetrics valoriza: [Colaboradores]","15. A Inmetrics valoriza: [Colaboradores]","15. A Inmetrics valoriza: [Colaboradores]","16. A Inmetrics é uma empresa que: [Cumpre suas obrigações trabalhistas (salários em dia, 13º etc.)]","16. A Inmetrics é uma empresa que: [Cumpre suas obrigações trabalhistas (salários em dia, 13º etc.)]","16. A Inmetrics é uma empresa que: [Cumpre suas obrigações trabalhistas (salários em dia, 13º etc.)]","16. A Inmetrics é uma empresa que: [Cumpre suas obrigações trabalhistas (salários em dia, 13º etc.)]","16. A Inmetrics é uma empresa que: [Cumpre suas obrigações trabalhistas (salários em dia, 13º etc.)]","16. A Inmetrics é uma empresa que: [Cumpre suas obrigações trabalhistas (salários em dia, 13º etc.)]","16. A Inmetrics é uma empresa que: [Se destaca positivamente em termos de ambiente de trabalho]","16. A Inmetrics é uma empresa que: [Se destaca positivamente em termos de ambiente de trabalho]","16. A Inmetrics é uma empresa que: [Se destaca positivamente em termos de ambiente de trabalho]","16. A Inmetrics é uma empresa que: [Se destaca positivamente em termos de ambiente de trabalho]","16. A Inmetrics é uma empresa que: [Se destaca positivamente em termos de ambiente de trabalho]","16. A Inmetrics é uma empresa que: [Se destaca positivamente em termos de ambiente de trabalho]","16. A Inmetrics é uma empresa que: [Oferece bons salários]","16. A Inmetrics é uma empresa que: [Oferece bons salários]","16. A Inmetrics é uma empresa que: [Oferece bons salários]","16. A Inmetrics é uma empresa que: [Oferece bons salários]","16. A Inmetrics é uma empresa que: [Oferece bons salários]","16. A Inmetrics é uma empresa que: [Oferece bons salários]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de aprendizado e desenvolvimento]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de aprendizado e desenvolvimento]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de aprendizado e desenvolvimento]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de aprendizado e desenvolvimento]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de aprendizado e desenvolvimento]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de aprendizado e desenvolvimento]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de crescimento interno]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de crescimento interno]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de crescimento interno]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de crescimento interno]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de crescimento interno]","16. A Inmetrics é uma empresa que: [Oferece oportunidades de crescimento interno]","16. A Inmetrics é uma empresa que: [Gera engajamento em seus colaboradores]","16. A Inmetrics é uma empresa que: [Gera engajamento em seus colaboradores]","16. A Inmetrics é uma empresa que: [Gera engajamento em seus colaboradores]","16. A Inmetrics é uma empresa que: [Gera engajamento em seus colaboradores]","16. A Inmetrics é uma empresa que: [Gera engajamento em seus colaboradores]","16. A Inmetrics é uma empresa que: [Gera engajamento em seus colaboradores]","17. Para você, os maiores fatores de satisfação do cliente são: [Entrega de qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Entrega de qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Entrega de qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Entrega de qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Entrega de qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Entrega de qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Rapidez na entrega]","17. Para você, os maiores fatores de satisfação do cliente são: [Rapidez na entrega]","17. Para você, os maiores fatores de satisfação do cliente são: [Rapidez na entrega]","17. Para você, os maiores fatores de satisfação do cliente são: [Rapidez na entrega]","17. Para você, os maiores fatores de satisfação do cliente são: [Rapidez na entrega]","17. Para você, os maiores fatores de satisfação do cliente são: [Rapidez na entrega]","17. Para você, os maiores fatores de satisfação do cliente são: [Equipe técnica de alta qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Equipe técnica de alta qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Equipe técnica de alta qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Equipe técnica de alta qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Equipe técnica de alta qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Equipe técnica de alta qualidade]","17. Para você, os maiores fatores de satisfação do cliente são: [Baixo custo]","17. Para você, os maiores fatores de satisfação do cliente são: [Baixo custo]","17. Para você, os maiores fatores de satisfação do cliente são: [Baixo custo]","17. Para você, os maiores fatores de satisfação do cliente são: [Baixo custo]","17. Para você, os maiores fatores de satisfação do cliente são: [Baixo custo]","17. Para você, os maiores fatores de satisfação do cliente são: [Baixo custo]","17. Para você, os maiores fatores de satisfação do cliente são: [Soluções inovadoras]","17. Para você, os maiores fatores de satisfação do cliente são: [Soluções inovadoras]","17. Para você, os maiores fatores de satisfação do cliente são: [Soluções inovadoras]","17. Para você, os maiores fatores de satisfação do cliente são: [Soluções inovadoras]","17. Para você, os maiores fatores de satisfação do cliente são: [Soluções inovadoras]","17. Para você, os maiores fatores de satisfação do cliente são: [Soluções inovadoras]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus colegas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus colegas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus colegas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus colegas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus colegas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus colegas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meu/minha líder]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meu/minha líder]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meu/minha líder]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meu/minha líder]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meu/minha líder]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meu/minha líder]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Liderança sênior (diretoria e CEO)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Liderança sênior (diretoria e CEO)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Liderança sênior (diretoria e CEO)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Liderança sênior (diretoria e CEO)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Liderança sênior (diretoria e CEO)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Liderança sênior (diretoria e CEO)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Colaboradores de outras áreas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Colaboradores de outras áreas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Colaboradores de outras áreas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Colaboradores de outras áreas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Colaboradores de outras áreas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Colaboradores de outras áreas]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus liderados (minha equipe)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus liderados (minha equipe)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus liderados (minha equipe)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus liderados (minha equipe)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus liderados (minha equipe)]","18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus liderados (minha equipe)]","19. Meu líder é: [Inspirador]","19. Meu líder é: [Inspirador]","19. Meu líder é: [Inspirador]","19. Meu líder é: [Inspirador]","19. Meu líder é: [Inspirador]","19. Meu líder é: [Inspirador]","19. Meu líder é: [Preparado]","19. Meu líder é: [Preparado]","19. Meu líder é: [Preparado]","19. Meu líder é: [Preparado]","19. Meu líder é: [Preparado]","19. Meu líder é: [Preparado]","19. Meu líder é: [Comercial]","19. Meu líder é: [Comercial]","19. Meu líder é: [Comercial]","19. Meu líder é: [Comercial]","19. Meu líder é: [Comercial]","19. Meu líder é: [Comercial]","19. Meu líder é: [Bem intencionado]","19. Meu líder é: [Bem intencionado]","19. Meu líder é: [Bem intencionado]","19. Meu líder é: [Bem intencionado]","19. Meu líder é: [Bem intencionado]","19. Meu líder é: [Bem intencionado]","19. Meu líder é: [Técnico]","19. Meu líder é: [Técnico]","19. Meu líder é: [Técnico]","19. Meu líder é: [Técnico]","19. Meu líder é: [Técnico]","19. Meu líder é: [Técnico]","19. Meu líder é: [Gestor de pessoas]","19. Meu líder é: [Gestor de pessoas]","19. Meu líder é: [Gestor de pessoas]","19. Meu líder é: [Gestor de pessoas]","19. Meu líder é: [Gestor de pessoas]","19. Meu líder é: [Gestor de pessoas]","19. Meu líder é: [Focado no cliente]","19. Meu líder é: [Focado no cliente]","19. Meu líder é: [Focado no cliente]","19. Meu líder é: [Focado no cliente]","19. Meu líder é: [Focado no cliente]","19. Meu líder é: [Focado no cliente]","19. Meu líder é: [Próximo]","19. Meu líder é: [Próximo]","19. Meu líder é: [Próximo]","19. Meu líder é: [Próximo]","19. Meu líder é: [Próximo]","19. Meu líder é: [Próximo]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Inspiradora]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Inspiradora]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Inspiradora]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Inspiradora]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Inspiradora]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Inspiradora]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Preparada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Preparada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Preparada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Preparada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Preparada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Preparada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Comercial]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Comercial]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Comercial]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Comercial]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Comercial]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Comercial]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Bem intencionada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Bem intencionada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Bem intencionada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Bem intencionada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Bem intencionada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Bem intencionada]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Técnica]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Técnica]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Técnica]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Técnica]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Técnica]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Técnica]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Gestora de pessoas]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Gestora de pessoas]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Gestora de pessoas]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Gestora de pessoas]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Gestora de pessoas]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Gestora de pessoas]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Focada no cliente]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Focada no cliente]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Focada no cliente]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Focada no cliente]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Focada no cliente]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Focada no cliente]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Próxima das equipes]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Próxima das equipes]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Próxima das equipes]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Próxima das equipes]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Próxima das equipes]","20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Próxima das equipes]","21. Inovação na Inmetrics é: [Incentivada]","21. Inovação na Inmetrics é: [Incentivada]","21. Inovação na Inmetrics é: [Incentivada]","21. Inovação na Inmetrics é: [Incentivada]","21. Inovação na Inmetrics é: [Incentivada]","21. Inovação na Inmetrics é: [Incentivada]","21. Inovação na Inmetrics é: [Teórica]","21. Inovação na Inmetrics é: [Teórica]","21. Inovação na Inmetrics é: [Teórica]","21. Inovação na Inmetrics é: [Teórica]","21. Inovação na Inmetrics é: [Teórica]","21. Inovação na Inmetrics é: [Teórica]","21. Inovação na Inmetrics é: [Voltada às necessidades dos clientes]","21. Inovação na Inmetrics é: [Voltada às necessidades dos clientes]","21. Inovação na Inmetrics é: [Voltada às necessidades dos clientes]","21. Inovação na Inmetrics é: [Voltada às necessidades dos clientes]","21. Inovação na Inmetrics é: [Voltada às necessidades dos clientes]","21. Inovação na Inmetrics é: [Voltada às necessidades dos clientes]","21. Inovação na Inmetrics é: [Voltada ao desenvolvimento de novos produtos]","21. Inovação na Inmetrics é: [Voltada ao desenvolvimento de novos produtos]","21. Inovação na Inmetrics é: [Voltada ao desenvolvimento de novos produtos]","21. Inovação na Inmetrics é: [Voltada ao desenvolvimento de novos produtos]","21. Inovação na Inmetrics é: [Voltada ao desenvolvimento de novos produtos]","21. Inovação na Inmetrics é: [Voltada ao desenvolvimento de novos produtos]","21. Inovação na Inmetrics é: [Parte do DNA da empresa]","21. Inovação na Inmetrics é: [Parte do DNA da empresa]","21. Inovação na Inmetrics é: [Parte do DNA da empresa]","21. Inovação na Inmetrics é: [Parte do DNA da empresa]","21. Inovação na Inmetrics é: [Parte do DNA da empresa]","21. Inovação na Inmetrics é: [Parte do DNA da empresa]","21. Inovação na Inmetrics é: [Isolada]","21. Inovação na Inmetrics é: [Isolada]","21. Inovação na Inmetrics é: [Isolada]","21. Inovação na Inmetrics é: [Isolada]","21. Inovação na Inmetrics é: [Isolada]","21. Inovação na Inmetrics é: [Isolada]","21. Inovação na Inmetrics é: [Dificultada]","21. Inovação na Inmetrics é: [Dificultada]","21. Inovação na Inmetrics é: [Dificultada]","21. Inovação na Inmetrics é: [Dificultada]","21. Inovação na Inmetrics é: [Dificultada]","21. Inovação na Inmetrics é: [Dificultada]"],["1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:","1. Eu sou:","2. Área:","3. Gênero:","4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)","5. Faixa etária:","6. Alocação:"],["0,13","0,04","0,03","<0,01","0,42","0,93","0,57","0,38","0,02","<0,01","0,22","<0,01","0,05","0,46","<0,01","<0,01","0,14","0,05","0,03","0,36","0,24","<0,01","0,03","0,45","<0,01","0,27","0,16","<0,01","0,26","0,01","0,03","0,58","0,07","<0,01","0,12","0,20","<0,01","<0,01","0,33","<0,01","0,02","0,63","<0,01","0,03","0,06","0,02","0,11","0,15","0,34","0,07","<0,01","0,02","0,65","0,18","<0,01","0,21","0,11","<0,01","0,04","0,07","0,04","0,10","0,17","<0,01","0,94","0,16","<0,01","0,28","0,09","<0,01","0,19","0,50","<0,01","0,87","0,97","0,51","<0,01","0,32","<0,01","<0,01","0,34","0,18","<0,01","0,18","0,55","0,31","0,11","0,22","0,29","0,06","<0,01","0,08","0,41","<0,01","0,10","0,27","0,03","0,43","0,94","<0,01","0,10","0,01","0,03","0,50","0,35","<0,01","0,36","0,16","0,26","0,78","0,56","0,07","0,60","0,03","<0,01","0,83","0,29","0,03","0,78","0,27","<0,01","0,38","0,05","0,01","0,60","0,43","<0,01","0,45","0,19","<0,01","0,14","0,02","<0,01","0,84","<0,01","<0,01","0,07","0,05","0,05","0,73","0,56","<0,01","0,60","0,03","<0,01","0,88","0,20","<0,01","0,34","0,12","<0,01","0,28","0,40","<0,01","0,32","0,06","<0,01","0,43","0,82","0,01","0,01","<0,01","<0,01","0,17","0,06","<0,01","0,34","0,11","0,07","0,11","<0,01","<0,01","0,43","0,77","NaN","NaN","NaN","NaN","NaN","NaN","0,09","0,13","<0,01","<0,01","0,05","0,43","<0,01","0,01","<0,01","<0,01","0,09","0,24","0,08","0,28","<0,01","<0,01","0,54","0,13","0,05","0,80","0,22","<0,01","0,13","0,18","<0,01","0,59","0,35","<0,01","0,41","0,26","0,44","0,30","0,26","0,09","0,34","0,15","NaN","NaN","NaN","NaN","NaN","NaN","0,02","0,35","<0,01","<0,01","0,08","0,17","<0,01","0,06","0,04","<0,01","0,04","0,11","0,35","0,73","<0,01","0,05","0,24","0,63","0,40","0,09","0,23","0,12","0,24","0,16","0,62","0,20","0,25","0,35","0,64","<0,01","0,11","<0,01","0,13","<0,01","0,11","0,04","0,11","0,41","0,08","<0,01","0,59","0,65","<0,01","0,52","0,18","0,28","1,00","0,15","0,86","0,05","0,19","0,25","0,77","0,17","0,29","0,17","0,04","<0,01","0,67","0,22","0,57","0,06","<0,01","0,01","0,94","0,07","0,64","0,31","0,29","0,02","0,54","0,39","0,94","<0,01","0,36","<0,01","0,85","0,08","0,04","0,16","0,05","0,39","0,71","0,93","0,07","0,70","0,20","<0,01","0,35","0,68","0,34","0,60","0,10","0,03","0,99","0,17","<0,01","0,17","0,07","<0,01","0,08","0,02","<0,01","0,07","0,77","<0,01","0,02","<0,01","0,04","0,73","0,16","<0,01","0,17","0,09","<0,01","0,70","0,27","<0,01","0,41","<0,01","<0,01","0,06","0,59","<0,01","0,05","<0,01","<0,01","0,58","0,37","<0,01","0,10","0,03","0,06","0,54","0,51","<0,01","0,51","0,17","0,06","0,26","0,15","<0,01","0,68","0,15","0,06","0,39","0,81","<0,01","0,29","<0,01","0,01","0,37","0,36","0,13","0,89","0,05","0,10","0,08","0,84","<0,01","0,07","0,55","0,36","0,43","0,54","<0,01","0,46","<0,01","<0,01","0,15","0,57","<0,01","0,06","<0,01","0,09","0,11","0,78","<0,01","0,53","0,73","0,19","0,44","0,24","0,07","0,61","0,56"],["Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Diferentes","Iguais","Iguais","Diferentes","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Diferentes","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Diferentes","Iguais","Diferentes","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Diferentes","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Diferentes","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Diferentes","Diferentes","Iguais","Iguais",null,null,null,null,null,null,"Iguais","Iguais","Diferentes","Diferentes","Iguais","Iguais","Diferentes","Iguais","Diferentes","Diferentes","Iguais","Iguais","Iguais","Iguais","Diferentes","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais",null,null,null,null,null,null,"Iguais","Iguais","Diferentes","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Diferentes","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Diferentes","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Diferentes","Iguais","Diferentes","Diferentes","Iguais","Iguais","Diferentes","Iguais","Diferentes","Diferentes","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Diferentes","Iguais","Diferentes","Diferentes","Iguais","Iguais","Diferentes","Iguais","Diferentes","Iguais","Iguais","Iguais","Diferentes","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais","Iguais"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Código<\/th>\n      <th>Questão<\/th>\n      <th>Corte<\/th>\n      <th>Valor-p<\/th>\n      <th>Conclusão<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'80%'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'80%'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'80%'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'80%'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'80%'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div id="questao-9" class="section level2">
+<h2><span class="header-section-number">4.1</span> Questão 9</h2>
+<blockquote>
+<ol start="9" style="list-style-type: decimal">
+<li>Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [-&gt;]</li>
+</ol>
+</blockquote>
+<div id="eu-sou" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> 1. Eu sou:</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/9_x1_eu_sou_grafico-1.png" width="1152" /></p>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+<ol style="list-style-type: decimal">
+<li>Eu sou:
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="3">
+<ol start="9" style="list-style-type: decimal">
+<li>Os colaboradores sÃ£o preparados de maneira adequada<br>para atuar com excelÃªncia em seus projetos e/ou Ã¡reas.<br>[-&gt;]
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+Total
+</th>
+</tr></li>
+</ol></li>
+</ol>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Colaborador
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+LÃ­der de equipe
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+LÃ­der de lÃ­der
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">33</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">42</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">111</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">17</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">12</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">140</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+NÃ£o concordo nem discordo
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">71</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">8</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">82</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">181</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">20</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">8</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">209</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">49</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">49</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+Total
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">445</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">52</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">25</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">522</span>
+</td>
+</tr>
+<td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="5">
+χ<sup>2</sup>=16.748 · df=8 · Cramer’s V=0.127 · Fisher’s p=0.017
+</td>
+</tr>
+</table>
+</div>
+<div id="area" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> 2. Área:</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/9_x2_area_grafico-1.png" width="1152" /></p>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+<ol start="2" style="list-style-type: decimal">
+<li>Ãrea:
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="12">
+<ol start="9" style="list-style-type: decimal">
+<li>Os colaboradores sÃ£o preparados de maneira adequada<br>para atuar com excelÃªncia em seus projetos e/ou Ã¡reas.<br>[-&gt;]
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+Total
+</th>
+</tr></li>
+</ol></li>
+</ol>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+BUs
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Consulting
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Financeiro/Administrativo/TI/CIG
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+GO e Controle de Qualidade
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Kernel
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Marketing
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+MS
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Novos NegÃ³cios e Parcerias
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Pessoas
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+PMS
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+QTS
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+SeguranÃ§a &amp; Cloud
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">5</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">6</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">21</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">42</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">6</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">8</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">10</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">15</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">13</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">17</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">63</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">140</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+NÃ£o concordo nem discordo
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">4</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">10</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">10</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">10</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">37</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">82</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">6</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">25</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">22</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">16</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">15</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">20</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">89</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">209</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">12</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">5</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">18</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">49</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+Total
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">17</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">57</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">50</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">40</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">9</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">39</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">5</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">14</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">55</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">228</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">522</span>
+</td>
+</tr>
+<td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="14">
+χ<sup>2</sup>=46.765 · df=44 · Cramer’s V=0.150 · Fisher’s p=0.271
+</td>
+</tr>
+</table>
+</div>
+<div id="genero" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> 3. Gênero:</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/9_x3_genero_grafico-1.png" width="1152" /></p>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+<ol start="3" style="list-style-type: decimal">
+<li>GÃªnero:
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="3">
+<ol start="9" style="list-style-type: decimal">
+<li>Os colaboradores sÃ£o preparados de maneira adequada<br>para atuar com excelÃªncia em seus projetos e/ou Ã¡reas.<br>[-&gt;]
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+Total
+</th>
+</tr></li>
+</ol></li>
+</ol>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Feminino
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Masculino
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Prefiro nÃ£o identificar
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">13</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">25</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">4</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">42</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">34</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">101</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">5</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">140</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+NÃ£o concordo nem discordo
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">17</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">63</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">82</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">66</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">137</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">6</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">209</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">14</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">34</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">49</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+Total
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">144</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">360</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">18</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">522</span>
+</td>
+</tr>
+<td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="5">
+χ<sup>2</sup>=10.413 · df=8 · Cramer’s V=0.100 · Fisher’s p=0.280
+</td>
+</tr>
+</table>
+</div>
+<div id="tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics" class="section level3">
+<h3><span class="header-section-number">4.1.4</span> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/9_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico-1.png" width="1152" /></p>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+<ol start="4" style="list-style-type: decimal">
+<li>Tempo de Empresa (hÃ¡ quanto tempo trabalha na<br>Inmetrics?)
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="6">
+<ol start="9" style="list-style-type: decimal">
+<li>Os colaboradores sÃ£o preparados de maneira adequada<br>para atuar com excelÃªncia em seus projetos e/ou Ã¡reas.<br>[-&gt;]
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+Total
+</th>
+</tr></li>
+</ol></li>
+</ol>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+1 a 2 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+2 a 4 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+4 a 7 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+6 meses a 1 ano
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Mais de 7 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Menos de 6 meses
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">4</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">13</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">13</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">4</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">42</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">20</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">46</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">19</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">34</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">9</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">12</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">140</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+NÃ£o concordo nem discordo
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">9</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">16</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">4</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">22</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">24</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">82</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">30</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">53</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">15</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">64</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">40</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">209</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">8</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">9</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">12</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">19</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">49</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+Total
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">71</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">137</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">46</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">145</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">24</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">99</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">522</span>
+</td>
+</tr>
+<td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="8">
+χ<sup>2</sup>=51.291 · df=20 · Cramer’s V=0.157 · Fisher’s p=0.000
+</td>
+</tr>
+</table>
+</div>
+<div id="faixa-etaria" class="section level3">
+<h3><span class="header-section-number">4.1.5</span> 5. Faixa etária:</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/9_x5_faixa_etaria_grafico-1.png" width="1152" /></p>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+<ol start="5" style="list-style-type: decimal">
+<li>Faixa etÃ¡ria:
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="6">
+<ol start="9" style="list-style-type: decimal">
+<li>Os colaboradores sÃ£o preparados de maneira adequada<br>para atuar com excelÃªncia em seus projetos e/ou Ã¡reas.<br>[-&gt;]
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+Total
+</th>
+</tr></li>
+</ol></li>
+</ol>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+18 a 20 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+21 a 25 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+26 a 30 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+31 a 35 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+36 a 45 anos
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Mais de 45 anos
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">0</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">8</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">5</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">14</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">10</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">5</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">42</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">6</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">20</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">30</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">39</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">35</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">10</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">140</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+NÃ£o concordo nem discordo
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">1</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">16</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">25</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">16</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">18</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">6</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">82</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">14</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">44</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">48</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">28</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">53</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">22</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">209</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">2</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">13</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">9</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">10</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">8</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">49</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+Total
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">23</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">101</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">117</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">107</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">123</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">51</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">522</span>
+</td>
+</tr>
+<td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="8">
+χ<sup>2</sup>=33.142 · df=20 · Cramer’s V=0.126 · Fisher’s p=0.036
+</td>
+</tr>
+</table>
+</div>
+<div id="alocacao" class="section level3">
+<h3><span class="header-section-number">4.1.6</span> 6. Alocação:</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/9_x6_alocacao_grafico-1.png" width="1152" /></p>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; border-bottom:1px solid;" rowspan="2">
+<ol start="6" style="list-style-type: decimal">
+<li>AlocaÃ§Ã£o:
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal;" colspan="3">
+<ol start="9" style="list-style-type: decimal">
+<li>Os colaboradores sÃ£o preparados de maneira adequada<br>para atuar com excelÃªncia em seus projetos e/ou Ã¡reas.<br>[-&gt;]
+</th>
+<th style="border-top:double; text-align:center; font-style:italic; font-weight:normal; font-weight:bolder; font-style:italic; border-bottom:1px solid; " rowspan="2">
+Total
+</th>
+</tr></li>
+</ol></li>
+</ol>
+<tr>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+Alocado no cliente
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+No Canopus
+</td>
+<td style="border-bottom:1px solid; text-align:center; padding:0.2cm;">
+No Thera
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">26</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">13</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">42</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Discordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">74</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">59</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">7</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">140</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+NÃ£o concordo nem discordo
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">42</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">31</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">9</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">82</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo parcialmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">123</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">75</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">11</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">209</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  text-align:left; vertical-align:middle;">
+Concordo totalmente
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">23</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">23</span>
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+<span style="color:black;">3</span>
+</td>
+<td style="padding:0.2cm; text-align:center;  ">
+<span style="color:black;">49</span>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm;  border-bottom:double; font-weight:bolder; font-style:italic; text-align:left; vertical-align:middle;">
+Total
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">288</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">201</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">33</span>
+</td>
+<td style="padding:0.2cm; text-align:center;   border-bottom:double;">
+<span style="color:black;">522</span>
+</td>
+</tr>
+<td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="5">
+χ<sup>2</sup>=7.834 · df=8 · Cramer’s V=0.087 · Fisher’s p=0.455
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="descritivas-das-questoes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="construtos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["relatorio_inmetrics.pdf", "relatorio_inmetrics.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
