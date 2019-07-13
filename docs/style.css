@@ -17,3 +17,8 @@ pre code {
     margin: 0 auto;
     padding: 20px 0 40px;
 }
+
+#associacao-entre-construtos-e-cortes table {
+  width: 100%;
+  font-size: small;
+} 
