@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 3 Descritivas das Questões | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics</title>
   <meta name="description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
-  <meta name="generator" content="bookdown 0.11.3 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 3 Descritivas das Questões | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="R6 e Aretí" />
 
 
-<meta name="date" content="2019-07-10" />
+<meta name="date" content="2019-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -47,6 +47,19 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.7/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
 
 
@@ -66,9 +79,7 @@
 <li><a href="./">R6 Consultoria</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Projeto</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#escopo"><i class="fa fa-check"></i><b>1.1</b> Escopo</a></li>
-</ul></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Projeto</a></li>
 <li class="chapter" data-level="2" data-path="descritivas-dos-atributos-de-perfil.html"><a href="descritivas-dos-atributos-de-perfil.html"><i class="fa fa-check"></i><b>2</b> Descritivas dos Atributos de Perfil</a></li>
 <li class="chapter" data-level="3" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html"><i class="fa fa-check"></i><b>3</b> Descritivas das Questões</a><ul>
 <li class="chapter" data-level="3.1" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#geral"><i class="fa fa-check"></i><b>3.1</b> Geral</a></li>
@@ -626,33 +637,104 @@
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="construtos.html"><a href="construtos.html"><i class="fa fa-check"></i><b>5</b> Construtos</a><ul>
-<li class="chapter" data-level="5.1" data-path="construtos.html"><a href="construtos.html#rapidez-antes-de-qualidade"><i class="fa fa-check"></i><b>5.1</b> Rapidez Antes de Qualidade</a><ul>
+<li class="chapter" data-level="5.1" data-path="construtos.html"><a href="construtos.html#descredibilidade-e-injustica"><i class="fa fa-check"></i><b>5.1</b> Descredibilidade e Injustiça</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial"><i class="fa fa-check"></i><b>5.1.1</b> Análise Fatorial</a></li>
-<li class="chapter" data-level="5.1.2" data-path="construtos.html"><a href="construtos.html#diagnostico-e-qualidade"><i class="fa fa-check"></i><b>5.1.2</b> Diagnóstico e Qualidade</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="construtos.html"><a href="construtos.html#exploracao"><i class="fa fa-check"></i><b>5.2</b> Exploração</a></li>
+<li class="chapter" data-level="5.2" data-path="construtos.html"><a href="construtos.html#despreparo-da-lideranca"><i class="fa fa-check"></i><b>5.2</b> Despreparo da Liderança</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-1"><i class="fa fa-check"></i><b>5.2.1</b> Análise Fatorial</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="hipoteses.html"><a href="hipoteses.html"><i class="fa fa-check"></i><b>6</b> Hipóteses</a><ul>
-<li class="chapter" data-level="6.1" data-path="hipoteses.html"><a href="hipoteses.html#existe-mais-foco-em-rapidez-por-parte-da-lideranca-versus-foco-em-qualidade-por-parte-dos-liderados"><i class="fa fa-check"></i><b>6.1</b> “Existe mais foco em rapidez por parte da Liderança versus foco em qualidade por parte dos liderados?”</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="hipoteses.html"><a href="hipoteses.html#estatisticas-descritivas"><i class="fa fa-check"></i><b>6.1.1</b> Estatísticas Descritivas</a></li>
-<li class="chapter" data-level="6.1.2" data-path="hipoteses.html"><a href="hipoteses.html#testes-de-hipotese"><i class="fa fa-check"></i><b>6.1.2</b> Testes de Hipótese</a></li>
+<li class="chapter" data-level="5.3" data-path="construtos.html"><a href="construtos.html#baixo-preparo-da-empresa-para-exercer-funcao"><i class="fa fa-check"></i><b>5.3</b> Baixo Preparo da Empresa Para Exercer Função</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-2"><i class="fa fa-check"></i><b>5.3.1</b> Análise Fatorial</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="hipoteses.html"><a href="hipoteses.html#existe-necessidade-de-uma-cultura-de-gente"><i class="fa fa-check"></i><b>6.2</b> Existe necessidade de uma Cultura de Gente?</a></li>
-<li class="chapter" data-level="6.3" data-path="hipoteses.html"><a href="hipoteses.html#a-falta-de-sistemas-formais-de-preparacao-e-acompanhamento-impacta-desempenho"><i class="fa fa-check"></i><b>6.3</b> A falta de sistemas formais de preparacão e acompanhamento impacta desempenho?</a></li>
-<li class="chapter" data-level="6.4" data-path="hipoteses.html"><a href="hipoteses.html#existe-alto-foco-em-qualidade-do-servico-prestado-ao-cliente"><i class="fa fa-check"></i><b>6.4</b> Existe alto foco em qualidade do serviço prestado ao cliente?</a></li>
-<li class="chapter" data-level="6.5" data-path="hipoteses.html"><a href="hipoteses.html#foco-no-cliente-e-um-potencial-facilitador-da-cultura-de-inovacao"><i class="fa fa-check"></i><b>6.5</b> Foco no Cliente é um potencial facilitador da Cultura de Inovação?</a></li>
-<li class="chapter" data-level="6.6" data-path="hipoteses.html"><a href="hipoteses.html#existe-uma-cultura-de-apoio-entre-os-liderados-que-inexiste-entre-a-lideranca"><i class="fa fa-check"></i><b>6.6</b> Existe uma Cultura de Apoio entre os liderados que inexiste entre a Liderança</a></li>
-<li class="chapter" data-level="6.7" data-path="hipoteses.html"><a href="hipoteses.html#aprendizagem-e-um-valor"><i class="fa fa-check"></i><b>6.7</b> Aprendizagem é um valor?</a></li>
-<li class="chapter" data-level="6.8" data-path="hipoteses.html"><a href="hipoteses.html#existem-culturas-distintas-de-liderados-x-lideres"><i class="fa fa-check"></i><b>6.8</b> Existem culturas distintas de Liderados X Líderes</a></li>
-<li class="chapter" data-level="6.9" data-path="hipoteses.html"><a href="hipoteses.html#existem-outros-valores-que-aparecem-nos-dados"><i class="fa fa-check"></i><b>6.9</b> Existem outros valores que aparecem nos dados?</a></li>
-<li class="chapter" data-level="6.10" data-path="hipoteses.html"><a href="hipoteses.html#a-lideranca-senior-e-distante-da-base"><i class="fa fa-check"></i><b>6.10</b> A liderança sênior é distante da base?</a></li>
-<li class="chapter" data-level="6.11" data-path="hipoteses.html"><a href="hipoteses.html#imediatismo-e-equacionado-a-rapidez"><i class="fa fa-check"></i><b>6.11</b> Imediatismo é equacionado a rapidez?</a></li>
-<li class="chapter" data-level="6.12" data-path="hipoteses.html"><a href="hipoteses.html#imediatismo-impacta-qualidade"><i class="fa fa-check"></i><b>6.12</b> Imediatismo impacta qualidade?</a></li>
-<li class="chapter" data-level="6.13" data-path="hipoteses.html"><a href="hipoteses.html#os-colaboradores-se-sentem-abandonados-sem-respaldo-da-lideranca-sem-preparo-sem-reconhecimento"><i class="fa fa-check"></i><b>6.13</b> Os colaboradores se sentem abandonados (sem respaldo da liderança, sem preparo, sem reconhecimento)?</a></li>
-<li class="chapter" data-level="6.14" data-path="hipoteses.html"><a href="hipoteses.html#quais-as-principais-dores-dos-colaboradores"><i class="fa fa-check"></i><b>6.14</b> Quais as principais dores dos colaboradores?</a></li>
-<li class="chapter" data-level="6.15" data-path="hipoteses.html"><a href="hipoteses.html#o-que-os-colaboradores-mais-apreciam-na-empresa"><i class="fa fa-check"></i><b>6.15</b> O que os colaboradores mais apreciam na empresa?</a></li>
-<li class="chapter" data-level="6.16" data-path="hipoteses.html"><a href="hipoteses.html#a-enfase-em-rapidez-impacta-o-foco-no-cliente"><i class="fa fa-check"></i><b>6.16</b> A ênfase em rapidez impacta o foco no cliente?</a></li>
-<li class="chapter" data-level="6.17" data-path="hipoteses.html"><a href="hipoteses.html#inovacao-esta-associada-a-necessidades-de-clientes"><i class="fa fa-check"></i><b>6.17</b> Inovação está associada a necessidades de clientes?</a></li>
+<li class="chapter" data-level="5.4" data-path="construtos.html"><a href="construtos.html#planejamento-e-metodo"><i class="fa fa-check"></i><b>5.4</b> Planejamento e Método</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-3"><i class="fa fa-check"></i><b>5.4.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="construtos.html"><a href="construtos.html#imediatismo"><i class="fa fa-check"></i><b>5.5</b> Imediatismo</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-4"><i class="fa fa-check"></i><b>5.5.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="construtos.html"><a href="construtos.html#ausencia-de-meritocracia"><i class="fa fa-check"></i><b>5.6</b> Ausência de Meritocracia</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-5"><i class="fa fa-check"></i><b>5.6.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="construtos.html"><a href="construtos.html#proximidade-da-lideranca"><i class="fa fa-check"></i><b>5.7</b> Proximidade da Liderança</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-6"><i class="fa fa-check"></i><b>5.7.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="construtos.html"><a href="construtos.html#visao-do-proposito-comum"><i class="fa fa-check"></i><b>5.8</b> Visão do Propósito Comum</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-7"><i class="fa fa-check"></i><b>5.8.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="construtos.html"><a href="construtos.html#colaboracao"><i class="fa fa-check"></i><b>5.9</b> Colaboração</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-8"><i class="fa fa-check"></i><b>5.9.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="construtos.html"><a href="construtos.html#ambiente-leve-e-flexibilidade"><i class="fa fa-check"></i><b>5.10</b> Ambiente Leve e Flexibilidade</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-9"><i class="fa fa-check"></i><b>5.10.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="construtos.html"><a href="construtos.html#lideranca-senior"><i class="fa fa-check"></i><b>5.11</b> Liderança Sênior</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-10"><i class="fa fa-check"></i><b>5.11.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="construtos.html"><a href="construtos.html#inovacao"><i class="fa fa-check"></i><b>5.12</b> Inovação</a><ul>
+<li class="chapter" data-level="5.12.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-11"><i class="fa fa-check"></i><b>5.12.1</b> Análise Fatorial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html"><i class="fa fa-check"></i><b>6</b> Associação entre Construtos e Cortes</a><ul>
+<li class="chapter" data-level="6.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#descredibilidade-e-injustica-i"><i class="fa fa-check"></i><b>6.1</b> Descredibilidade e Injustiça I</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas"><i class="fa fa-check"></i><b>6.1.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.1.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese"><i class="fa fa-check"></i><b>6.1.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#descredibilidade-e-injustica-ii"><i class="fa fa-check"></i><b>6.2</b> Descredibilidade e Injustiça II</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-1"><i class="fa fa-check"></i><b>6.2.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.2.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-1"><i class="fa fa-check"></i><b>6.2.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#despreparo-da-lideranca-i"><i class="fa fa-check"></i><b>6.3</b> Despreparo da Liderança I</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-2"><i class="fa fa-check"></i><b>6.3.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.3.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-2"><i class="fa fa-check"></i><b>6.3.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#despreparo-da-lideranca-ii"><i class="fa fa-check"></i><b>6.4</b> Despreparo da Liderança II</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-3"><i class="fa fa-check"></i><b>6.4.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.4.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-3"><i class="fa fa-check"></i><b>6.4.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#baixo-preparo-da-empresa-para-exercer-funcao-1"><i class="fa fa-check"></i><b>6.5</b> Baixo Preparo da Empresa Para Exercer Função</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-4"><i class="fa fa-check"></i><b>6.5.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.5.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-4"><i class="fa fa-check"></i><b>6.5.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#planejamento-e-metodo-1"><i class="fa fa-check"></i><b>6.6</b> Planejamento e Método</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-5"><i class="fa fa-check"></i><b>6.6.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.6.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-5"><i class="fa fa-check"></i><b>6.6.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#ausencia-de-meritocracia-1"><i class="fa fa-check"></i><b>6.7</b> Ausência de Meritocracia</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-6"><i class="fa fa-check"></i><b>6.7.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.7.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-6"><i class="fa fa-check"></i><b>6.7.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#proximidade-da-lideranca-i"><i class="fa fa-check"></i><b>6.8</b> Proximidade da Liderança I</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-7"><i class="fa fa-check"></i><b>6.8.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.8.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-7"><i class="fa fa-check"></i><b>6.8.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#proximidade-da-lideranca-ii"><i class="fa fa-check"></i><b>6.9</b> Proximidade da Liderança II</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-8"><i class="fa fa-check"></i><b>6.9.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.9.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-8"><i class="fa fa-check"></i><b>6.9.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#visao-do-proposito-comum-1"><i class="fa fa-check"></i><b>6.10</b> Visão do Propósito Comum</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-9"><i class="fa fa-check"></i><b>6.10.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.10.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-9"><i class="fa fa-check"></i><b>6.10.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#colaboracao-1"><i class="fa fa-check"></i><b>6.11</b> Colaboração</a><ul>
+<li class="chapter" data-level="6.11.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-10"><i class="fa fa-check"></i><b>6.11.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.11.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-10"><i class="fa fa-check"></i><b>6.11.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.12" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#ambiente-leve-e-flexibilidade-1"><i class="fa fa-check"></i><b>6.12</b> Ambiente Leve e Flexibilidade</a><ul>
+<li class="chapter" data-level="6.12.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-11"><i class="fa fa-check"></i><b>6.12.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.12.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-11"><i class="fa fa-check"></i><b>6.12.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.13" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#lideranca-senior-1"><i class="fa fa-check"></i><b>6.13</b> Liderança Sênior</a><ul>
+<li class="chapter" data-level="6.13.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-12"><i class="fa fa-check"></i><b>6.13.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.13.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-12"><i class="fa fa-check"></i><b>6.13.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.14" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#inovacao-i"><i class="fa fa-check"></i><b>6.14</b> Inovação I</a><ul>
+<li class="chapter" data-level="6.14.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-13"><i class="fa fa-check"></i><b>6.14.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.14.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-13"><i class="fa fa-check"></i><b>6.14.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.15" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#inovacao-ii"><i class="fa fa-check"></i><b>6.15</b> Inovação II</a><ul>
+<li class="chapter" data-level="6.15.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-14"><i class="fa fa-check"></i><b>6.15.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.15.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-14"><i class="fa fa-check"></i><b>6.15.2</b> Testes de Hipótese</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Feito com bookdown</a></li>

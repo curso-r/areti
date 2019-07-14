@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 2 Descritivas dos Atributos de Perfil | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics</title>
   <meta name="description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
-  <meta name="generator" content="bookdown 0.11.3 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 2 Descritivas dos Atributos de Perfil | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="R6 e Aretí" />
 
 
-<meta name="date" content="2019-07-10" />
+<meta name="date" content="2019-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -48,7 +48,18 @@
 
 
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.7/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
 
 
@@ -68,9 +79,7 @@
 <li><a href="./">R6 Consultoria</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Projeto</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#escopo"><i class="fa fa-check"></i><b>1.1</b> Escopo</a></li>
-</ul></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Projeto</a></li>
 <li class="chapter" data-level="2" data-path="descritivas-dos-atributos-de-perfil.html"><a href="descritivas-dos-atributos-de-perfil.html"><i class="fa fa-check"></i><b>2</b> Descritivas dos Atributos de Perfil</a></li>
 <li class="chapter" data-level="3" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html"><i class="fa fa-check"></i><b>3</b> Descritivas das Questões</a><ul>
 <li class="chapter" data-level="3.1" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#geral"><i class="fa fa-check"></i><b>3.1</b> Geral</a></li>
@@ -628,33 +637,104 @@
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="construtos.html"><a href="construtos.html"><i class="fa fa-check"></i><b>5</b> Construtos</a><ul>
-<li class="chapter" data-level="5.1" data-path="construtos.html"><a href="construtos.html#rapidez-antes-de-qualidade"><i class="fa fa-check"></i><b>5.1</b> Rapidez Antes de Qualidade</a><ul>
+<li class="chapter" data-level="5.1" data-path="construtos.html"><a href="construtos.html#descredibilidade-e-injustica"><i class="fa fa-check"></i><b>5.1</b> Descredibilidade e Injustiça</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial"><i class="fa fa-check"></i><b>5.1.1</b> Análise Fatorial</a></li>
-<li class="chapter" data-level="5.1.2" data-path="construtos.html"><a href="construtos.html#diagnostico-e-qualidade"><i class="fa fa-check"></i><b>5.1.2</b> Diagnóstico e Qualidade</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="construtos.html"><a href="construtos.html#exploracao"><i class="fa fa-check"></i><b>5.2</b> Exploração</a></li>
+<li class="chapter" data-level="5.2" data-path="construtos.html"><a href="construtos.html#despreparo-da-lideranca"><i class="fa fa-check"></i><b>5.2</b> Despreparo da Liderança</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-1"><i class="fa fa-check"></i><b>5.2.1</b> Análise Fatorial</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="hipoteses.html"><a href="hipoteses.html"><i class="fa fa-check"></i><b>6</b> Hipóteses</a><ul>
-<li class="chapter" data-level="6.1" data-path="hipoteses.html"><a href="hipoteses.html#existe-mais-foco-em-rapidez-por-parte-da-lideranca-versus-foco-em-qualidade-por-parte-dos-liderados"><i class="fa fa-check"></i><b>6.1</b> “Existe mais foco em rapidez por parte da Liderança versus foco em qualidade por parte dos liderados?”</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="hipoteses.html"><a href="hipoteses.html#estatisticas-descritivas"><i class="fa fa-check"></i><b>6.1.1</b> Estatísticas Descritivas</a></li>
-<li class="chapter" data-level="6.1.2" data-path="hipoteses.html"><a href="hipoteses.html#testes-de-hipotese"><i class="fa fa-check"></i><b>6.1.2</b> Testes de Hipótese</a></li>
+<li class="chapter" data-level="5.3" data-path="construtos.html"><a href="construtos.html#baixo-preparo-da-empresa-para-exercer-funcao"><i class="fa fa-check"></i><b>5.3</b> Baixo Preparo da Empresa Para Exercer Função</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-2"><i class="fa fa-check"></i><b>5.3.1</b> Análise Fatorial</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="hipoteses.html"><a href="hipoteses.html#existe-necessidade-de-uma-cultura-de-gente"><i class="fa fa-check"></i><b>6.2</b> Existe necessidade de uma Cultura de Gente?</a></li>
-<li class="chapter" data-level="6.3" data-path="hipoteses.html"><a href="hipoteses.html#a-falta-de-sistemas-formais-de-preparacao-e-acompanhamento-impacta-desempenho"><i class="fa fa-check"></i><b>6.3</b> A falta de sistemas formais de preparacão e acompanhamento impacta desempenho?</a></li>
-<li class="chapter" data-level="6.4" data-path="hipoteses.html"><a href="hipoteses.html#existe-alto-foco-em-qualidade-do-servico-prestado-ao-cliente"><i class="fa fa-check"></i><b>6.4</b> Existe alto foco em qualidade do serviço prestado ao cliente?</a></li>
-<li class="chapter" data-level="6.5" data-path="hipoteses.html"><a href="hipoteses.html#foco-no-cliente-e-um-potencial-facilitador-da-cultura-de-inovacao"><i class="fa fa-check"></i><b>6.5</b> Foco no Cliente é um potencial facilitador da Cultura de Inovação?</a></li>
-<li class="chapter" data-level="6.6" data-path="hipoteses.html"><a href="hipoteses.html#existe-uma-cultura-de-apoio-entre-os-liderados-que-inexiste-entre-a-lideranca"><i class="fa fa-check"></i><b>6.6</b> Existe uma Cultura de Apoio entre os liderados que inexiste entre a Liderança</a></li>
-<li class="chapter" data-level="6.7" data-path="hipoteses.html"><a href="hipoteses.html#aprendizagem-e-um-valor"><i class="fa fa-check"></i><b>6.7</b> Aprendizagem é um valor?</a></li>
-<li class="chapter" data-level="6.8" data-path="hipoteses.html"><a href="hipoteses.html#existem-culturas-distintas-de-liderados-x-lideres"><i class="fa fa-check"></i><b>6.8</b> Existem culturas distintas de Liderados X Líderes</a></li>
-<li class="chapter" data-level="6.9" data-path="hipoteses.html"><a href="hipoteses.html#existem-outros-valores-que-aparecem-nos-dados"><i class="fa fa-check"></i><b>6.9</b> Existem outros valores que aparecem nos dados?</a></li>
-<li class="chapter" data-level="6.10" data-path="hipoteses.html"><a href="hipoteses.html#a-lideranca-senior-e-distante-da-base"><i class="fa fa-check"></i><b>6.10</b> A liderança sênior é distante da base?</a></li>
-<li class="chapter" data-level="6.11" data-path="hipoteses.html"><a href="hipoteses.html#imediatismo-e-equacionado-a-rapidez"><i class="fa fa-check"></i><b>6.11</b> Imediatismo é equacionado a rapidez?</a></li>
-<li class="chapter" data-level="6.12" data-path="hipoteses.html"><a href="hipoteses.html#imediatismo-impacta-qualidade"><i class="fa fa-check"></i><b>6.12</b> Imediatismo impacta qualidade?</a></li>
-<li class="chapter" data-level="6.13" data-path="hipoteses.html"><a href="hipoteses.html#os-colaboradores-se-sentem-abandonados-sem-respaldo-da-lideranca-sem-preparo-sem-reconhecimento"><i class="fa fa-check"></i><b>6.13</b> Os colaboradores se sentem abandonados (sem respaldo da liderança, sem preparo, sem reconhecimento)?</a></li>
-<li class="chapter" data-level="6.14" data-path="hipoteses.html"><a href="hipoteses.html#quais-as-principais-dores-dos-colaboradores"><i class="fa fa-check"></i><b>6.14</b> Quais as principais dores dos colaboradores?</a></li>
-<li class="chapter" data-level="6.15" data-path="hipoteses.html"><a href="hipoteses.html#o-que-os-colaboradores-mais-apreciam-na-empresa"><i class="fa fa-check"></i><b>6.15</b> O que os colaboradores mais apreciam na empresa?</a></li>
-<li class="chapter" data-level="6.16" data-path="hipoteses.html"><a href="hipoteses.html#a-enfase-em-rapidez-impacta-o-foco-no-cliente"><i class="fa fa-check"></i><b>6.16</b> A ênfase em rapidez impacta o foco no cliente?</a></li>
-<li class="chapter" data-level="6.17" data-path="hipoteses.html"><a href="hipoteses.html#inovacao-esta-associada-a-necessidades-de-clientes"><i class="fa fa-check"></i><b>6.17</b> Inovação está associada a necessidades de clientes?</a></li>
+<li class="chapter" data-level="5.4" data-path="construtos.html"><a href="construtos.html#planejamento-e-metodo"><i class="fa fa-check"></i><b>5.4</b> Planejamento e Método</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-3"><i class="fa fa-check"></i><b>5.4.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="construtos.html"><a href="construtos.html#imediatismo"><i class="fa fa-check"></i><b>5.5</b> Imediatismo</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-4"><i class="fa fa-check"></i><b>5.5.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="construtos.html"><a href="construtos.html#ausencia-de-meritocracia"><i class="fa fa-check"></i><b>5.6</b> Ausência de Meritocracia</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-5"><i class="fa fa-check"></i><b>5.6.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="construtos.html"><a href="construtos.html#proximidade-da-lideranca"><i class="fa fa-check"></i><b>5.7</b> Proximidade da Liderança</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-6"><i class="fa fa-check"></i><b>5.7.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="construtos.html"><a href="construtos.html#visao-do-proposito-comum"><i class="fa fa-check"></i><b>5.8</b> Visão do Propósito Comum</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-7"><i class="fa fa-check"></i><b>5.8.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="construtos.html"><a href="construtos.html#colaboracao"><i class="fa fa-check"></i><b>5.9</b> Colaboração</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-8"><i class="fa fa-check"></i><b>5.9.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="construtos.html"><a href="construtos.html#ambiente-leve-e-flexibilidade"><i class="fa fa-check"></i><b>5.10</b> Ambiente Leve e Flexibilidade</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-9"><i class="fa fa-check"></i><b>5.10.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="construtos.html"><a href="construtos.html#lideranca-senior"><i class="fa fa-check"></i><b>5.11</b> Liderança Sênior</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-10"><i class="fa fa-check"></i><b>5.11.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="construtos.html"><a href="construtos.html#inovacao"><i class="fa fa-check"></i><b>5.12</b> Inovação</a><ul>
+<li class="chapter" data-level="5.12.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-11"><i class="fa fa-check"></i><b>5.12.1</b> Análise Fatorial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html"><i class="fa fa-check"></i><b>6</b> Associação entre Construtos e Cortes</a><ul>
+<li class="chapter" data-level="6.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#descredibilidade-e-injustica-i"><i class="fa fa-check"></i><b>6.1</b> Descredibilidade e Injustiça I</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas"><i class="fa fa-check"></i><b>6.1.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.1.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese"><i class="fa fa-check"></i><b>6.1.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#descredibilidade-e-injustica-ii"><i class="fa fa-check"></i><b>6.2</b> Descredibilidade e Injustiça II</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-1"><i class="fa fa-check"></i><b>6.2.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.2.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-1"><i class="fa fa-check"></i><b>6.2.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#despreparo-da-lideranca-i"><i class="fa fa-check"></i><b>6.3</b> Despreparo da Liderança I</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-2"><i class="fa fa-check"></i><b>6.3.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.3.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-2"><i class="fa fa-check"></i><b>6.3.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#despreparo-da-lideranca-ii"><i class="fa fa-check"></i><b>6.4</b> Despreparo da Liderança II</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-3"><i class="fa fa-check"></i><b>6.4.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.4.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-3"><i class="fa fa-check"></i><b>6.4.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#baixo-preparo-da-empresa-para-exercer-funcao-1"><i class="fa fa-check"></i><b>6.5</b> Baixo Preparo da Empresa Para Exercer Função</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-4"><i class="fa fa-check"></i><b>6.5.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.5.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-4"><i class="fa fa-check"></i><b>6.5.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#planejamento-e-metodo-1"><i class="fa fa-check"></i><b>6.6</b> Planejamento e Método</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-5"><i class="fa fa-check"></i><b>6.6.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.6.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-5"><i class="fa fa-check"></i><b>6.6.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#ausencia-de-meritocracia-1"><i class="fa fa-check"></i><b>6.7</b> Ausência de Meritocracia</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-6"><i class="fa fa-check"></i><b>6.7.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.7.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-6"><i class="fa fa-check"></i><b>6.7.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#proximidade-da-lideranca-i"><i class="fa fa-check"></i><b>6.8</b> Proximidade da Liderança I</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-7"><i class="fa fa-check"></i><b>6.8.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.8.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-7"><i class="fa fa-check"></i><b>6.8.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#proximidade-da-lideranca-ii"><i class="fa fa-check"></i><b>6.9</b> Proximidade da Liderança II</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-8"><i class="fa fa-check"></i><b>6.9.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.9.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-8"><i class="fa fa-check"></i><b>6.9.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#visao-do-proposito-comum-1"><i class="fa fa-check"></i><b>6.10</b> Visão do Propósito Comum</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-9"><i class="fa fa-check"></i><b>6.10.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.10.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-9"><i class="fa fa-check"></i><b>6.10.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#colaboracao-1"><i class="fa fa-check"></i><b>6.11</b> Colaboração</a><ul>
+<li class="chapter" data-level="6.11.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-10"><i class="fa fa-check"></i><b>6.11.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.11.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-10"><i class="fa fa-check"></i><b>6.11.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.12" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#ambiente-leve-e-flexibilidade-1"><i class="fa fa-check"></i><b>6.12</b> Ambiente Leve e Flexibilidade</a><ul>
+<li class="chapter" data-level="6.12.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-11"><i class="fa fa-check"></i><b>6.12.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.12.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-11"><i class="fa fa-check"></i><b>6.12.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.13" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#lideranca-senior-1"><i class="fa fa-check"></i><b>6.13</b> Liderança Sênior</a><ul>
+<li class="chapter" data-level="6.13.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-12"><i class="fa fa-check"></i><b>6.13.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.13.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-12"><i class="fa fa-check"></i><b>6.13.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.14" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#inovacao-i"><i class="fa fa-check"></i><b>6.14</b> Inovação I</a><ul>
+<li class="chapter" data-level="6.14.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-13"><i class="fa fa-check"></i><b>6.14.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.14.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-13"><i class="fa fa-check"></i><b>6.14.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.15" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#inovacao-ii"><i class="fa fa-check"></i><b>6.15</b> Inovação II</a><ul>
+<li class="chapter" data-level="6.15.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-14"><i class="fa fa-check"></i><b>6.15.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.15.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-14"><i class="fa fa-check"></i><b>6.15.2</b> Testes de Hipótese</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Feito com bookdown</a></li>
@@ -680,7 +760,7 @@
 <h1><span class="header-section-number">Capítulo 2</span> Descritivas dos Atributos de Perfil</h1>
 <table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:unnamed-chunk-2">Table 2.1: </span>Variáveis de Perfil
+<span id="tab:unnamed-chunk-3">Table 2.1: </span>Variáveis de Perfil
 </caption>
 <thead>
 <tr>
@@ -755,7 +835,7 @@ Líder de líder
 preencher_lacuna_com_js
 </td>
 </tr>
-<tr grouplength="12">
+<tr grouplength="4">
 <td colspan="5" style="background-color: #666; color: #fff;">
 <strong>Área</strong>
 </td>
@@ -764,13 +844,13 @@ preencher_lacuna_com_js
 <td style="text-align:left; padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:left;">
-BUs
+B.U.’s
 </td>
 <td style="text-align:right;">
-17
+22
 </td>
 <td style="text-align:left;">
-3,3%
+4,2%
 </td>
 <td style="text-align:left;width: 8cm; ">
 preencher_lacuna_com_js
@@ -780,13 +860,13 @@ preencher_lacuna_com_js
 <td style="text-align:left; padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:left;">
-Consulting
+Kernel/Segurança e Cloud
 </td>
 <td style="text-align:right;">
-57
+16
 </td>
 <td style="text-align:left;">
-10,9%
+3,1%
 </td>
 <td style="text-align:left;width: 8cm; ">
 preencher_lacuna_com_js
@@ -796,13 +876,13 @@ preencher_lacuna_com_js
 <td style="text-align:left; padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:left;">
-Financeiro/Administrativo/TI/CIG
+Operações
 </td>
 <td style="text-align:right;">
-50
+419
 </td>
 <td style="text-align:left;">
-9,6%
+80,3%
 </td>
 <td style="text-align:left;width: 8cm; ">
 preencher_lacuna_com_js
@@ -812,141 +892,13 @@ preencher_lacuna_com_js
 <td style="text-align:left; padding-left: 2em;" indentlevel="1">
 </td>
 <td style="text-align:left;">
-GO e Controle de Qualidade
+Suportes
 </td>
 <td style="text-align:right;">
-40
+65
 </td>
 <td style="text-align:left;">
-7,7%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-Kernel
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-1,7%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-Marketing
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-0,2%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-MS
-</td>
-<td style="text-align:right;">
-39
-</td>
-<td style="text-align:left;">
-7,5%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-Novos Negócios e Parcerias
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-1,0%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-Pessoas
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:left;">
-2,7%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-PMS
-</td>
-<td style="text-align:right;">
-55
-</td>
-<td style="text-align:left;">
-10,5%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-QTS
-</td>
-<td style="text-align:right;">
-228
-</td>
-<td style="text-align:left;">
-43,7%
-</td>
-<td style="text-align:left;width: 8cm; ">
-preencher_lacuna_com_js
-</td>
-</tr>
-<tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
-</td>
-<td style="text-align:left;">
-Segurança &amp; Cloud
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-1,3%
+12,5%
 </td>
 <td style="text-align:left;width: 8cm; ">
 preencher_lacuna_com_js
@@ -1262,7 +1214,7 @@ preencher_lacuna_com_js
 </tr>
 </tbody>
 </table>
-<script> objeto_0 = $("td:contains(preencher_lacuna_com_js)").eq(0);objeto_1 = $("td:contains(preencher_lacuna_com_js)").eq(1);objeto_2 = $("td:contains(preencher_lacuna_com_js)").eq(2);objeto_3 = $("td:contains(preencher_lacuna_com_js)").eq(3);objeto_4 = $("td:contains(preencher_lacuna_com_js)").eq(4);objeto_5 = $("td:contains(preencher_lacuna_com_js)").eq(5);objeto_6 = $("td:contains(preencher_lacuna_com_js)").eq(6);objeto_7 = $("td:contains(preencher_lacuna_com_js)").eq(7);objeto_8 = $("td:contains(preencher_lacuna_com_js)").eq(8);objeto_9 = $("td:contains(preencher_lacuna_com_js)").eq(9);objeto_10 = $("td:contains(preencher_lacuna_com_js)").eq(10);objeto_11 = $("td:contains(preencher_lacuna_com_js)").eq(11);objeto_12 = $("td:contains(preencher_lacuna_com_js)").eq(12);objeto_13 = $("td:contains(preencher_lacuna_com_js)").eq(13);objeto_14 = $("td:contains(preencher_lacuna_com_js)").eq(14);objeto_15 = $("td:contains(preencher_lacuna_com_js)").eq(15);objeto_16 = $("td:contains(preencher_lacuna_com_js)").eq(16);objeto_17 = $("td:contains(preencher_lacuna_com_js)").eq(17);objeto_18 = $("td:contains(preencher_lacuna_com_js)").eq(18);objeto_19 = $("td:contains(preencher_lacuna_com_js)").eq(19);objeto_20 = $("td:contains(preencher_lacuna_com_js)").eq(20);objeto_21 = $("td:contains(preencher_lacuna_com_js)").eq(21);objeto_22 = $("td:contains(preencher_lacuna_com_js)").eq(22);objeto_23 = $("td:contains(preencher_lacuna_com_js)").eq(23);objeto_24 = $("td:contains(preencher_lacuna_com_js)").eq(24);objeto_25 = $("td:contains(preencher_lacuna_com_js)").eq(25);objeto_26 = $("td:contains(preencher_lacuna_com_js)").eq(26);objeto_27 = $("td:contains(preencher_lacuna_com_js)").eq(27);objeto_28 = $("td:contains(preencher_lacuna_com_js)").eq(28);objeto_29 = $("td:contains(preencher_lacuna_com_js)").eq(29);objeto_30 = $("td:contains(preencher_lacuna_com_js)").eq(30);objeto_31 = $("td:contains(preencher_lacuna_com_js)").eq(31);objeto_32 = $("td:contains(preencher_lacuna_com_js)").eq(32) ; objeto_0.empty();objeto_1.empty();objeto_2.empty();objeto_3.empty();objeto_4.empty();objeto_5.empty();objeto_6.empty();objeto_7.empty();objeto_8.empty();objeto_9.empty();objeto_10.empty();objeto_11.empty();objeto_12.empty();objeto_13.empty();objeto_14.empty();objeto_15.empty();objeto_16.empty();objeto_17.empty();objeto_18.empty();objeto_19.empty();objeto_20.empty();objeto_21.empty();objeto_22.empty();objeto_23.empty();objeto_24.empty();objeto_25.empty();objeto_26.empty();objeto_27.empty();objeto_28.empty();objeto_29.empty();objeto_30.empty();objeto_31.empty();objeto_32.empty() ; objeto_0.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 85.2%'>|</span>");objeto_1.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 10.0%'>|</span>");objeto_2.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 4.8%'>|</span>");objeto_3.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 3.3%'>|</span>");objeto_4.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 10.9%'>|</span>");objeto_5.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 9.6%'>|</span>");objeto_6.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 7.7%'>|</span>");objeto_7.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 1.7%'>|</span>");objeto_8.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 0.2%'>|</span>");objeto_9.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 7.5%'>|</span>");objeto_10.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 1.0%'>|</span>");objeto_11.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 2.7%'>|</span>");objeto_12.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 10.5%'>|</span>");objeto_13.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 43.7%'>|</span>");objeto_14.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 1.3%'>|</span>");objeto_15.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 27.6%'>|</span>");objeto_16.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 69.0%'>|</span>");objeto_17.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 3.4%'>|</span>");objeto_18.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 13.6%'>|</span>");objeto_19.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 26.2%'>|</span>");objeto_20.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 8.8%'>|</span>");objeto_21.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 27.8%'>|</span>");objeto_22.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 4.6%'>|</span>");objeto_23.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 19.0%'>|</span>");objeto_24.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 4.4%'>|</span>");objeto_25.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 19.3%'>|</span>");objeto_26.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 22.4%'>|</span>");objeto_27.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 20.5%'>|</span>");objeto_28.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 23.6%'>|</span>");objeto_29.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 9.8%'>|</span>");objeto_30.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 55.2%'>|</span>");objeto_31.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 38.5%'>|</span>");objeto_32.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 6.3%'>|</span>") </script>
+<script> objeto_0 = $("td:contains(preencher_lacuna_com_js)").eq(0);objeto_1 = $("td:contains(preencher_lacuna_com_js)").eq(1);objeto_2 = $("td:contains(preencher_lacuna_com_js)").eq(2);objeto_3 = $("td:contains(preencher_lacuna_com_js)").eq(3);objeto_4 = $("td:contains(preencher_lacuna_com_js)").eq(4);objeto_5 = $("td:contains(preencher_lacuna_com_js)").eq(5);objeto_6 = $("td:contains(preencher_lacuna_com_js)").eq(6);objeto_7 = $("td:contains(preencher_lacuna_com_js)").eq(7);objeto_8 = $("td:contains(preencher_lacuna_com_js)").eq(8);objeto_9 = $("td:contains(preencher_lacuna_com_js)").eq(9);objeto_10 = $("td:contains(preencher_lacuna_com_js)").eq(10);objeto_11 = $("td:contains(preencher_lacuna_com_js)").eq(11);objeto_12 = $("td:contains(preencher_lacuna_com_js)").eq(12);objeto_13 = $("td:contains(preencher_lacuna_com_js)").eq(13);objeto_14 = $("td:contains(preencher_lacuna_com_js)").eq(14);objeto_15 = $("td:contains(preencher_lacuna_com_js)").eq(15);objeto_16 = $("td:contains(preencher_lacuna_com_js)").eq(16);objeto_17 = $("td:contains(preencher_lacuna_com_js)").eq(17);objeto_18 = $("td:contains(preencher_lacuna_com_js)").eq(18);objeto_19 = $("td:contains(preencher_lacuna_com_js)").eq(19);objeto_20 = $("td:contains(preencher_lacuna_com_js)").eq(20);objeto_21 = $("td:contains(preencher_lacuna_com_js)").eq(21);objeto_22 = $("td:contains(preencher_lacuna_com_js)").eq(22);objeto_23 = $("td:contains(preencher_lacuna_com_js)").eq(23);objeto_24 = $("td:contains(preencher_lacuna_com_js)").eq(24) ; objeto_0.empty();objeto_1.empty();objeto_2.empty();objeto_3.empty();objeto_4.empty();objeto_5.empty();objeto_6.empty();objeto_7.empty();objeto_8.empty();objeto_9.empty();objeto_10.empty();objeto_11.empty();objeto_12.empty();objeto_13.empty();objeto_14.empty();objeto_15.empty();objeto_16.empty();objeto_17.empty();objeto_18.empty();objeto_19.empty();objeto_20.empty();objeto_21.empty();objeto_22.empty();objeto_23.empty();objeto_24.empty() ; objeto_0.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 85.2%'>|</span>");objeto_1.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 10.0%'>|</span>");objeto_2.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 4.8%'>|</span>");objeto_3.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 4.2%'>|</span>");objeto_4.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 3.1%'>|</span>");objeto_5.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 80.3%'>|</span>");objeto_6.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 12.5%'>|</span>");objeto_7.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 27.6%'>|</span>");objeto_8.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 69.0%'>|</span>");objeto_9.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 3.4%'>|</span>");objeto_10.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 13.6%'>|</span>");objeto_11.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 26.2%'>|</span>");objeto_12.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 8.8%'>|</span>");objeto_13.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 27.8%'>|</span>");objeto_14.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 4.6%'>|</span>");objeto_15.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 19.0%'>|</span>");objeto_16.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 4.4%'>|</span>");objeto_17.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 19.3%'>|</span>");objeto_18.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 22.4%'>|</span>");objeto_19.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 20.5%'>|</span>");objeto_20.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 23.6%'>|</span>");objeto_21.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 9.8%'>|</span>");objeto_22.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 55.2%'>|</span>");objeto_23.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 38.5%'>|</span>");objeto_24.append("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: 6.3%'>|</span>") </script>
 
 </div>
             </section>
