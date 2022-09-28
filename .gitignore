@@ -1,10 +1,10 @@
 # Ignore everything
-/*
+# /*
 
 
 # But not these files...
-!.gitignore
-!/docs
+# !.gitignore
+# !/docs
 .Rproj.user
 .Rhistory
 .Rdata
