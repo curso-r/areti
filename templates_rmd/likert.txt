@@ -1,0 +1,5 @@
+
+## Questão {variavel_codigo_likert}
+
+> {variavel_texto_likert}
+

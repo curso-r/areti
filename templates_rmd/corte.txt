@@ -1,0 +1,10 @@
+
+### {variavel_texto_corte}
+
+```{{r  {variavel_codigo_likert}_{variavel_nome_corte}_grafico, fig.height=6}}
+grafico_uma_likert(sumariza_uma_likert("{variavel_nome_likert}", "{variavel_nome_corte}"))
+```
+
+```{{r  {variavel_codigo_likert}_{variavel_nome_corte}_sjxtab, results='asis'}}
+cat(sjxtab("{variavel_nome_corte}", "{variavel_nome_likert}"))
+```

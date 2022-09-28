@@ -1,0 +1,116 @@
+
+
+## {construto_texto}
+
+
+```{{r {construto_nome}_a}}
+variaveis_selecionadas <- papel_das_variaveis %>% 
+  filter(
+    construto %in% c("{construto_texto}")
+  )
+colaboradores_sumario <- colaboradores %>% 
+  mutate(geral = "geral") %>%
+  sumariza_likert(
+    variaveis_selecionadas = variaveis_selecionadas$variavel_nome,
+    cortes = c("geral")
+  )
+```
+ 
+```{{r {construto_nome}_b, fig.height=6}}
+
+grafico <- grafico_likert(
+  colaboradores_sumario %>% mutate(variavel_texto = str_replace(variavel_texto, "\\[->\\]", "")),
+  titulo = 'Questões do construto "{construto_texto}"',
+  ordena_por_concordo = TRUE
+)
+
+grafico
+```
+
+
+### Análise Fatorial
+
+```{{r {construto_nome}_c}}
+## polychoric             
+{construto_nome}_pc <- colaboradores %>% 
+  select_at(vars(!!variaveis_selecionadas$variavel_nome)) %>%
+  as.data.frame %>%
+  hetcor(ML = TRUE) 
+
+saveRDS({construto_nome}_pc, file = "../data/{construto_nome}_pc.rds")
+```
+
+```{{r {construto_nome}_d}}
+{construto_nome}_pc <- readRDS(file = "../data/{construto_nome}_pc.rds")
+
+pheatmap(
+  ({construto_nome}_pc$correlations) %>% 
+    `colnames<-`(1:nrow(.)) %>%
+    `rownames<-`(str_wrap(variaveis_selecionadas$variavel_texto, 50)), 
+  cutree_rows = 1, 
+  clustering_method = "ward.D2",
+  breaks = seq(-1,1,length.out = 20), 
+  color = colorRampPalette(c("firebrick3", "white", "firebrick3"))(20)
+)
+```
+
+```{{r {construto_nome}_e, fig.width=8}}
+## factor analysis
+{construto_nome}_fa_par = fa.parallel({construto_nome}_pc$correlations, n.obs = nrow(colaboradores))
+
+{construto_nome}_fa <- fa(
+  {construto_nome}_pc$correlations, 
+  nfactors = {construto_nome}_fa_par$nfact, 
+  n.obs = nrow(colaboradores), 
+  rotate="varimax"
+)
+
+saveRDS({construto_nome}_fa, file = "../data/{construto_nome}_fa.rds")
+```
+
+```{{r {construto_nome}_f}}
+{construto_nome}_fa <- readRDS(file = "../data/{construto_nome}_fa.rds")
+constr <- {construto_nome}_fa$Structure %>% as.matrix()
+class(constr) <- "matrix"
+constr %>% apply(1, scales::percent) %>% knitr::kable()
+```
+
+```{{r {construto_nome}_g, fig.width=12}}
+{construto_nome}_pc <- readRDS(file = "../data/{construto_nome}_pc.rds")
+
+library("pheatmap")
+pheatmap(
+  ({construto_nome}_pc$correlations) %>% 
+    `colnames<-`(1:nrow(.)) %>%
+    `rownames<-`(str_wrap(variaveis_selecionadas$variavel_texto, 50)), 
+  cutree_rows = 3, 
+  clustering_method = "ward.D2",
+  breaks = seq(-1,1,length.out = 20), 
+  color = colorRampPalette(c("firebrick3", "white", "firebrick3"))(20),
+  display_numbers = TRUE, cex = 1.2
+)
+
+```
+
+```{{r {construto_nome}_h}}
+
+colaboradores_com_construtos <- readr::read_rds(path = "../data/colaboradores_com_construtos.rds")
+colaboradores_com_construtos <- colaboradores_com_construtos %>% 
+  dplyr::select(-contains("{construto_nome}")) %>%
+  bind_cols(
+    predict(
+      {construto_nome}_fa, 
+      data = colaboradores_com_construtos %>% 
+      select(!!variaveis_selecionadas$variavel_nome) %>% 
+      mutate_all(as.numeric) %>% 
+      as.matrix
+    ) %>%
+      as.data.frame.matrix() %>%
+      dplyr::mutate_all(~ (. - min(.))/(max(.) - min(.))) %>%
+      set_names(paste0("{construto_nome}", 1:ncol(.)))
+  )
+
+readr::write_rds(colaboradores_com_construtos, path = "../data/colaboradores_com_construtos.rds")
+```
+
+

@@ -1,0 +1,1761 @@
+# Associação entre Construtos e Cortes
+
+
+## Resumo 
+
+```{r setuasapasd, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.width = 12
+)
+library(knitr)
+library(JLutils)
+library(kableExtra)
+library(ggplot2)
+library(ggrepel)
+library(polycor)  
+library(psych)
+library(FactoMineR)
+library(pheatmap)
+library(tidyverse)
+#
+wrap_palavra_grande <- function(palavras, n = 50) {
+  linha1 <- palavras %>% str_sub(1, -n)
+  linha2 <- palavras %>% str_sub(-n+1)
+  map2_chr(linha1, linha2, paste, sep = "\n")
+}
+
+#
+categs_likert_ordenados <- c(
+  "Discordo totalmente"
+  ,"Discordo parcialmente"
+  ,"Não concordo nem discordo"
+  ,"Concordo parcialmente"
+  ,"Concordo totalmente"
+)
+
+#
+eh_likert <- function(x) {
+  any(x %in% categs_likert_ordenados)
+}
+
+#
+sumariza_likert <- function(data, variaveis_selecionadas, cortes) {
+  categs_likert_ordenados <- c(
+    "Discordo totalmente"
+    ,"Discordo parcialmente"
+    ,"Não concordo nem discordo"
+    ,"Concordo parcialmente"
+    ,"Concordo totalmente"
+  )
+  
+  data <- data %>%
+    tidyr::gather("question", "response", !!variaveis_selecionadas) %>%  
+    dplyr::filter(response %in% categs_likert_ordenados) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      group = do.call(partial(paste, sep = "|"), syms(cortes))
+    ) %>%
+    dplyr::group_by(group) %>%
+    dplyr::mutate(
+      count_group = length(group)
+    ) %>%
+    dplyr::group_by(question, group, response) %>%
+    dplyr::summarise(
+      count_group = first(count_group),
+      count = length(group)
+    ) %>%
+    dplyr::group_by(question, group) %>%
+    dplyr::mutate(
+      group_n = glue::glue("{group} ({sum(count)})"),
+      p = count/sum(count),
+      p_lbl = percent(p, 0.1, decimal.mark = ","),
+      p_lbl = if_else(p < 0.015, "", p_lbl)
+    ) %>%
+    dplyr::select(-count_group) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      count_concordo_totalmente = dplyr::if_else(response %in% "Concordo totalmente", .$p, 0.0),
+      response = fct_relevel(response, !!rev(categs_likert_ordenados))
+    ) %>%
+    dplyr::left_join(papel_das_variaveis %>% dplyr::select(question = variavel_nome, variavel_texto, ordem_das_variaveis) %>% dplyr::distinct()) %>%
+    dplyr::mutate(
+      variavel_texto = str_wrap(variavel_texto, width = 40)
+    )
+  
+  
+  data
+}
+
+#
+grafico_likert <- function(colaboradores_sumario, titulo = "", ordena_por_concordo = TRUE) {
+  
+  if(ordena_por_concordo) {
+    colaboradores_sumario  <- colaboradores_sumario %>%
+      dplyr::mutate(
+        variavel_texto = fct_reorder(
+          factor(variavel_texto), 
+          -count_concordo_totalmente, 
+          .fun = "mean"
+        )
+      )
+  } else {
+    colaboradores_sumario  <- colaboradores_sumario %>%
+      dplyr::mutate(
+        variavel_texto = fct_reorder(
+          factor(variavel_texto), 
+          ordem_das_variaveis, 
+          .fun = "mean"
+        )
+      )
+  }
+  
+  colaboradores_sumario %>%
+    dplyr::filter(!is.na(response)) %>%
+    ggplot(aes(x = group_n, y = p, fill = response)) +
+    geom_col(position = "stack") +
+    geom_label(
+      aes(label = p_lbl), 
+      position = position_stack(vjust = .5), 
+      colour = "white", 
+      fontface = "bold", 
+      label.size = 0
+    ) +
+    coord_flip() +
+    scale_fill_manual(values = rev(c("#CA0020", "#F4A582", "#979797", "#92C5DE", "#0571B0"))) + 
+    theme_minimal(14, base_family = "serif") +
+    theme(legend.position="top",
+          axis.text.y = element_text(hjust = 0),
+          strip.text.y = element_text(angle = 180, hjust = 0),
+          strip.placement = "outside"
+    ) +
+    guides(fill = guide_legend(nrow = 2, byrow = FALSE)) +
+    labs(fill = "Resposta:", x = "", y = "") +
+    scale_y_continuous(labels = scales::percent_format(decimal.mark = ","))+
+    scale_x_discrete(labels = partial(str_wrap, width = 40)) +
+    facet_grid(variavel_texto~., switch = "y", scales = "free_y") +
+    ggtitle(titulo)
+}
+
+```
+
+
+
+```{r a32asas}
+#BDs
+colaboradores_com_construtos <- readRDS("D:/OneDrive/Documents/areti/data/colaboradores_com_construtos.rds") %>%
+  mutate(
+    tempo_de_empresa = x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics,
+    tempo_de_empresa = fct_relevel(tempo_de_empresa, c("Menos de 6 meses", "6 meses a 1 ano", "1 a 2 anos", "2 a 4 anos", "4 a 7 anos", "Mais de 7 anos"))
+  )
+construtos <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos v3.xlsx", sheet = "construtos Moema Dani")
+variaveis <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos v3.xlsx", sheet = "variaveis")
+papel_das_variaveis <- construtos %>% 
+  left_join(variaveis) %>%
+  dplyr::mutate(
+    variavel_nome = variavel_nome %>% stringr::str_replace_all('\"', ''),
+    variavel_nome = nome %>% stringr::str_replace_all('\"', ''),
+    ordem_das_variaveis = as.numeric(fct_inorder(variavel_nome))
+  ) %>%
+  dplyr::group_by(variavel_nome) %>%
+  mutate(
+    variavel_texto = first(variavel_texto[!is.na(variavel_texto)])
+  )
+fatores <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos v3.xlsx", sheet = "depara_fatores")
+```
+
+
+```{r}
+tribble(
+  ~Construto,	~`Associado com...`,
+  "Descredibilidade e Injustiça I", "tempo de empresa; gênero",
+  "Descredibilidade e Injustiça II", "tempo de empresa; posição",
+  "Despreparo da Liderança I", "tempo de empresa",
+  "Despreparo da Liderança II", "tempo de empresa",
+  "Baixo Preparo da Empresa Para Exercer Função", "tempo de empresa; gênero; posição",
+  "Planejamento e Método", "tempo de empresa; posição",
+  "Ausência de Meritocracia", "tempo de empresa; gênero",
+  "Proximidade da Liderança I", "tempo de empresa; posição",
+  "Proximidade da Liderança II", "alocação",
+  "Visão do Propósito Comum", "tempo de empresa",
+  "Colaboração", "posição; alocação",
+  "Ambiente Leve e Flexibilidade", "tempo de empresa; gênero; idade",
+  "Liderança Sênior", "tempo de empresa",
+  "Inovação I", "tempo de empresa",
+  "Inovação II", "tempo de empresa",
+) %>%
+  knitr::kable("latex", booktabs = T, caption = "Resumo das associações entre construtos e variáveis de corte.") %>%
+  kable_styling(
+    font_size = 10
+  ) 
+```
+
+\pagebreak
+
+## Descredibilidade e Injustiça I
+
+**Hipótese:** A percepção de Descredibilidade e Injustiça I pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Descredibilidade e Injustiça I esteja associada com o tempo de empresa e com o Gênero.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Gênero "Prefiro Não identificar" apresentou menor percepção.
+
+### Estatísticas Descritivas
+
+```{r descredibilidade_e_injustica1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = descredibilidade_e_injustica1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nDescredibilidade e Injustiça I")
+```
+
+```{r}
+
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(descredibilidade_e_injustica1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Descredibilidade e Injustiça I, por tempo de casa") %>%
+  kable_styling( 
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+```{r descredibilidade_e_injustica1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = descredibilidade_e_injustica1,
+             y = x3_genero, 
+             colour = x3_genero, 
+             fill = x3_genero)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Gênero", colour = "Gênero", y = "", x = "Percepção de\nDescredibilidade e Injustiça I")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x3_genero) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(descredibilidade_e_injustica1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Descredibilidade e Injustiça I por gênero") %>%
+  kable_styling( 
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r descredibilidade_e_injustica1_b, results = "asis"}
+fit_hipotese <- glm(
+  descredibilidade_e_injustica1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  descredibilidade_e_injustica1 ~ 1 
+  # + x1_eu_sou
+  # + x2_area
+  + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+)
+```
+
+
+
+
+
+
+
+
+\pagebreak
+
+
+
+## Descredibilidade e Injustiça II
+
+**Hipótese:** A percepção de Descredibilidade e Injustiça II pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Descredibilidade e Injustiça II esteja associada com o tempo de empresa e com o Gênero.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Líderes de líder apresentou menor percepção.
+
+### Estatísticas Descritivas
+
+```{r descredibilidade_e_injustica2_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = descredibilidade_e_injustica2,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nDescredibilidade e Injustiça II")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(descredibilidade_e_injustica2, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(descredibilidade_e_injustica2, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(descredibilidade_e_injustica2, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Descredibilidade e Injustiça II") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+```{r descredibilidade_e_injustica2_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = descredibilidade_e_injustica2,
+             y = x1_eu_sou, 
+             colour = x1_eu_sou, 
+             fill = x1_eu_sou)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Eu sou...", colour = "Eu sou...", y = "", x = "Percepção de\nDescredibilidade e Injustiça II")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x1_eu_sou) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(descredibilidade_e_injustica2, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(descredibilidade_e_injustica2, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(descredibilidade_e_injustica2, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(descredibilidade_e_injustica2, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Descredibilidade e Injustiça II") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r descredibilidade_e_injustica2_b, results = "asis"}
+fit_hipotese <- glm(
+  descredibilidade_e_injustica2 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  descredibilidade_e_injustica2 ~ 1 
+  + x1_eu_sou
+  # + x2_area
+  # + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+## Despreparo da Liderança I
+
+**Hipótese:** A percepção de Despreparo da Liderança I pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Despreparo da Liderança I esteja associada com o tempo de empresa e com o Gênero.
+
+- Quanto maior o tempo de casa, menor a percepção.
+
+### Estatísticas Descritivas
+
+```{r despreparo_da_lideranca1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = despreparo_da_lideranca1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nDespreparo da Liderança I")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(despreparo_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(despreparo_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(despreparo_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(despreparo_da_lideranca1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(despreparo_da_lideranca1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(despreparo_da_lideranca1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(despreparo_da_lideranca1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Despreparo da Liderança I") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r despreparo_da_lideranca1_b, results = "asis"}
+fit_hipotese <- glm(
+  despreparo_da_lideranca1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  despreparo_da_lideranca1 ~ 1 
+  # + x1_eu_sou 
+  # + x2_area 
+  # + x3_genero 
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+)
+```
+
+
+## Despreparo da Liderança II
+
+**Hipótese:** A percepção de Despreparo da Liderança II pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Despreparo da Liderança II esteja associada com o tempo de empresa e com o Gênero.
+
+- Quanto maior o tempo de casa, menor a percepção.
+
+### Estatísticas Descritivas
+
+```{r despreparo_da_lideranca2_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = despreparo_da_lideranca2,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nDespreparo da Liderança II")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(despreparo_da_lideranca2, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(despreparo_da_lideranca2, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(despreparo_da_lideranca2, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(despreparo_da_lideranca2, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(despreparo_da_lideranca2, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(despreparo_da_lideranca2, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(despreparo_da_lideranca2, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Despreparo da Liderança II") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+### Testes de Hipótese
+
+```{r despreparo_da_lideranca2_b, results = "asis"}
+fit_hipotese <- glm(
+  despreparo_da_lideranca2 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  despreparo_da_lideranca2 ~ 1 
+  # + x1_eu_sou 
+  # + x2_area 
+  # + x3_genero 
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+## Baixo Preparo da Empresa Para Exercer Função
+
+**Hipótese:** A percepção de Baixo Preparo da Empresa Para Exercer Função pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Baixo Preparo da Empresa Para Exercer Função esteja associada com o tempo de empresa, com o gênero e com posição.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Líderes de líder apresentaram menor percepção.
+- Gênero "Prefiro Não identificar" apresentou menor percepção.
+
+### Estatísticas Descritivas
+
+```{r baixo_preparo_da_empresa_para_exercer_funcao1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = baixo_preparo_da_empresa_para_exercer_funcao1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nBaixo Preparo da Empresa Para Exercer Função")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Baixo Preparo da Empresa Para Exercer Função por tempo de casa.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+```{r baixo_preparo_da_empresa_para_exercer_funcao1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = baixo_preparo_da_empresa_para_exercer_funcao1,
+             y = x1_eu_sou, 
+             colour = x1_eu_sou, 
+             fill = x1_eu_sou)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Eu sou...", colour = "Eu sou...", y = "", x = "Percepção de\nBaixo Preparo da Empresa Para Exercer Função")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x1_eu_sou) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Baixo Preparo da Empresa Para Exercer Função por gênero.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+
+```{r baixo_preparo_da_empresa_para_exercer_funcao1_ccc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = baixo_preparo_da_empresa_para_exercer_funcao1,
+             y = x3_genero, 
+             colour = x3_genero, 
+             fill = x3_genero)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Eu sou...", colour = "Eu sou...", y = "", x = "Percepção de\nBaixo Preparo da Empresa Para Exercer Função")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x3_genero) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(baixo_preparo_da_empresa_para_exercer_funcao1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(baixo_preparo_da_empresa_para_exercer_funcao1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Baixo Preparo da Empresa Para Exercer Função por Gênero.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r baixo_preparo_da_empresa_para_exercer_funcao1_b, results = "asis"}
+fit_hipotese <- glm(
+  baixo_preparo_da_empresa_para_exercer_funcao1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  baixo_preparo_da_empresa_para_exercer_funcao1 ~ 1 
+  + x1_eu_sou
+  # + x2_area
+  + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+
+
+
+## Planejamento e Método
+
+**Hipótese:** A percepção de Planejamento e Método pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Planejamento e Método esteja associada com o tempo de empresa e com posição.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Líderes de líder apresentaram menor percepção.
+
+
+### Estatísticas Descritivas
+
+```{r planejamento_e_metodo1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = planejamento_e_metodo1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nPlanejamento e Método")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(planejamento_e_metodo1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(planejamento_e_metodo1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(planejamento_e_metodo1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(planejamento_e_metodo1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(planejamento_e_metodo1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(planejamento_e_metodo1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(planejamento_e_metodo1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Planejamento e Método por tempo de empresa.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+```{r planejamento_e_metodo1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = planejamento_e_metodo1,
+             y = x1_eu_sou, 
+             colour = x1_eu_sou, 
+             fill = x1_eu_sou)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Eu sou...", colour = "Eu sou...", y = "", x = "Percepção de\nPlanejamento e Método")
+```
+
+```{r planejamento_e_metodo1_aa}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x1_eu_sou) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(planejamento_e_metodo1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(planejamento_e_metodo1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(planejamento_e_metodo1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(planejamento_e_metodo1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(planejamento_e_metodo1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(planejamento_e_metodo1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(planejamento_e_metodo1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Planejamento e Método por posição.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+\pagebreak
+ 
+### Testes de Hipótese
+
+```{r planejamento_e_metodo1_b, results = "asis"}
+fit_hipotese <- glm(
+  planejamento_e_metodo1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  planejamento_e_metodo1 ~ 1 
+  + x1_eu_sou
+  # + x2_area
+  # + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+\pagebreak
+
+## Ausência de Meritocracia
+
+**Hipótese:** A percepção de Ausência de Meritocracia pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Ausência de Meritocracia esteja associada com o tempo de empresa e com gênero.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Gênero "Prefiro Não identificar" apresentou menor percepção.
+
+### Estatísticas Descritivas
+
+```{r ausencia_de_meritocracia1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = ausencia_de_meritocracia1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nAusência de Meritocracia")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(ausencia_de_meritocracia1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(ausencia_de_meritocracia1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(ausencia_de_meritocracia1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Ausência de Meritocracia por tempo de empresa.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+```{r ausencia_de_meritocracia1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = ausencia_de_meritocracia1,
+             y = x3_genero, 
+             colour = x3_genero, 
+             fill = x3_genero)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Gênero", colour = "Gênero", y = "", x = "Percepção de\nAusência de Meritocracia")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x3_genero) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(ausencia_de_meritocracia1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(ausencia_de_meritocracia1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(ausencia_de_meritocracia1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(ausencia_de_meritocracia1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Ausência de Meritocracia por gênero.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r ausencia_de_meritocracia1_b, results = "asis"}
+fit_hipotese <- glm(
+  ausencia_de_meritocracia1 ~ 1 
+  + x1_eu_sou
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  ausencia_de_meritocracia1 ~ 1 
+  # + x1_eu_sou
+  # + x2_area
+  + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+\pagebreak
+
+
+## Proximidade da Liderança I
+
+**Hipótese:** A percepção de Proximidade da Liderança I pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Proximidade da Liderança I esteja associada com o tempo de empresa e com posição.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Líderes de líder apresentaram menor percepção.
+
+### Estatísticas Descritivas
+
+```{r proximidade_da_lideranca1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = proximidade_da_lideranca1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nProximidade da Liderança I")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(proximidade_da_lideranca1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(proximidade_da_lideranca1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(proximidade_da_lideranca1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Proximidade da Liderança I por tempo de empresa.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+```{r proximidade_da_lideranca1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = proximidade_da_lideranca1,
+             y = x1_eu_sou, 
+             colour = x1_eu_sou, 
+             fill = x1_eu_sou)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Eu sou...", colour = "Eu sou...", y = "", x = "Percepção de\nProximidade da Liderança I")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(proximidade_da_lideranca1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(proximidade_da_lideranca1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(proximidade_da_lideranca1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(proximidade_da_lideranca1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Proximidade da Liderança I por posição.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r proximidade_da_lideranca1_b, results = "asis"}
+fit_hipotese <- glm(
+  proximidade_da_lideranca1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  proximidade_da_lideranca1 ~ 1 
+  + x1_eu_sou
+  # + x2_area
+  # + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+\pagebreak
+
+## Proximidade da Liderança II
+
+**Hipótese:** A percepção de Proximidade da Liderança II pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Proximidade da Liderança II esteja associada com a alocação.
+
+- Funcionários do Canopus apresentaram maior percepção.
+
+### Estatísticas Descritivas
+
+```{r proximidade_da_lideranca2_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = proximidade_da_lideranca2,
+             y = x6_alocacao, 
+             colour = x6_alocacao, 
+             fill = x6_alocacao)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Alocação", colour = "Alocação", y = "", x = "Percepção de\nProximidade da Liderança II")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x6_alocacao) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(proximidade_da_lideranca2, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(proximidade_da_lideranca2, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(proximidade_da_lideranca2, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(proximidade_da_lideranca2, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(proximidade_da_lideranca2, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(proximidade_da_lideranca2, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(proximidade_da_lideranca2, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Proximidade da Liderança II por alocação") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r proximidade_da_lideranca2_b, results = "asis"}
+fit_hipotese <- glm(
+  proximidade_da_lideranca2 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  proximidade_da_lideranca2 ~ 1 
+  # + x1_eu_sou
+  # + x2_area
+  # + x3_genero
+  # + tempo_de_empresa
+  # + x5_faixa_etaria
+  + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+\pagebreak
+
+## Visão do Propósito Comum
+
+**Hipótese:** A percepção de Visão do Propósito Comum pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Visão do Propósito Comum esteja associada com o tempo de empresa.
+
+- Quanto maior o tempo de casa, menor a percepção.
+
+
+### Estatísticas Descritivas
+
+```{r visao_do_proposito_comum1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = visao_do_proposito_comum1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nVisão do Propósito Comum")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(visao_do_proposito_comum1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(visao_do_proposito_comum1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(visao_do_proposito_comum1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(visao_do_proposito_comum1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(visao_do_proposito_comum1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(visao_do_proposito_comum1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(visao_do_proposito_comum1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Visão do Propósito Comum") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r visao_do_proposito_comum1_b, results = "asis"}
+fit_hipotese <- glm(
+  visao_do_proposito_comum1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  visao_do_proposito_comum1 ~ 1 
+  # + x1_eu_sou 
+  # + x2_area 
+  # + x3_genero 
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+\pagebreak
+
+## Colaboração
+
+**Hipótese:** A percepção de Colaboração pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Visão do Propósito Comum esteja associada com a posição e com a alocação.
+
+- Colaboradores apresentaram menor a percepção do que Líderes.
+- Menor percepção se alocado no cliente. Maior percepção se alocado no Thera. Percepção intermediária se alocado no COnapus.
+
+### Estatísticas Descritivas
+
+```{r colaboracao1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = colaboracao1,
+             y = x1_eu_sou, 
+             colour = x1_eu_sou, 
+             fill = x1_eu_sou)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Eu sou...", colour = "Eu sou...", y = "", x = "Percepção de\nColaboração")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x1_eu_sou) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(colaboracao1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(colaboracao1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(colaboracao1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(colaboracao1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(colaboracao1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(colaboracao1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(colaboracao1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Colaboração por posição.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+```{r colaboracao1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = colaboracao1,
+             y = x6_alocacao, 
+             colour = x6_alocacao, 
+             fill = x6_alocacao)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Alocação", colour = "Alocação", y = "", x = "Percepção de\nColaboração")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x6_alocacao) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(colaboracao1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(colaboracao1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(colaboracao1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(colaboracao1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(colaboracao1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(colaboracao1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(colaboracao1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Colaboração por Alocação.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r colaboracao1_b, results = "asis"}
+fit_hipotese <- glm(
+  colaboracao1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  colaboracao1 ~ 1 
+  + x1_eu_sou
+  # + x2_area
+  # + x3_genero
+  # + tempo_de_empresa
+  # + x5_faixa_etaria
+  + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+\pagebreak
+
+## Ambiente Leve e Flexibilidade
+
+**Hipótese:** A percepção de Ambiente Leve e Flexibilidade pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Ambiente Leve e Flexibilidade esteja associada com o gênero, com o tempo de casa e com a idade.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Líderes de líder apresentaram menor percepção.
+- Quanto maior a idade, menor a percepção.
+
+### Estatísticas Descritivas
+
+```{r ambiente_leve_e_flexibilidade1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = ambiente_leve_e_flexibilidade1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nAmbiente Leve e Flexibilidade")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(ambiente_leve_e_flexibilidade1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(ambiente_leve_e_flexibilidade1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(ambiente_leve_e_flexibilidade1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Ambiente Leve e Flexibilidade por tempo de empresa.") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+
+```{r ambiente_leve_e_flexibilidade1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = ambiente_leve_e_flexibilidade1,
+             y = x3_genero, 
+             colour = x3_genero, 
+             fill = x3_genero)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Gênero", colour = "Gênero", y = "", x = "Percepção de\nAmbiente Leve e Flexibilidade")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x3_genero) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(ambiente_leve_e_flexibilidade1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(ambiente_leve_e_flexibilidade1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(ambiente_leve_e_flexibilidade1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Ambiente Leve e Flexibilidade por Gênero") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+
+
+
+```{r ambiente_leve_e_flexibilidade1_ccc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = ambiente_leve_e_flexibilidade1,
+             y = x5_faixa_etaria, 
+             colour = x5_faixa_etaria, 
+             fill = x5_faixa_etaria)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Faixa Etária", colour = "Faixa Etária", y = "", x = "Percepção de\nAmbiente Leve e Flexibilidade")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x5_faixa_etaria) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(ambiente_leve_e_flexibilidade1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(ambiente_leve_e_flexibilidade1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(ambiente_leve_e_flexibilidade1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(ambiente_leve_e_flexibilidade1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Ambiente Leve e Flexibilidade por Faixa Etária") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r ambiente_leve_e_flexibilidade1_b, results = "asis"}
+fit_hipotese <- glm(
+  ambiente_leve_e_flexibilidade1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  ambiente_leve_e_flexibilidade1 ~ 1 
+  # + x1_eu_sou
+  # + x2_area
+  + x3_genero
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+\pagebreak
+
+## Liderança Sênior
+
+**Hipótese:** A percepção de Liderança Sênior pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Liderança Sênior esteja associada com o tempo de casa.
+
+- Colaboradores com 7 anos ou mais de empresa mostraram menor percepção de Liderança Sênior.
+
+### Estatísticas Descritivas
+
+```{r lideranca_senior1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = lideranca_senior1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nLiderança Sênior")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(lideranca_senior1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(lideranca_senior1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(lideranca_senior1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(lideranca_senior1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(lideranca_senior1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(lideranca_senior1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(lideranca_senior1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Liderança Sênior") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r lideranca_senior1_b, results = "asis"}
+fit_hipotese <- glm(
+  lideranca_senior1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  lideranca_senior1 ~ 1 
+  # + x1_eu_sou
+  # + x2_area
+  # + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+\pagebreak
+
+## Inovação I
+
+**Hipótese:** A percepção de Inovação I pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Inovação I esteja associada com o tempo de casa.
+
+- Quanto maior o tempo de casa, menor a percepção.
+
+### Estatísticas Descritivas
+
+```{r inovacao1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = inovacao1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nInovação I")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(inovacao1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(inovacao1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(inovacao1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(inovacao1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(inovacao1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(inovacao1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(inovacao1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Inovação I") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r inovacao1_b, results = "asis"}
+fit_hipotese <- glm(
+  inovacao1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  inovacao1 ~ 1 
+  # + x1_eu_sou
+  # + x2_area
+  # + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+\pagebreak
+
+## Inovação II
+
+**Hipótese:** A percepção de Inovação II pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Inovação II esteja associada com o tempo de casa.
+
+- Quanto maior o tempo de casa, **maior** a percepção.
+
+### Estatísticas Descritivas
+
+```{r inovacao2_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = inovacao2,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nInovação II")
+```
+
+```{r}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(inovacao2, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(inovacao2, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(inovacao2, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(inovacao2, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(inovacao2, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(inovacao2, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(inovacao2, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable("latex", booktabs = T, caption = "Medidas Resumo do Score de Inovação II") %>%
+  kable_styling(
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 7, 
+    fixed_thead = FALSE
+  ) 
+```
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r inovacao2_b, results = "asis"}
+fit_hipotese <- glm(
+  inovacao2 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  inovacao2 ~ 1 
+  # + x1_eu_sou 
+  # + x2_area 
+  # + x3_genero 
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+   
+)
+```
+
+
+
+

@@ -1,0 +1,565 @@
+\contentsline {chapter}{\numberline {1}Projeto}{9}{chapter.1}% 
+\contentsline {part}{I\hspace {1em}Colaboradores}{11}{part.1}% 
+\contentsline {chapter}{\numberline {2}Descritivas dos Atributos de Perfil}{13}{chapter.2}% 
+\contentsline {chapter}{\numberline {3}Descritivas das Questões}{15}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Geral}{15}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}Questões por Posição (Eu sou\ldots {})}{24}{section.3.2}% 
+\contentsline {section}{\numberline {3.3}Questões por Área}{36}{section.3.3}% 
+\contentsline {section}{\numberline {3.4}Questões por Gênero}{53}{section.3.4}% 
+\contentsline {section}{\numberline {3.5}Questões por Tempo de Empresa}{71}{section.3.5}% 
+\contentsline {section}{\numberline {3.6}Questões por Faixa Etária}{94}{section.3.6}% 
+\contentsline {section}{\numberline {3.7}Questões por Alocação}{117}{section.3.7}% 
+\contentsline {chapter}{\numberline {4}Questões versus Cortes}{135}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Questão 8a}{154}{section.4.1}% 
+\contentsline {subsection}{\numberline {4.1.1}1. Eu sou:}{154}{subsection.4.1.1}% 
+\contentsline {subsection}{\numberline {4.1.2}2. Área:}{155}{subsection.4.1.2}% 
+\contentsline {subsection}{\numberline {4.1.3}3. Gênero:}{156}{subsection.4.1.3}% 
+\contentsline {subsection}{\numberline {4.1.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{156}{subsection.4.1.4}% 
+\contentsline {subsection}{\numberline {4.1.5}5. Faixa etária:}{157}{subsection.4.1.5}% 
+\contentsline {subsection}{\numberline {4.1.6}6. Alocação:}{158}{subsection.4.1.6}% 
+\contentsline {section}{\numberline {4.2}Questão 8b}{158}{section.4.2}% 
+\contentsline {subsection}{\numberline {4.2.1}1. Eu sou:}{159}{subsection.4.2.1}% 
+\contentsline {subsection}{\numberline {4.2.2}2. Área:}{159}{subsection.4.2.2}% 
+\contentsline {subsection}{\numberline {4.2.3}3. Gênero:}{160}{subsection.4.2.3}% 
+\contentsline {subsection}{\numberline {4.2.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{161}{subsection.4.2.4}% 
+\contentsline {subsection}{\numberline {4.2.5}5. Faixa etária:}{162}{subsection.4.2.5}% 
+\contentsline {subsection}{\numberline {4.2.6}6. Alocação:}{163}{subsection.4.2.6}% 
+\contentsline {section}{\numberline {4.3}Questão 8c}{163}{section.4.3}% 
+\contentsline {subsection}{\numberline {4.3.1}1. Eu sou:}{164}{subsection.4.3.1}% 
+\contentsline {subsection}{\numberline {4.3.2}2. Área:}{164}{subsection.4.3.2}% 
+\contentsline {subsection}{\numberline {4.3.3}3. Gênero:}{165}{subsection.4.3.3}% 
+\contentsline {subsection}{\numberline {4.3.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{166}{subsection.4.3.4}% 
+\contentsline {subsection}{\numberline {4.3.5}5. Faixa etária:}{167}{subsection.4.3.5}% 
+\contentsline {subsection}{\numberline {4.3.6}6. Alocação:}{168}{subsection.4.3.6}% 
+\contentsline {section}{\numberline {4.4}Questão 9}{168}{section.4.4}% 
+\contentsline {subsection}{\numberline {4.4.1}1. Eu sou:}{169}{subsection.4.4.1}% 
+\contentsline {subsection}{\numberline {4.4.2}2. Área:}{169}{subsection.4.4.2}% 
+\contentsline {subsection}{\numberline {4.4.3}3. Gênero:}{170}{subsection.4.4.3}% 
+\contentsline {subsection}{\numberline {4.4.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{171}{subsection.4.4.4}% 
+\contentsline {subsection}{\numberline {4.4.5}5. Faixa etária:}{172}{subsection.4.4.5}% 
+\contentsline {subsection}{\numberline {4.4.6}6. Alocação:}{173}{subsection.4.4.6}% 
+\contentsline {section}{\numberline {4.5}Questão 10a}{173}{section.4.5}% 
+\contentsline {subsection}{\numberline {4.5.1}1. Eu sou:}{174}{subsection.4.5.1}% 
+\contentsline {subsection}{\numberline {4.5.2}2. Área:}{174}{subsection.4.5.2}% 
+\contentsline {subsection}{\numberline {4.5.3}3. Gênero:}{175}{subsection.4.5.3}% 
+\contentsline {subsection}{\numberline {4.5.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{176}{subsection.4.5.4}% 
+\contentsline {subsection}{\numberline {4.5.5}5. Faixa etária:}{177}{subsection.4.5.5}% 
+\contentsline {subsection}{\numberline {4.5.6}6. Alocação:}{178}{subsection.4.5.6}% 
+\contentsline {section}{\numberline {4.6}Questão 10d}{178}{section.4.6}% 
+\contentsline {subsection}{\numberline {4.6.1}1. Eu sou:}{179}{subsection.4.6.1}% 
+\contentsline {subsection}{\numberline {4.6.2}2. Área:}{179}{subsection.4.6.2}% 
+\contentsline {subsection}{\numberline {4.6.3}3. Gênero:}{180}{subsection.4.6.3}% 
+\contentsline {subsection}{\numberline {4.6.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{181}{subsection.4.6.4}% 
+\contentsline {subsection}{\numberline {4.6.5}5. Faixa etária:}{182}{subsection.4.6.5}% 
+\contentsline {subsection}{\numberline {4.6.6}6. Alocação:}{183}{subsection.4.6.6}% 
+\contentsline {section}{\numberline {4.7}Questão 10e}{183}{section.4.7}% 
+\contentsline {subsection}{\numberline {4.7.1}1. Eu sou:}{184}{subsection.4.7.1}% 
+\contentsline {subsection}{\numberline {4.7.2}2. Área:}{184}{subsection.4.7.2}% 
+\contentsline {subsection}{\numberline {4.7.3}3. Gênero:}{185}{subsection.4.7.3}% 
+\contentsline {subsection}{\numberline {4.7.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{186}{subsection.4.7.4}% 
+\contentsline {subsection}{\numberline {4.7.5}5. Faixa etária:}{187}{subsection.4.7.5}% 
+\contentsline {subsection}{\numberline {4.7.6}6. Alocação:}{188}{subsection.4.7.6}% 
+\contentsline {section}{\numberline {4.8}Questão 10f}{188}{section.4.8}% 
+\contentsline {subsection}{\numberline {4.8.1}1. Eu sou:}{189}{subsection.4.8.1}% 
+\contentsline {subsection}{\numberline {4.8.2}2. Área:}{189}{subsection.4.8.2}% 
+\contentsline {subsection}{\numberline {4.8.3}3. Gênero:}{190}{subsection.4.8.3}% 
+\contentsline {subsection}{\numberline {4.8.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{191}{subsection.4.8.4}% 
+\contentsline {subsection}{\numberline {4.8.5}5. Faixa etária:}{192}{subsection.4.8.5}% 
+\contentsline {subsection}{\numberline {4.8.6}6. Alocação:}{193}{subsection.4.8.6}% 
+\contentsline {section}{\numberline {4.9}Questão 10g}{193}{section.4.9}% 
+\contentsline {subsection}{\numberline {4.9.1}1. Eu sou:}{194}{subsection.4.9.1}% 
+\contentsline {subsection}{\numberline {4.9.2}2. Área:}{194}{subsection.4.9.2}% 
+\contentsline {subsection}{\numberline {4.9.3}3. Gênero:}{195}{subsection.4.9.3}% 
+\contentsline {subsection}{\numberline {4.9.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{196}{subsection.4.9.4}% 
+\contentsline {subsection}{\numberline {4.9.5}5. Faixa etária:}{197}{subsection.4.9.5}% 
+\contentsline {subsection}{\numberline {4.9.6}6. Alocação:}{198}{subsection.4.9.6}% 
+\contentsline {section}{\numberline {4.10}Questão 10b}{198}{section.4.10}% 
+\contentsline {subsection}{\numberline {4.10.1}1. Eu sou:}{199}{subsection.4.10.1}% 
+\contentsline {subsection}{\numberline {4.10.2}2. Área:}{199}{subsection.4.10.2}% 
+\contentsline {subsection}{\numberline {4.10.3}3. Gênero:}{200}{subsection.4.10.3}% 
+\contentsline {subsection}{\numberline {4.10.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{201}{subsection.4.10.4}% 
+\contentsline {subsection}{\numberline {4.10.5}5. Faixa etária:}{202}{subsection.4.10.5}% 
+\contentsline {subsection}{\numberline {4.10.6}6. Alocação:}{203}{subsection.4.10.6}% 
+\contentsline {section}{\numberline {4.11}Questão 10c}{203}{section.4.11}% 
+\contentsline {subsection}{\numberline {4.11.1}1. Eu sou:}{204}{subsection.4.11.1}% 
+\contentsline {subsection}{\numberline {4.11.2}2. Área:}{204}{subsection.4.11.2}% 
+\contentsline {subsection}{\numberline {4.11.3}3. Gênero:}{205}{subsection.4.11.3}% 
+\contentsline {subsection}{\numberline {4.11.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{206}{subsection.4.11.4}% 
+\contentsline {subsection}{\numberline {4.11.5}5. Faixa etária:}{207}{subsection.4.11.5}% 
+\contentsline {subsection}{\numberline {4.11.6}6. Alocação:}{208}{subsection.4.11.6}% 
+\contentsline {section}{\numberline {4.12}Questão 14}{208}{section.4.12}% 
+\contentsline {subsection}{\numberline {4.12.1}1. Eu sou:}{209}{subsection.4.12.1}% 
+\contentsline {subsection}{\numberline {4.12.2}2. Área:}{209}{subsection.4.12.2}% 
+\contentsline {subsection}{\numberline {4.12.3}3. Gênero:}{210}{subsection.4.12.3}% 
+\contentsline {subsection}{\numberline {4.12.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{211}{subsection.4.12.4}% 
+\contentsline {subsection}{\numberline {4.12.5}5. Faixa etária:}{212}{subsection.4.12.5}% 
+\contentsline {subsection}{\numberline {4.12.6}6. Alocação:}{213}{subsection.4.12.6}% 
+\contentsline {section}{\numberline {4.13}Questão 11a}{213}{section.4.13}% 
+\contentsline {subsection}{\numberline {4.13.1}1. Eu sou:}{214}{subsection.4.13.1}% 
+\contentsline {subsection}{\numberline {4.13.2}2. Área:}{214}{subsection.4.13.2}% 
+\contentsline {subsection}{\numberline {4.13.3}3. Gênero:}{215}{subsection.4.13.3}% 
+\contentsline {subsection}{\numberline {4.13.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{216}{subsection.4.13.4}% 
+\contentsline {subsection}{\numberline {4.13.5}5. Faixa etária:}{217}{subsection.4.13.5}% 
+\contentsline {subsection}{\numberline {4.13.6}6. Alocação:}{218}{subsection.4.13.6}% 
+\contentsline {section}{\numberline {4.14}Questão 11b}{218}{section.4.14}% 
+\contentsline {subsection}{\numberline {4.14.1}1. Eu sou:}{219}{subsection.4.14.1}% 
+\contentsline {subsection}{\numberline {4.14.2}2. Área:}{219}{subsection.4.14.2}% 
+\contentsline {subsection}{\numberline {4.14.3}3. Gênero:}{220}{subsection.4.14.3}% 
+\contentsline {subsection}{\numberline {4.14.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{221}{subsection.4.14.4}% 
+\contentsline {subsection}{\numberline {4.14.5}5. Faixa etária:}{222}{subsection.4.14.5}% 
+\contentsline {subsection}{\numberline {4.14.6}6. Alocação:}{223}{subsection.4.14.6}% 
+\contentsline {section}{\numberline {4.15}Questão 11c}{223}{section.4.15}% 
+\contentsline {subsection}{\numberline {4.15.1}1. Eu sou:}{224}{subsection.4.15.1}% 
+\contentsline {subsection}{\numberline {4.15.2}2. Área:}{224}{subsection.4.15.2}% 
+\contentsline {subsection}{\numberline {4.15.3}3. Gênero:}{225}{subsection.4.15.3}% 
+\contentsline {subsection}{\numberline {4.15.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{226}{subsection.4.15.4}% 
+\contentsline {subsection}{\numberline {4.15.5}5. Faixa etária:}{227}{subsection.4.15.5}% 
+\contentsline {subsection}{\numberline {4.15.6}6. Alocação:}{228}{subsection.4.15.6}% 
+\contentsline {section}{\numberline {4.16}Questão 11d}{228}{section.4.16}% 
+\contentsline {subsection}{\numberline {4.16.1}1. Eu sou:}{229}{subsection.4.16.1}% 
+\contentsline {subsection}{\numberline {4.16.2}2. Área:}{229}{subsection.4.16.2}% 
+\contentsline {subsection}{\numberline {4.16.3}3. Gênero:}{230}{subsection.4.16.3}% 
+\contentsline {subsection}{\numberline {4.16.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{231}{subsection.4.16.4}% 
+\contentsline {subsection}{\numberline {4.16.5}5. Faixa etária:}{232}{subsection.4.16.5}% 
+\contentsline {subsection}{\numberline {4.16.6}6. Alocação:}{233}{subsection.4.16.6}% 
+\contentsline {section}{\numberline {4.17}Questão 11e}{233}{section.4.17}% 
+\contentsline {subsection}{\numberline {4.17.1}1. Eu sou:}{234}{subsection.4.17.1}% 
+\contentsline {subsection}{\numberline {4.17.2}2. Área:}{234}{subsection.4.17.2}% 
+\contentsline {subsection}{\numberline {4.17.3}3. Gênero:}{235}{subsection.4.17.3}% 
+\contentsline {subsection}{\numberline {4.17.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{236}{subsection.4.17.4}% 
+\contentsline {subsection}{\numberline {4.17.5}5. Faixa etária:}{237}{subsection.4.17.5}% 
+\contentsline {subsection}{\numberline {4.17.6}6. Alocação:}{238}{subsection.4.17.6}% 
+\contentsline {section}{\numberline {4.18}Questão 13a}{238}{section.4.18}% 
+\contentsline {subsection}{\numberline {4.18.1}1. Eu sou:}{239}{subsection.4.18.1}% 
+\contentsline {subsection}{\numberline {4.18.2}2. Área:}{239}{subsection.4.18.2}% 
+\contentsline {subsection}{\numberline {4.18.3}3. Gênero:}{240}{subsection.4.18.3}% 
+\contentsline {subsection}{\numberline {4.18.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{241}{subsection.4.18.4}% 
+\contentsline {subsection}{\numberline {4.18.5}5. Faixa etária:}{242}{subsection.4.18.5}% 
+\contentsline {subsection}{\numberline {4.18.6}6. Alocação:}{243}{subsection.4.18.6}% 
+\contentsline {section}{\numberline {4.19}Questão 13b}{243}{section.4.19}% 
+\contentsline {subsection}{\numberline {4.19.1}1. Eu sou:}{244}{subsection.4.19.1}% 
+\contentsline {subsection}{\numberline {4.19.2}2. Área:}{244}{subsection.4.19.2}% 
+\contentsline {subsection}{\numberline {4.19.3}3. Gênero:}{245}{subsection.4.19.3}% 
+\contentsline {subsection}{\numberline {4.19.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{246}{subsection.4.19.4}% 
+\contentsline {subsection}{\numberline {4.19.5}5. Faixa etária:}{247}{subsection.4.19.5}% 
+\contentsline {subsection}{\numberline {4.19.6}6. Alocação:}{248}{subsection.4.19.6}% 
+\contentsline {section}{\numberline {4.20}Questão 13c}{248}{section.4.20}% 
+\contentsline {subsection}{\numberline {4.20.1}1. Eu sou:}{249}{subsection.4.20.1}% 
+\contentsline {subsection}{\numberline {4.20.2}2. Área:}{249}{subsection.4.20.2}% 
+\contentsline {subsection}{\numberline {4.20.3}3. Gênero:}{250}{subsection.4.20.3}% 
+\contentsline {subsection}{\numberline {4.20.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{251}{subsection.4.20.4}% 
+\contentsline {subsection}{\numberline {4.20.5}5. Faixa etária:}{252}{subsection.4.20.5}% 
+\contentsline {subsection}{\numberline {4.20.6}6. Alocação:}{253}{subsection.4.20.6}% 
+\contentsline {section}{\numberline {4.21}Questão 13d}{253}{section.4.21}% 
+\contentsline {subsection}{\numberline {4.21.1}1. Eu sou:}{254}{subsection.4.21.1}% 
+\contentsline {subsection}{\numberline {4.21.2}2. Área:}{254}{subsection.4.21.2}% 
+\contentsline {subsection}{\numberline {4.21.3}3. Gênero:}{255}{subsection.4.21.3}% 
+\contentsline {subsection}{\numberline {4.21.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{256}{subsection.4.21.4}% 
+\contentsline {subsection}{\numberline {4.21.5}5. Faixa etária:}{257}{subsection.4.21.5}% 
+\contentsline {subsection}{\numberline {4.21.6}6. Alocação:}{258}{subsection.4.21.6}% 
+\contentsline {section}{\numberline {4.22}Questão 13e}{258}{section.4.22}% 
+\contentsline {subsection}{\numberline {4.22.1}1. Eu sou:}{259}{subsection.4.22.1}% 
+\contentsline {subsection}{\numberline {4.22.2}2. Área:}{259}{subsection.4.22.2}% 
+\contentsline {subsection}{\numberline {4.22.3}3. Gênero:}{260}{subsection.4.22.3}% 
+\contentsline {subsection}{\numberline {4.22.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{261}{subsection.4.22.4}% 
+\contentsline {subsection}{\numberline {4.22.5}5. Faixa etária:}{262}{subsection.4.22.5}% 
+\contentsline {subsection}{\numberline {4.22.6}6. Alocação:}{263}{subsection.4.22.6}% 
+\contentsline {section}{\numberline {4.23}Questão 13f}{263}{section.4.23}% 
+\contentsline {subsection}{\numberline {4.23.1}1. Eu sou:}{264}{subsection.4.23.1}% 
+\contentsline {subsection}{\numberline {4.23.2}2. Área:}{264}{subsection.4.23.2}% 
+\contentsline {subsection}{\numberline {4.23.3}3. Gênero:}{265}{subsection.4.23.3}% 
+\contentsline {subsection}{\numberline {4.23.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{266}{subsection.4.23.4}% 
+\contentsline {subsection}{\numberline {4.23.5}5. Faixa etária:}{267}{subsection.4.23.5}% 
+\contentsline {subsection}{\numberline {4.23.6}6. Alocação:}{268}{subsection.4.23.6}% 
+\contentsline {section}{\numberline {4.24}Questão 15a}{268}{section.4.24}% 
+\contentsline {subsection}{\numberline {4.24.1}1. Eu sou:}{269}{subsection.4.24.1}% 
+\contentsline {subsection}{\numberline {4.24.2}2. Área:}{269}{subsection.4.24.2}% 
+\contentsline {subsection}{\numberline {4.24.3}3. Gênero:}{270}{subsection.4.24.3}% 
+\contentsline {subsection}{\numberline {4.24.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{271}{subsection.4.24.4}% 
+\contentsline {subsection}{\numberline {4.24.5}5. Faixa etária:}{272}{subsection.4.24.5}% 
+\contentsline {subsection}{\numberline {4.24.6}6. Alocação:}{273}{subsection.4.24.6}% 
+\contentsline {section}{\numberline {4.25}Questão 15b}{273}{section.4.25}% 
+\contentsline {subsection}{\numberline {4.25.1}1. Eu sou:}{274}{subsection.4.25.1}% 
+\contentsline {subsection}{\numberline {4.25.2}2. Área:}{274}{subsection.4.25.2}% 
+\contentsline {subsection}{\numberline {4.25.3}3. Gênero:}{275}{subsection.4.25.3}% 
+\contentsline {subsection}{\numberline {4.25.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{276}{subsection.4.25.4}% 
+\contentsline {subsection}{\numberline {4.25.5}5. Faixa etária:}{277}{subsection.4.25.5}% 
+\contentsline {subsection}{\numberline {4.25.6}6. Alocação:}{278}{subsection.4.25.6}% 
+\contentsline {section}{\numberline {4.26}Questão 15c}{278}{section.4.26}% 
+\contentsline {subsection}{\numberline {4.26.1}1. Eu sou:}{279}{subsection.4.26.1}% 
+\contentsline {subsection}{\numberline {4.26.2}2. Área:}{279}{subsection.4.26.2}% 
+\contentsline {subsection}{\numberline {4.26.3}3. Gênero:}{280}{subsection.4.26.3}% 
+\contentsline {subsection}{\numberline {4.26.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{281}{subsection.4.26.4}% 
+\contentsline {subsection}{\numberline {4.26.5}5. Faixa etária:}{282}{subsection.4.26.5}% 
+\contentsline {subsection}{\numberline {4.26.6}6. Alocação:}{283}{subsection.4.26.6}% 
+\contentsline {section}{\numberline {4.27}Questão 15d}{283}{section.4.27}% 
+\contentsline {subsection}{\numberline {4.27.1}1. Eu sou:}{284}{subsection.4.27.1}% 
+\contentsline {subsection}{\numberline {4.27.2}2. Área:}{284}{subsection.4.27.2}% 
+\contentsline {subsection}{\numberline {4.27.3}3. Gênero:}{285}{subsection.4.27.3}% 
+\contentsline {subsection}{\numberline {4.27.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{286}{subsection.4.27.4}% 
+\contentsline {subsection}{\numberline {4.27.5}5. Faixa etária:}{287}{subsection.4.27.5}% 
+\contentsline {subsection}{\numberline {4.27.6}6. Alocação:}{288}{subsection.4.27.6}% 
+\contentsline {section}{\numberline {4.28}Questão 15e}{288}{section.4.28}% 
+\contentsline {subsection}{\numberline {4.28.1}1. Eu sou:}{289}{subsection.4.28.1}% 
+\contentsline {subsection}{\numberline {4.28.2}2. Área:}{289}{subsection.4.28.2}% 
+\contentsline {subsection}{\numberline {4.28.3}3. Gênero:}{290}{subsection.4.28.3}% 
+\contentsline {subsection}{\numberline {4.28.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{291}{subsection.4.28.4}% 
+\contentsline {subsection}{\numberline {4.28.5}5. Faixa etária:}{292}{subsection.4.28.5}% 
+\contentsline {subsection}{\numberline {4.28.6}6. Alocação:}{293}{subsection.4.28.6}% 
+\contentsline {section}{\numberline {4.29}Questão 15f}{293}{section.4.29}% 
+\contentsline {subsection}{\numberline {4.29.1}1. Eu sou:}{294}{subsection.4.29.1}% 
+\contentsline {subsection}{\numberline {4.29.2}2. Área:}{294}{subsection.4.29.2}% 
+\contentsline {subsection}{\numberline {4.29.3}3. Gênero:}{295}{subsection.4.29.3}% 
+\contentsline {subsection}{\numberline {4.29.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{296}{subsection.4.29.4}% 
+\contentsline {subsection}{\numberline {4.29.5}5. Faixa etária:}{297}{subsection.4.29.5}% 
+\contentsline {subsection}{\numberline {4.29.6}6. Alocação:}{298}{subsection.4.29.6}% 
+\contentsline {section}{\numberline {4.30}Questão 16a}{298}{section.4.30}% 
+\contentsline {subsection}{\numberline {4.30.1}1. Eu sou:}{299}{subsection.4.30.1}% 
+\contentsline {subsection}{\numberline {4.30.2}2. Área:}{299}{subsection.4.30.2}% 
+\contentsline {subsection}{\numberline {4.30.3}3. Gênero:}{300}{subsection.4.30.3}% 
+\contentsline {subsection}{\numberline {4.30.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{301}{subsection.4.30.4}% 
+\contentsline {subsection}{\numberline {4.30.5}5. Faixa etária:}{302}{subsection.4.30.5}% 
+\contentsline {subsection}{\numberline {4.30.6}6. Alocação:}{303}{subsection.4.30.6}% 
+\contentsline {section}{\numberline {4.31}Questão 16b}{303}{section.4.31}% 
+\contentsline {subsection}{\numberline {4.31.1}1. Eu sou:}{304}{subsection.4.31.1}% 
+\contentsline {subsection}{\numberline {4.31.2}2. Área:}{304}{subsection.4.31.2}% 
+\contentsline {subsection}{\numberline {4.31.3}3. Gênero:}{305}{subsection.4.31.3}% 
+\contentsline {subsection}{\numberline {4.31.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{306}{subsection.4.31.4}% 
+\contentsline {subsection}{\numberline {4.31.5}5. Faixa etária:}{307}{subsection.4.31.5}% 
+\contentsline {subsection}{\numberline {4.31.6}6. Alocação:}{308}{subsection.4.31.6}% 
+\contentsline {section}{\numberline {4.32}Questão 16c}{308}{section.4.32}% 
+\contentsline {subsection}{\numberline {4.32.1}1. Eu sou:}{309}{subsection.4.32.1}% 
+\contentsline {subsection}{\numberline {4.32.2}2. Área:}{309}{subsection.4.32.2}% 
+\contentsline {subsection}{\numberline {4.32.3}3. Gênero:}{310}{subsection.4.32.3}% 
+\contentsline {subsection}{\numberline {4.32.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{311}{subsection.4.32.4}% 
+\contentsline {subsection}{\numberline {4.32.5}5. Faixa etária:}{312}{subsection.4.32.5}% 
+\contentsline {subsection}{\numberline {4.32.6}6. Alocação:}{313}{subsection.4.32.6}% 
+\contentsline {section}{\numberline {4.33}Questão 16d}{313}{section.4.33}% 
+\contentsline {subsection}{\numberline {4.33.1}1. Eu sou:}{314}{subsection.4.33.1}% 
+\contentsline {subsection}{\numberline {4.33.2}2. Área:}{314}{subsection.4.33.2}% 
+\contentsline {subsection}{\numberline {4.33.3}3. Gênero:}{315}{subsection.4.33.3}% 
+\contentsline {subsection}{\numberline {4.33.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{316}{subsection.4.33.4}% 
+\contentsline {subsection}{\numberline {4.33.5}5. Faixa etária:}{317}{subsection.4.33.5}% 
+\contentsline {subsection}{\numberline {4.33.6}6. Alocação:}{318}{subsection.4.33.6}% 
+\contentsline {section}{\numberline {4.34}Questão 16e}{318}{section.4.34}% 
+\contentsline {subsection}{\numberline {4.34.1}1. Eu sou:}{319}{subsection.4.34.1}% 
+\contentsline {subsection}{\numberline {4.34.2}2. Área:}{319}{subsection.4.34.2}% 
+\contentsline {subsection}{\numberline {4.34.3}3. Gênero:}{320}{subsection.4.34.3}% 
+\contentsline {subsection}{\numberline {4.34.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{321}{subsection.4.34.4}% 
+\contentsline {subsection}{\numberline {4.34.5}5. Faixa etária:}{322}{subsection.4.34.5}% 
+\contentsline {subsection}{\numberline {4.34.6}6. Alocação:}{323}{subsection.4.34.6}% 
+\contentsline {section}{\numberline {4.35}Questão 16f}{323}{section.4.35}% 
+\contentsline {subsection}{\numberline {4.35.1}1. Eu sou:}{324}{subsection.4.35.1}% 
+\contentsline {subsection}{\numberline {4.35.2}2. Área:}{324}{subsection.4.35.2}% 
+\contentsline {subsection}{\numberline {4.35.3}3. Gênero:}{325}{subsection.4.35.3}% 
+\contentsline {subsection}{\numberline {4.35.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{326}{subsection.4.35.4}% 
+\contentsline {subsection}{\numberline {4.35.5}5. Faixa etária:}{327}{subsection.4.35.5}% 
+\contentsline {subsection}{\numberline {4.35.6}6. Alocação:}{328}{subsection.4.35.6}% 
+\contentsline {section}{\numberline {4.36}Questão 17a}{328}{section.4.36}% 
+\contentsline {subsection}{\numberline {4.36.1}1. Eu sou:}{329}{subsection.4.36.1}% 
+\contentsline {subsection}{\numberline {4.36.2}2. Área:}{329}{subsection.4.36.2}% 
+\contentsline {subsection}{\numberline {4.36.3}3. Gênero:}{330}{subsection.4.36.3}% 
+\contentsline {subsection}{\numberline {4.36.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{331}{subsection.4.36.4}% 
+\contentsline {subsection}{\numberline {4.36.5}5. Faixa etária:}{332}{subsection.4.36.5}% 
+\contentsline {subsection}{\numberline {4.36.6}6. Alocação:}{333}{subsection.4.36.6}% 
+\contentsline {section}{\numberline {4.37}Questão 17b}{333}{section.4.37}% 
+\contentsline {subsection}{\numberline {4.37.1}1. Eu sou:}{334}{subsection.4.37.1}% 
+\contentsline {subsection}{\numberline {4.37.2}2. Área:}{334}{subsection.4.37.2}% 
+\contentsline {subsection}{\numberline {4.37.3}3. Gênero:}{335}{subsection.4.37.3}% 
+\contentsline {subsection}{\numberline {4.37.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{336}{subsection.4.37.4}% 
+\contentsline {subsection}{\numberline {4.37.5}5. Faixa etária:}{337}{subsection.4.37.5}% 
+\contentsline {subsection}{\numberline {4.37.6}6. Alocação:}{338}{subsection.4.37.6}% 
+\contentsline {section}{\numberline {4.38}Questão 17c}{338}{section.4.38}% 
+\contentsline {subsection}{\numberline {4.38.1}1. Eu sou:}{339}{subsection.4.38.1}% 
+\contentsline {subsection}{\numberline {4.38.2}2. Área:}{339}{subsection.4.38.2}% 
+\contentsline {subsection}{\numberline {4.38.3}3. Gênero:}{340}{subsection.4.38.3}% 
+\contentsline {subsection}{\numberline {4.38.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{341}{subsection.4.38.4}% 
+\contentsline {subsection}{\numberline {4.38.5}5. Faixa etária:}{342}{subsection.4.38.5}% 
+\contentsline {subsection}{\numberline {4.38.6}6. Alocação:}{343}{subsection.4.38.6}% 
+\contentsline {section}{\numberline {4.39}Questão 17d}{343}{section.4.39}% 
+\contentsline {subsection}{\numberline {4.39.1}1. Eu sou:}{344}{subsection.4.39.1}% 
+\contentsline {subsection}{\numberline {4.39.2}2. Área:}{344}{subsection.4.39.2}% 
+\contentsline {subsection}{\numberline {4.39.3}3. Gênero:}{345}{subsection.4.39.3}% 
+\contentsline {subsection}{\numberline {4.39.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{346}{subsection.4.39.4}% 
+\contentsline {subsection}{\numberline {4.39.5}5. Faixa etária:}{347}{subsection.4.39.5}% 
+\contentsline {subsection}{\numberline {4.39.6}6. Alocação:}{348}{subsection.4.39.6}% 
+\contentsline {section}{\numberline {4.40}Questão 17e}{348}{section.4.40}% 
+\contentsline {subsection}{\numberline {4.40.1}1. Eu sou:}{349}{subsection.4.40.1}% 
+\contentsline {subsection}{\numberline {4.40.2}2. Área:}{349}{subsection.4.40.2}% 
+\contentsline {subsection}{\numberline {4.40.3}3. Gênero:}{350}{subsection.4.40.3}% 
+\contentsline {subsection}{\numberline {4.40.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{351}{subsection.4.40.4}% 
+\contentsline {subsection}{\numberline {4.40.5}5. Faixa etária:}{352}{subsection.4.40.5}% 
+\contentsline {subsection}{\numberline {4.40.6}6. Alocação:}{353}{subsection.4.40.6}% 
+\contentsline {section}{\numberline {4.41}Questão 18a}{353}{section.4.41}% 
+\contentsline {subsection}{\numberline {4.41.1}1. Eu sou:}{354}{subsection.4.41.1}% 
+\contentsline {subsection}{\numberline {4.41.2}2. Área:}{354}{subsection.4.41.2}% 
+\contentsline {subsection}{\numberline {4.41.3}3. Gênero:}{355}{subsection.4.41.3}% 
+\contentsline {subsection}{\numberline {4.41.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{356}{subsection.4.41.4}% 
+\contentsline {subsection}{\numberline {4.41.5}5. Faixa etária:}{357}{subsection.4.41.5}% 
+\contentsline {subsection}{\numberline {4.41.6}6. Alocação:}{358}{subsection.4.41.6}% 
+\contentsline {section}{\numberline {4.42}Questão 18b}{358}{section.4.42}% 
+\contentsline {subsection}{\numberline {4.42.1}1. Eu sou:}{359}{subsection.4.42.1}% 
+\contentsline {subsection}{\numberline {4.42.2}2. Área:}{359}{subsection.4.42.2}% 
+\contentsline {subsection}{\numberline {4.42.3}3. Gênero:}{360}{subsection.4.42.3}% 
+\contentsline {subsection}{\numberline {4.42.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{361}{subsection.4.42.4}% 
+\contentsline {subsection}{\numberline {4.42.5}5. Faixa etária:}{362}{subsection.4.42.5}% 
+\contentsline {subsection}{\numberline {4.42.6}6. Alocação:}{363}{subsection.4.42.6}% 
+\contentsline {section}{\numberline {4.43}Questão 18c}{363}{section.4.43}% 
+\contentsline {subsection}{\numberline {4.43.1}1. Eu sou:}{364}{subsection.4.43.1}% 
+\contentsline {subsection}{\numberline {4.43.2}2. Área:}{364}{subsection.4.43.2}% 
+\contentsline {subsection}{\numberline {4.43.3}3. Gênero:}{365}{subsection.4.43.3}% 
+\contentsline {subsection}{\numberline {4.43.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{366}{subsection.4.43.4}% 
+\contentsline {subsection}{\numberline {4.43.5}5. Faixa etária:}{367}{subsection.4.43.5}% 
+\contentsline {subsection}{\numberline {4.43.6}6. Alocação:}{368}{subsection.4.43.6}% 
+\contentsline {section}{\numberline {4.44}Questão 18d}{368}{section.4.44}% 
+\contentsline {subsection}{\numberline {4.44.1}1. Eu sou:}{369}{subsection.4.44.1}% 
+\contentsline {subsection}{\numberline {4.44.2}2. Área:}{369}{subsection.4.44.2}% 
+\contentsline {subsection}{\numberline {4.44.3}3. Gênero:}{370}{subsection.4.44.3}% 
+\contentsline {subsection}{\numberline {4.44.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{371}{subsection.4.44.4}% 
+\contentsline {subsection}{\numberline {4.44.5}5. Faixa etária:}{372}{subsection.4.44.5}% 
+\contentsline {subsection}{\numberline {4.44.6}6. Alocação:}{373}{subsection.4.44.6}% 
+\contentsline {section}{\numberline {4.45}Questão 18e}{373}{section.4.45}% 
+\contentsline {subsection}{\numberline {4.45.1}1. Eu sou:}{374}{subsection.4.45.1}% 
+\contentsline {subsection}{\numberline {4.45.2}2. Área:}{374}{subsection.4.45.2}% 
+\contentsline {subsection}{\numberline {4.45.3}3. Gênero:}{375}{subsection.4.45.3}% 
+\contentsline {subsection}{\numberline {4.45.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{376}{subsection.4.45.4}% 
+\contentsline {subsection}{\numberline {4.45.5}5. Faixa etária:}{377}{subsection.4.45.5}% 
+\contentsline {subsection}{\numberline {4.45.6}6. Alocação:}{378}{subsection.4.45.6}% 
+\contentsline {section}{\numberline {4.46}Questão 19a}{378}{section.4.46}% 
+\contentsline {subsection}{\numberline {4.46.1}1. Eu sou:}{379}{subsection.4.46.1}% 
+\contentsline {subsection}{\numberline {4.46.2}2. Área:}{379}{subsection.4.46.2}% 
+\contentsline {subsection}{\numberline {4.46.3}3. Gênero:}{380}{subsection.4.46.3}% 
+\contentsline {subsection}{\numberline {4.46.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{381}{subsection.4.46.4}% 
+\contentsline {subsection}{\numberline {4.46.5}5. Faixa etária:}{382}{subsection.4.46.5}% 
+\contentsline {subsection}{\numberline {4.46.6}6. Alocação:}{383}{subsection.4.46.6}% 
+\contentsline {section}{\numberline {4.47}Questão 19b}{383}{section.4.47}% 
+\contentsline {subsection}{\numberline {4.47.1}1. Eu sou:}{384}{subsection.4.47.1}% 
+\contentsline {subsection}{\numberline {4.47.2}2. Área:}{384}{subsection.4.47.2}% 
+\contentsline {subsection}{\numberline {4.47.3}3. Gênero:}{385}{subsection.4.47.3}% 
+\contentsline {subsection}{\numberline {4.47.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{386}{subsection.4.47.4}% 
+\contentsline {subsection}{\numberline {4.47.5}5. Faixa etária:}{387}{subsection.4.47.5}% 
+\contentsline {subsection}{\numberline {4.47.6}6. Alocação:}{388}{subsection.4.47.6}% 
+\contentsline {section}{\numberline {4.48}Questão 19c}{388}{section.4.48}% 
+\contentsline {subsection}{\numberline {4.48.1}1. Eu sou:}{389}{subsection.4.48.1}% 
+\contentsline {subsection}{\numberline {4.48.2}2. Área:}{389}{subsection.4.48.2}% 
+\contentsline {subsection}{\numberline {4.48.3}3. Gênero:}{390}{subsection.4.48.3}% 
+\contentsline {subsection}{\numberline {4.48.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{391}{subsection.4.48.4}% 
+\contentsline {subsection}{\numberline {4.48.5}5. Faixa etária:}{392}{subsection.4.48.5}% 
+\contentsline {subsection}{\numberline {4.48.6}6. Alocação:}{393}{subsection.4.48.6}% 
+\contentsline {section}{\numberline {4.49}Questão 19d}{393}{section.4.49}% 
+\contentsline {subsection}{\numberline {4.49.1}1. Eu sou:}{394}{subsection.4.49.1}% 
+\contentsline {subsection}{\numberline {4.49.2}2. Área:}{394}{subsection.4.49.2}% 
+\contentsline {subsection}{\numberline {4.49.3}3. Gênero:}{395}{subsection.4.49.3}% 
+\contentsline {subsection}{\numberline {4.49.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{396}{subsection.4.49.4}% 
+\contentsline {subsection}{\numberline {4.49.5}5. Faixa etária:}{397}{subsection.4.49.5}% 
+\contentsline {subsection}{\numberline {4.49.6}6. Alocação:}{398}{subsection.4.49.6}% 
+\contentsline {section}{\numberline {4.50}Questão 19e}{398}{section.4.50}% 
+\contentsline {subsection}{\numberline {4.50.1}1. Eu sou:}{399}{subsection.4.50.1}% 
+\contentsline {subsection}{\numberline {4.50.2}2. Área:}{399}{subsection.4.50.2}% 
+\contentsline {subsection}{\numberline {4.50.3}3. Gênero:}{400}{subsection.4.50.3}% 
+\contentsline {subsection}{\numberline {4.50.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{401}{subsection.4.50.4}% 
+\contentsline {subsection}{\numberline {4.50.5}5. Faixa etária:}{402}{subsection.4.50.5}% 
+\contentsline {subsection}{\numberline {4.50.6}6. Alocação:}{403}{subsection.4.50.6}% 
+\contentsline {section}{\numberline {4.51}Questão 19f}{403}{section.4.51}% 
+\contentsline {subsection}{\numberline {4.51.1}1. Eu sou:}{404}{subsection.4.51.1}% 
+\contentsline {subsection}{\numberline {4.51.2}2. Área:}{404}{subsection.4.51.2}% 
+\contentsline {subsection}{\numberline {4.51.3}3. Gênero:}{405}{subsection.4.51.3}% 
+\contentsline {subsection}{\numberline {4.51.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{406}{subsection.4.51.4}% 
+\contentsline {subsection}{\numberline {4.51.5}5. Faixa etária:}{407}{subsection.4.51.5}% 
+\contentsline {subsection}{\numberline {4.51.6}6. Alocação:}{408}{subsection.4.51.6}% 
+\contentsline {section}{\numberline {4.52}Questão 19g}{408}{section.4.52}% 
+\contentsline {subsection}{\numberline {4.52.1}1. Eu sou:}{409}{subsection.4.52.1}% 
+\contentsline {subsection}{\numberline {4.52.2}2. Área:}{409}{subsection.4.52.2}% 
+\contentsline {subsection}{\numberline {4.52.3}3. Gênero:}{410}{subsection.4.52.3}% 
+\contentsline {subsection}{\numberline {4.52.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{411}{subsection.4.52.4}% 
+\contentsline {subsection}{\numberline {4.52.5}5. Faixa etária:}{412}{subsection.4.52.5}% 
+\contentsline {subsection}{\numberline {4.52.6}6. Alocação:}{413}{subsection.4.52.6}% 
+\contentsline {section}{\numberline {4.53}Questão 19h}{413}{section.4.53}% 
+\contentsline {subsection}{\numberline {4.53.1}1. Eu sou:}{414}{subsection.4.53.1}% 
+\contentsline {subsection}{\numberline {4.53.2}2. Área:}{414}{subsection.4.53.2}% 
+\contentsline {subsection}{\numberline {4.53.3}3. Gênero:}{415}{subsection.4.53.3}% 
+\contentsline {subsection}{\numberline {4.53.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{416}{subsection.4.53.4}% 
+\contentsline {subsection}{\numberline {4.53.5}5. Faixa etária:}{417}{subsection.4.53.5}% 
+\contentsline {subsection}{\numberline {4.53.6}6. Alocação:}{418}{subsection.4.53.6}% 
+\contentsline {section}{\numberline {4.54}Questão 20a}{418}{section.4.54}% 
+\contentsline {subsection}{\numberline {4.54.1}1. Eu sou:}{419}{subsection.4.54.1}% 
+\contentsline {subsection}{\numberline {4.54.2}2. Área:}{419}{subsection.4.54.2}% 
+\contentsline {subsection}{\numberline {4.54.3}3. Gênero:}{420}{subsection.4.54.3}% 
+\contentsline {subsection}{\numberline {4.54.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{421}{subsection.4.54.4}% 
+\contentsline {subsection}{\numberline {4.54.5}5. Faixa etária:}{422}{subsection.4.54.5}% 
+\contentsline {subsection}{\numberline {4.54.6}6. Alocação:}{423}{subsection.4.54.6}% 
+\contentsline {section}{\numberline {4.55}Questão 20b}{423}{section.4.55}% 
+\contentsline {subsection}{\numberline {4.55.1}1. Eu sou:}{424}{subsection.4.55.1}% 
+\contentsline {subsection}{\numberline {4.55.2}2. Área:}{424}{subsection.4.55.2}% 
+\contentsline {subsection}{\numberline {4.55.3}3. Gênero:}{425}{subsection.4.55.3}% 
+\contentsline {subsection}{\numberline {4.55.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{426}{subsection.4.55.4}% 
+\contentsline {subsection}{\numberline {4.55.5}5. Faixa etária:}{427}{subsection.4.55.5}% 
+\contentsline {subsection}{\numberline {4.55.6}6. Alocação:}{428}{subsection.4.55.6}% 
+\contentsline {section}{\numberline {4.56}Questão 20c}{428}{section.4.56}% 
+\contentsline {subsection}{\numberline {4.56.1}1. Eu sou:}{429}{subsection.4.56.1}% 
+\contentsline {subsection}{\numberline {4.56.2}2. Área:}{429}{subsection.4.56.2}% 
+\contentsline {subsection}{\numberline {4.56.3}3. Gênero:}{430}{subsection.4.56.3}% 
+\contentsline {subsection}{\numberline {4.56.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{431}{subsection.4.56.4}% 
+\contentsline {subsection}{\numberline {4.56.5}5. Faixa etária:}{432}{subsection.4.56.5}% 
+\contentsline {subsection}{\numberline {4.56.6}6. Alocação:}{433}{subsection.4.56.6}% 
+\contentsline {section}{\numberline {4.57}Questão 20d}{433}{section.4.57}% 
+\contentsline {subsection}{\numberline {4.57.1}1. Eu sou:}{434}{subsection.4.57.1}% 
+\contentsline {subsection}{\numberline {4.57.2}2. Área:}{434}{subsection.4.57.2}% 
+\contentsline {subsection}{\numberline {4.57.3}3. Gênero:}{435}{subsection.4.57.3}% 
+\contentsline {subsection}{\numberline {4.57.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{436}{subsection.4.57.4}% 
+\contentsline {subsection}{\numberline {4.57.5}5. Faixa etária:}{437}{subsection.4.57.5}% 
+\contentsline {subsection}{\numberline {4.57.6}6. Alocação:}{438}{subsection.4.57.6}% 
+\contentsline {section}{\numberline {4.58}Questão 20e}{438}{section.4.58}% 
+\contentsline {subsection}{\numberline {4.58.1}1. Eu sou:}{439}{subsection.4.58.1}% 
+\contentsline {subsection}{\numberline {4.58.2}2. Área:}{439}{subsection.4.58.2}% 
+\contentsline {subsection}{\numberline {4.58.3}3. Gênero:}{440}{subsection.4.58.3}% 
+\contentsline {subsection}{\numberline {4.58.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{441}{subsection.4.58.4}% 
+\contentsline {subsection}{\numberline {4.58.5}5. Faixa etária:}{442}{subsection.4.58.5}% 
+\contentsline {subsection}{\numberline {4.58.6}6. Alocação:}{443}{subsection.4.58.6}% 
+\contentsline {section}{\numberline {4.59}Questão 20f}{443}{section.4.59}% 
+\contentsline {subsection}{\numberline {4.59.1}1. Eu sou:}{444}{subsection.4.59.1}% 
+\contentsline {subsection}{\numberline {4.59.2}2. Área:}{444}{subsection.4.59.2}% 
+\contentsline {subsection}{\numberline {4.59.3}3. Gênero:}{445}{subsection.4.59.3}% 
+\contentsline {subsection}{\numberline {4.59.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{446}{subsection.4.59.4}% 
+\contentsline {subsection}{\numberline {4.59.5}5. Faixa etária:}{447}{subsection.4.59.5}% 
+\contentsline {subsection}{\numberline {4.59.6}6. Alocação:}{448}{subsection.4.59.6}% 
+\contentsline {section}{\numberline {4.60}Questão 20g}{448}{section.4.60}% 
+\contentsline {subsection}{\numberline {4.60.1}1. Eu sou:}{449}{subsection.4.60.1}% 
+\contentsline {subsection}{\numberline {4.60.2}2. Área:}{449}{subsection.4.60.2}% 
+\contentsline {subsection}{\numberline {4.60.3}3. Gênero:}{450}{subsection.4.60.3}% 
+\contentsline {subsection}{\numberline {4.60.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{451}{subsection.4.60.4}% 
+\contentsline {subsection}{\numberline {4.60.5}5. Faixa etária:}{452}{subsection.4.60.5}% 
+\contentsline {subsection}{\numberline {4.60.6}6. Alocação:}{453}{subsection.4.60.6}% 
+\contentsline {section}{\numberline {4.61}Questão 20h}{453}{section.4.61}% 
+\contentsline {subsection}{\numberline {4.61.1}1. Eu sou:}{454}{subsection.4.61.1}% 
+\contentsline {subsection}{\numberline {4.61.2}2. Área:}{454}{subsection.4.61.2}% 
+\contentsline {subsection}{\numberline {4.61.3}3. Gênero:}{455}{subsection.4.61.3}% 
+\contentsline {subsection}{\numberline {4.61.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{456}{subsection.4.61.4}% 
+\contentsline {subsection}{\numberline {4.61.5}5. Faixa etária:}{457}{subsection.4.61.5}% 
+\contentsline {subsection}{\numberline {4.61.6}6. Alocação:}{458}{subsection.4.61.6}% 
+\contentsline {section}{\numberline {4.62}Questão 21a}{458}{section.4.62}% 
+\contentsline {subsection}{\numberline {4.62.1}1. Eu sou:}{459}{subsection.4.62.1}% 
+\contentsline {subsection}{\numberline {4.62.2}2. Área:}{459}{subsection.4.62.2}% 
+\contentsline {subsection}{\numberline {4.62.3}3. Gênero:}{460}{subsection.4.62.3}% 
+\contentsline {subsection}{\numberline {4.62.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{461}{subsection.4.62.4}% 
+\contentsline {subsection}{\numberline {4.62.5}5. Faixa etária:}{462}{subsection.4.62.5}% 
+\contentsline {subsection}{\numberline {4.62.6}6. Alocação:}{463}{subsection.4.62.6}% 
+\contentsline {section}{\numberline {4.63}Questão 21b}{463}{section.4.63}% 
+\contentsline {subsection}{\numberline {4.63.1}1. Eu sou:}{464}{subsection.4.63.1}% 
+\contentsline {subsection}{\numberline {4.63.2}2. Área:}{464}{subsection.4.63.2}% 
+\contentsline {subsection}{\numberline {4.63.3}3. Gênero:}{465}{subsection.4.63.3}% 
+\contentsline {subsection}{\numberline {4.63.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{466}{subsection.4.63.4}% 
+\contentsline {subsection}{\numberline {4.63.5}5. Faixa etária:}{467}{subsection.4.63.5}% 
+\contentsline {subsection}{\numberline {4.63.6}6. Alocação:}{468}{subsection.4.63.6}% 
+\contentsline {section}{\numberline {4.64}Questão 21c}{468}{section.4.64}% 
+\contentsline {subsection}{\numberline {4.64.1}1. Eu sou:}{469}{subsection.4.64.1}% 
+\contentsline {subsection}{\numberline {4.64.2}2. Área:}{469}{subsection.4.64.2}% 
+\contentsline {subsection}{\numberline {4.64.3}3. Gênero:}{470}{subsection.4.64.3}% 
+\contentsline {subsection}{\numberline {4.64.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{471}{subsection.4.64.4}% 
+\contentsline {subsection}{\numberline {4.64.5}5. Faixa etária:}{472}{subsection.4.64.5}% 
+\contentsline {subsection}{\numberline {4.64.6}6. Alocação:}{473}{subsection.4.64.6}% 
+\contentsline {section}{\numberline {4.65}Questão 21d}{473}{section.4.65}% 
+\contentsline {subsection}{\numberline {4.65.1}1. Eu sou:}{474}{subsection.4.65.1}% 
+\contentsline {subsection}{\numberline {4.65.2}2. Área:}{474}{subsection.4.65.2}% 
+\contentsline {subsection}{\numberline {4.65.3}3. Gênero:}{475}{subsection.4.65.3}% 
+\contentsline {subsection}{\numberline {4.65.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{476}{subsection.4.65.4}% 
+\contentsline {subsection}{\numberline {4.65.5}5. Faixa etária:}{477}{subsection.4.65.5}% 
+\contentsline {subsection}{\numberline {4.65.6}6. Alocação:}{478}{subsection.4.65.6}% 
+\contentsline {section}{\numberline {4.66}Questão 21e}{478}{section.4.66}% 
+\contentsline {subsection}{\numberline {4.66.1}1. Eu sou:}{479}{subsection.4.66.1}% 
+\contentsline {subsection}{\numberline {4.66.2}2. Área:}{479}{subsection.4.66.2}% 
+\contentsline {subsection}{\numberline {4.66.3}3. Gênero:}{480}{subsection.4.66.3}% 
+\contentsline {subsection}{\numberline {4.66.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{481}{subsection.4.66.4}% 
+\contentsline {subsection}{\numberline {4.66.5}5. Faixa etária:}{482}{subsection.4.66.5}% 
+\contentsline {subsection}{\numberline {4.66.6}6. Alocação:}{483}{subsection.4.66.6}% 
+\contentsline {section}{\numberline {4.67}Questão 21f}{483}{section.4.67}% 
+\contentsline {subsection}{\numberline {4.67.1}1. Eu sou:}{484}{subsection.4.67.1}% 
+\contentsline {subsection}{\numberline {4.67.2}2. Área:}{484}{subsection.4.67.2}% 
+\contentsline {subsection}{\numberline {4.67.3}3. Gênero:}{485}{subsection.4.67.3}% 
+\contentsline {subsection}{\numberline {4.67.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{486}{subsection.4.67.4}% 
+\contentsline {subsection}{\numberline {4.67.5}5. Faixa etária:}{487}{subsection.4.67.5}% 
+\contentsline {subsection}{\numberline {4.67.6}6. Alocação:}{488}{subsection.4.67.6}% 
+\contentsline {section}{\numberline {4.68}Questão 21g}{488}{section.4.68}% 
+\contentsline {subsection}{\numberline {4.68.1}1. Eu sou:}{489}{subsection.4.68.1}% 
+\contentsline {subsection}{\numberline {4.68.2}2. Área:}{489}{subsection.4.68.2}% 
+\contentsline {subsection}{\numberline {4.68.3}3. Gênero:}{490}{subsection.4.68.3}% 
+\contentsline {subsection}{\numberline {4.68.4}4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}{491}{subsection.4.68.4}% 
+\contentsline {subsection}{\numberline {4.68.5}5. Faixa etária:}{492}{subsection.4.68.5}% 
+\contentsline {subsection}{\numberline {4.68.6}6. Alocação:}{493}{subsection.4.68.6}% 
+\contentsline {chapter}{\numberline {5}Construtos}{495}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}Descredibilidade e Injustiça}{496}{section.5.1}% 
+\contentsline {subsection}{\numberline {5.1.1}Análise Fatorial}{497}{subsection.5.1.1}% 
+\contentsline {section}{\numberline {5.2}Despreparo da Liderança}{499}{section.5.2}% 
+\contentsline {subsection}{\numberline {5.2.1}Análise Fatorial}{500}{subsection.5.2.1}% 
+\contentsline {section}{\numberline {5.3}Baixo Preparo da Empresa Para Exercer Função}{503}{section.5.3}% 
+\contentsline {subsection}{\numberline {5.3.1}Análise Fatorial}{503}{subsection.5.3.1}% 
+\contentsline {section}{\numberline {5.4}Planejamento e Método}{505}{section.5.4}% 
+\contentsline {subsection}{\numberline {5.4.1}Análise Fatorial}{505}{subsection.5.4.1}% 
+\contentsline {section}{\numberline {5.5}Imediatismo}{507}{section.5.5}% 
+\contentsline {subsection}{\numberline {5.5.1}Análise Fatorial}{507}{subsection.5.5.1}% 
+\contentsline {section}{\numberline {5.6}Ausência de Meritocracia}{508}{section.5.6}% 
+\contentsline {subsection}{\numberline {5.6.1}Análise Fatorial}{509}{subsection.5.6.1}% 
+\contentsline {section}{\numberline {5.7}Proximidade da Liderança}{510}{section.5.7}% 
+\contentsline {subsection}{\numberline {5.7.1}Análise Fatorial}{511}{subsection.5.7.1}% 
+\contentsline {section}{\numberline {5.8}Visão do Propósito Comum}{513}{section.5.8}% 
+\contentsline {subsection}{\numberline {5.8.1}Análise Fatorial}{513}{subsection.5.8.1}% 
+\contentsline {section}{\numberline {5.9}Colaboração}{515}{section.5.9}% 
+\contentsline {subsection}{\numberline {5.9.1}Análise Fatorial}{515}{subsection.5.9.1}% 
+\contentsline {section}{\numberline {5.10}Ambiente Leve e Flexibilidade}{517}{section.5.10}% 
+\contentsline {subsection}{\numberline {5.10.1}Análise Fatorial}{517}{subsection.5.10.1}% 
+\contentsline {section}{\numberline {5.11}Liderança Sênior}{519}{section.5.11}% 
+\contentsline {subsection}{\numberline {5.11.1}Análise Fatorial}{520}{subsection.5.11.1}% 
+\contentsline {section}{\numberline {5.12}Inovação}{522}{section.5.12}% 
+\contentsline {subsection}{\numberline {5.12.1}Análise Fatorial}{522}{subsection.5.12.1}% 
+\contentsline {chapter}{\numberline {6}Associação entre Construtos e Cortes}{525}{chapter.6}% 
+\contentsline {section}{\numberline {6.1}Resumo}{525}{section.6.1}% 
+\contentsline {section}{\numberline {6.2}Descredibilidade e Injustiça I}{526}{section.6.2}% 
+\contentsline {subsection}{\numberline {6.2.1}Estatísticas Descritivas}{527}{subsection.6.2.1}% 
+\contentsline {subsection}{\numberline {6.2.2}Testes de Hipótese}{529}{subsection.6.2.2}% 
+\contentsline {section}{\numberline {6.3}Descredibilidade e Injustiça II}{530}{section.6.3}% 
+\contentsline {subsection}{\numberline {6.3.1}Estatísticas Descritivas}{530}{subsection.6.3.1}% 
+\contentsline {subsection}{\numberline {6.3.2}Testes de Hipótese}{532}{subsection.6.3.2}% 
+\contentsline {section}{\numberline {6.4}Despreparo da Liderança I}{533}{section.6.4}% 
+\contentsline {subsection}{\numberline {6.4.1}Estatísticas Descritivas}{533}{subsection.6.4.1}% 
+\contentsline {subsection}{\numberline {6.4.2}Testes de Hipótese}{534}{subsection.6.4.2}% 
+\contentsline {section}{\numberline {6.5}Despreparo da Liderança II}{535}{section.6.5}% 
+\contentsline {subsection}{\numberline {6.5.1}Estatísticas Descritivas}{535}{subsection.6.5.1}% 
+\contentsline {subsection}{\numberline {6.5.2}Testes de Hipótese}{536}{subsection.6.5.2}% 
+\contentsline {section}{\numberline {6.6}Baixo Preparo da Empresa Para Exercer Função}{537}{section.6.6}% 
+\contentsline {subsection}{\numberline {6.6.1}Estatísticas Descritivas}{537}{subsection.6.6.1}% 
+\contentsline {subsection}{\numberline {6.6.2}Testes de Hipótese}{540}{subsection.6.6.2}% 
+\contentsline {section}{\numberline {6.7}Planejamento e Método}{541}{section.6.7}% 
+\contentsline {subsection}{\numberline {6.7.1}Estatísticas Descritivas}{541}{subsection.6.7.1}% 
+\contentsline {subsection}{\numberline {6.7.2}Testes de Hipótese}{543}{subsection.6.7.2}% 
+\contentsline {section}{\numberline {6.8}Ausência de Meritocracia}{544}{section.6.8}% 
+\contentsline {subsection}{\numberline {6.8.1}Estatísticas Descritivas}{544}{subsection.6.8.1}% 
+\contentsline {subsection}{\numberline {6.8.2}Testes de Hipótese}{546}{subsection.6.8.2}% 
+\contentsline {section}{\numberline {6.9}Proximidade da Liderança I}{547}{section.6.9}% 
+\contentsline {subsection}{\numberline {6.9.1}Estatísticas Descritivas}{547}{subsection.6.9.1}% 
+\contentsline {subsection}{\numberline {6.9.2}Testes de Hipótese}{549}{subsection.6.9.2}% 
+\contentsline {section}{\numberline {6.10}Proximidade da Liderança II}{550}{section.6.10}% 
+\contentsline {subsection}{\numberline {6.10.1}Estatísticas Descritivas}{550}{subsection.6.10.1}% 
+\contentsline {subsection}{\numberline {6.10.2}Testes de Hipótese}{551}{subsection.6.10.2}% 
+\contentsline {section}{\numberline {6.11}Visão do Propósito Comum}{552}{section.6.11}% 
+\contentsline {subsection}{\numberline {6.11.1}Estatísticas Descritivas}{552}{subsection.6.11.1}% 
+\contentsline {subsection}{\numberline {6.11.2}Testes de Hipótese}{553}{subsection.6.11.2}% 
+\contentsline {section}{\numberline {6.12}Colaboração}{554}{section.6.12}% 
+\contentsline {subsection}{\numberline {6.12.1}Estatísticas Descritivas}{554}{subsection.6.12.1}% 
+\contentsline {subsection}{\numberline {6.12.2}Testes de Hipótese}{556}{subsection.6.12.2}% 
+\contentsline {section}{\numberline {6.13}Ambiente Leve e Flexibilidade}{557}{section.6.13}% 
+\contentsline {subsection}{\numberline {6.13.1}Estatísticas Descritivas}{557}{subsection.6.13.1}% 
+\contentsline {subsection}{\numberline {6.13.2}Testes de Hipótese}{560}{subsection.6.13.2}% 
+\contentsline {section}{\numberline {6.14}Liderança Sênior}{561}{section.6.14}% 
+\contentsline {subsection}{\numberline {6.14.1}Estatísticas Descritivas}{561}{subsection.6.14.1}% 
+\contentsline {subsection}{\numberline {6.14.2}Testes de Hipótese}{562}{subsection.6.14.2}% 
+\contentsline {section}{\numberline {6.15}Inovação I}{563}{section.6.15}% 
+\contentsline {subsection}{\numberline {6.15.1}Estatísticas Descritivas}{563}{subsection.6.15.1}% 
+\contentsline {subsection}{\numberline {6.15.2}Testes de Hipótese}{564}{subsection.6.15.2}% 
+\contentsline {section}{\numberline {6.16}Inovação II}{565}{section.6.16}% 
+\contentsline {subsection}{\numberline {6.16.1}Estatísticas Descritivas}{565}{subsection.6.16.1}% 
+\contentsline {subsection}{\numberline {6.16.2}Testes de Hipótese}{566}{subsection.6.16.2}% 
+\contentsline {part}{II\hspace {1em}Clientes}{567}{part.2}% 
+\contentsline {chapter}{\numberline {7}Descritivas das Questões}{569}{chapter.7}% 
+\contentsline {section}{\numberline {7.1}Tempo de Clientela}{569}{section.7.1}% 
+\contentsline {section}{\numberline {7.2}Questões Likert}{570}{section.7.2}% 
+\contentsline {section}{\numberline {7.3}Questão aberta}{570}{section.7.3}% 

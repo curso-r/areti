@@ -1,0 +1,72 @@
+
+## {fator_texto}
+
+**Hipótese:** A percepção de {fator_texto} pode ser diferente entre alguns perfis.
+
+**Conclusão:** 
+
+### Estatísticas Descritivas
+
+```{{r {fator_nome}_c, fig.height=4, fig.width= 8}}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = {fator_nome},
+             y = x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics, 
+             colour = x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics, 
+             fill = x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\n{fator_texto}")
+```
+
+```{{r {fator_nome}_a}}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean({fator_nome}, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd({fator_nome}, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min({fator_nome}, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile({fator_nome}, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile({fator_nome}, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile({fator_nome}, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max({fator_nome}, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable(caption = "Medidas Resumo do Score de '{fator_texto}'") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 14, 
+    fixed_thead = TRUE
+  ) 
+```
+
+### Testes de Hipótese
+
+```{{r {fator_nome}_b}}
+fit_hipotese <- glm(
+  {fator_nome} ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  {fator_nome} ~ 1 
+  # + x1_eu_sou 
+  # + x2_area 
+  # + x3_genero 
+  + x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+sjPlot::tab_model(
+  fit_hipotese, 
+  fit_reduzido,
+  CSS = list(`margin-left` = "auto", `margin-right` = "auto", `font-size` = "small")
+)
+```

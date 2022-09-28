@@ -1,0 +1,42 @@
+
+
+```{{r}}
+tidyr::crossing(
+  papel_das_variaveis %>% 
+    filter(!positiva_ou_negativa %in% "não likert") %>% 
+    mutate(
+      ordem_das_variaveis = as.numeric(fct_inorder(variavel_nome))
+    ) %>%
+    select(
+      variavel_codigo_likert = variavel_codigo, 
+      variavel_texto,
+      variavel_nome_likert = variavel_nome
+    ),
+  
+  papel_das_variaveis %>% 
+    filter(construto %in% 'corte') %>% 
+    select(
+      Corte = variavel_texto,
+      variavel_nome_corte = variavel_nome
+    )
+) %>%
+  mutate(
+    teste_qui_quadrado = map2(variavel_nome_likert, variavel_nome_corte, teste_chisq),
+    `Questão` = glue::glue("<a href='#questao-{{variavel_codigo_likert}}'>{{variavel_texto}}</a>")
+  ) %>%
+  unnest %>%
+  mutate(
+    `Conclusão` = if_else(p_value < 0.05, '<span class="badge badge-default">Diferentes</span>', '<span class="badge badge-secondary">Iguais</span>'),
+    p_value = scales::pvalue(p_value, 0.05, decimal.mark = ",")
+  ) %>%
+  select(
+    `Código` = variavel_codigo_likert,
+    `Questão`,
+    `Corte`,
+    `Valor-p` = p_value,
+    `Conclusão`
+  ) %>%
+  DT::datatable(class = c("display", "compact", "hover"), rownames = FALSE, escape = FALSE, filter = "top") %>%
+  DT::formatStyle(columns = 1:5, fontSize = '70%')
+  
+```

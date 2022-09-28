@@ -1,0 +1,151 @@
+# Questões versus Cortes
+
+
+```{{r setttup_header, echo=FALSE}}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.width = 12
+)
+```
+
+```{{r}}
+library(knitr)
+library(JLutils)
+library(kableExtra)
+library(ggplot2)
+library(ggrepel)
+library(sjPlot)
+library(infer)
+library(tidyverse)
+
+
+#
+eh_likert <- function(x) {{
+  any(x %in% categs_likert_ordenados)
+}}
+
+#
+sumariza_uma_likert <- function(likert, corte) {{
+
+  categs_likert_ordenados <- c(
+    "Discordo totalmente"
+    ,"Discordo parcialmente"
+    ,"Não concordo nem discordo"
+    ,"Concordo parcialmente"
+    ,"Concordo totalmente"
+  )
+  
+  suppressWarnings(
+    df <- colaboradores %>%
+    tidyr::gather(question, response, !!sym(likert)) %>%  
+    dplyr::filter(response %in% categs_likert_ordenados) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename(
+      group = !!sym(corte)
+    ) %>%
+    dplyr::group_by(group) %>%
+    dplyr::mutate(
+      count_group = length(group)
+    ) %>%
+    dplyr::group_by(question, group, response) %>%
+    dplyr::summarise(
+      count_group = first(count_group),
+      count = length(group)
+    ) %>%
+    dplyr::group_by(question, group) %>%
+    dplyr::mutate(
+      group_n = glue::glue("{{group}} ({{sum(count)}})"),
+      p = count/sum(count),
+      p_lbl = percent(p, 0.1, decimal.mark = ","),
+      p_lbl = if_else(p < 0.041, "", p_lbl)
+    ) %>%
+    dplyr::select(-count_group) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      count_concordo_totalmente = dplyr::if_else(response %in% "Concordo totalmente", .$p, 0.0),
+      response = fct_relevel(response, !!rev(categs_likert_ordenados))
+    ) %>%
+    dplyr::left_join(papel_das_variaveis %>% dplyr::select(question = variavel_nome, variavel_texto) %>% dplyr::distinct(), by = "question") %>%
+    dplyr::mutate(
+      variavel_texto = str_wrap(variavel_texto, width = 40)
+    )
+  )
+  
+  df
+}}
+
+#
+grafico_uma_likert <- function(colaboradores_sumario, titulo = "") {{
+  
+  colaboradores_sumario %>%
+    dplyr::filter(!is.na(response)) %>%
+    ggplot(aes(x = group_n, y = p, fill = response)) +
+    geom_col(position = "stack") +
+    geom_label(
+      aes(label = p_lbl), 
+      position = position_stack(vjust = .5), 
+      colour = "white", 
+      fontface = "bold", 
+      label.size = 0
+    ) +
+    coord_flip() +
+    scale_fill_manual(values = rev(c("#CA0020", "#F4A582", "#979797", "#92C5DE", "#0571B0"))) + 
+    theme_minimal(16, base_family = "serif") +
+    theme(legend.position="top",
+          axis.text.y = element_text(hjust = 0),
+          strip.text.y = element_text(angle = 180, hjust = 0),
+          strip.placement = "outside"
+    ) +
+    guides(fill = guide_legend(nrow = 2, byrow = FALSE)) +
+    labs(fill = "Resposta:", x = "", y = "") +
+    scale_y_continuous(labels = scales::percent_format(decimal.mark = ","))+
+    scale_x_discrete(labels = partial(str_wrap, width = 40)) +
+    ggtitle(titulo)
+}}
+
+#
+tabelar <- function(likert, corte) {{
+  colaboradores %>%
+    mutate(
+      questao = fct_explicit_na(!!sym(likert)),
+      corte = fct_explicit_na(!!sym(corte))
+    ) %>%
+    dplyr::count(questao, corte)
+}}
+
+teste_chisq <- function(likert, corte) {{
+  suppressWarnings(
+    colaboradores %>%
+    chisq_test(as.formula(glue::glue("{{likert}} ~ {{corte}}")))
+  )
+}}
+
+#
+sjxtab <- function(likert, corte) {{
+  var_labels <- papel_das_variaveis %>% 
+    filter(variavel_nome %in% c(likert, corte)) %>% 
+    pluck("variavel_texto")
+  
+  df <- colaboradores %>% 
+    select(likert = !!sym(likert), corte = !!sym(corte))
+  
+  sjt.xtab(df$likert, df$corte, statistics = c("fisher"), wrap.labels = 54, var.labels = var_labels, encoding = "utf-8")$knitr
+}}
+```
+
+
+```{{r}}
+colaboradores <- readRDS("C:/Users/ap_da/OneDrive/Documents/areti/data/colaboradores.rds")
+construtos <- readxl::read_xlsx("C:/Users/ap_da/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "construtos")
+variaveis <- readxl::read_xlsx("C:/Users/ap_da/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "variaveis")
+papel_das_variaveis <- construtos %>% 
+  select(variavel_codigo, construto) %>%
+  distinct(variavel_codigo, .keep_all = TRUE) %>%
+  left_join(variaveis) %>%
+  dplyr::mutate(
+    variavel_nome = variavel_nome %>% stringr::str_replace_all('\"', '')
+  )
+```

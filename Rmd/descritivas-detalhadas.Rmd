@@ -1,0 +1,4710 @@
+---
+title: "Untitled"
+output:
+  pdf_document: default
+  html_document: default
+---
+# Questões versus Cortes
+
+
+```{r settaatup_header, echo=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.width = 12
+)
+```
+
+```{r}
+library(knitr)
+library(JLutils)
+library(kableExtra)
+library(ggplot2)
+library(ggrepel)
+library(epitab)
+library(sjPlot)
+library(infer)
+library(tidyverse)
+
+
+#
+eh_likert <- function(x) {
+  any(x %in% categs_likert_ordenados)
+}
+
+
+print.contintab <- function(x, ...) {
+  kable(x, "latex") %>% kable_styling(font_size = 6)
+}
+
+
+#
+sumariza_uma_likert <- function(likert, corte) {
+
+  categs_likert_ordenados <- c(
+    "Discordo totalmente"
+    ,"Discordo parcialmente"
+    ,"Não concordo nem discordo"
+    ,"Concordo parcialmente"
+    ,"Concordo totalmente"
+  )
+  
+  suppressWarnings(
+    df <- colaboradores %>%
+    tidyr::gather(question, response, !!sym(likert)) %>%  
+    dplyr::filter(response %in% categs_likert_ordenados) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename(
+      group = !!sym(corte)
+    ) %>%
+    dplyr::group_by(group) %>%
+    dplyr::mutate(
+      count_group = length(group)
+    ) %>%
+    dplyr::group_by(question, group, response) %>%
+    dplyr::summarise(
+      count_group = first(count_group),
+      count = length(group)
+    ) %>%
+    dplyr::group_by(question, group) %>%
+    dplyr::mutate(
+      group_n = group, #glue::glue("{group} ({sum(count)})"),
+      p = count/sum(count),
+      p_lbl = scales::percent(p, 0.1, decimal.mark = ","),
+      p_lbl = if_else(p < 0.015, "", p_lbl)
+    ) %>%
+    dplyr::select(-count_group) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      count_concordo_totalmente = dplyr::if_else(response %in% "Concordo totalmente", .$p, 0.0),
+      response = fct_relevel(response, !!rev(categs_likert_ordenados))
+    ) %>%
+    dplyr::left_join(papel_das_variaveis %>% dplyr::select(question = variavel_nome, variavel_texto) %>% dplyr::distinct(), by = "question") %>%
+    dplyr::mutate(
+      variavel_texto = str_wrap(variavel_texto, width = 40)
+    )
+  )
+  
+  df
+}
+
+#
+grafico_uma_likert <- function(colaboradores_sumario, titulo = "") {
+  
+  colaboradores_sumario %>%
+    dplyr::filter(!is.na(response)) %>%
+    ggplot(aes(x = group_n, y = p, fill = response)) +
+    geom_col(position = "stack") +
+    geom_label(
+      aes(label = p_lbl), 
+      position = position_stack(vjust = .5), 
+      colour = "white", 
+      fontface = "bold", 
+      label.size = 0
+    ) +
+    coord_flip() +
+    scale_fill_manual(values = rev(c("#CA0020", "#F4A582", "#979797", "#92C5DE", "#0571B0"))) + 
+    theme_minimal(16, base_family = "serif") +
+    theme(legend.position="top",
+          axis.text.y = element_text(hjust = 0),
+          strip.text.y = element_text(angle = 180, hjust = 0),
+          strip.placement = "outside"
+    ) +
+    guides(fill = guide_legend(nrow = 2, byrow = FALSE)) +
+    labs(fill = "Resposta:", x = "", y = "") +
+    scale_y_continuous(labels = scales::percent_format(decimal.mark = ","))+
+    scale_x_discrete(labels = partial(str_wrap, width = 40)) +
+    ggtitle(titulo)
+}
+
+#
+tabelar <- function(likert, corte) {
+  colaboradores %>%
+    mutate(
+      questao = fct_explicit_na(!!sym(likert)),
+      corte = fct_explicit_na(!!sym(corte))
+    ) %>%
+    dplyr::count(questao, corte)
+}
+
+teste_chisq <- function(likert, corte) {
+  suppressWarnings(
+    colaboradores %>%
+    chisq_test(as.formula(glue::glue("{likert} ~ {corte}")))
+  )
+}
+
+#
+sjxtab <- function(likert, corte) {
+  var_labels <- papel_das_variaveis %>% 
+    filter(variavel_nome %in% c(likert, corte)) %>% 
+    pluck("variavel_texto")
+  
+df <- colaboradores %>% 
+    select(likert = !!sym(likert), corte = !!sym(corte))
+
+df %>% 
+  group_by_all %>% 
+  count() %>% 
+  group_by(likert) %>%
+  mutate(
+    p = round(n/sum(n) * 100),
+    celula = glue::glue("{n} ({p}%)")
+  ) %>%
+  ungroup() %>%
+  mutate(
+    likert = str_wrap(likert, 15)
+  ) %>%
+  select(likert, corte, celula) %>%
+  spread(corte, celula, fill = "0 (0%)")
+}
+```
+
+```{r}
+
+```
+
+```{r}
+colaboradores <- readRDS("D:/OneDrive/Documents/areti/data/colaboradores.rds") 
+construtos <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "construtos")
+variaveis <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "variaveis")
+papel_das_variaveis <- construtos %>% 
+  select(variavel_codigo, construto) %>%
+  distinct(variavel_codigo, .keep_all = TRUE) %>%
+  left_join(variaveis) %>%
+  dplyr::mutate(
+    variavel_nome = variavel_nome %>% stringr::str_replace_all('\"', '')
+  )
+``` 
+
+```{r}
+tidyr::crossing(
+  papel_das_variaveis %>% 
+    filter(!positiva_ou_negativa %in% "não likert") %>% 
+    mutate(
+      ordem_das_variaveis = as.numeric(fct_inorder(variavel_nome))
+    ) %>%
+    select(
+      variavel_codigo_likert = variavel_codigo, 
+      variavel_texto,
+      variavel_nome_likert = variavel_nome
+    ),
+  
+  papel_das_variaveis %>% 
+    filter(construto %in% 'corte') %>% 
+    select(
+      Corte = variavel_texto,
+      variavel_nome_corte = variavel_nome
+    )
+) %>%
+  mutate(
+    teste_qui_quadrado = map2(variavel_nome_likert, variavel_nome_corte, teste_chisq),
+    `Questão` = stringr::str_wrap(variavel_texto, 20)
+  ) %>%
+  unnest %>%
+  mutate(
+    `Conclusão` = if_else(p_value < 0.05, 'Diferentes', 'Iguais'),
+    p_value = round(p_value, 2)
+  ) %>%
+  select(
+    `Código` = variavel_codigo_likert,
+    `Questão`,
+    `Corte`,
+    `Valor-p` = p_value,
+    `Conclusão`
+  ) %>%
+  kable("latex", longtable = TRUE, booktabs = TRUE) %>%
+  kable_styling(latex_options = c("repeat_header"), font_size = 7) %>%
+  column_spec(2, width = "30em") %>%
+  column_spec(3, width = "10em")
+  
+```
+ 
+## Questão 8a
+
+> 8. Na Inmetrics: [O reconhecimento (na forma de promoções, elogios, aumentos) é justo e eficiente]
+
+ 
+### 1. Eu sou:
+
+```{r  8a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente", "x1_eu_sou"))
+```
+
+```{r  8a_x1_eu_sou_sjxtab, results='asis'}
+print.contintab(sjxtab("x1_eu_sou", "x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente"))
+```
+
+### 2. Área:
+
+```{r  8a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente", "x2_area"))
+```
+
+```{r  8a_x2_area_sjxtab, results='asis'}
+print.contintab(sjxtab("x2_area", "x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente"))
+```
+
+### 3. Gênero:
+
+```{r  8a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente", "x3_genero"))
+```
+
+```{r  8a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  8a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  8a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente"))
+```
+
+### 5. Faixa etária:
+
+```{r  8a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente", "x5_faixa_etaria"))
+```
+
+```{r  8a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente"))
+```
+
+### 6. Alocação:
+
+```{r  8a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente", "x6_alocacao"))
+```
+
+```{r  8a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente"))
+```
+
+
+## Questão 8b
+
+> 8. Na Inmetrics: [O sistema de avaliação de desempenho da empresa é justo e eficiente]
+
+ 
+### 1. Eu sou:
+
+```{r  8b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente", "x1_eu_sou"))
+```
+
+```{r  8b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente"))
+```
+
+### 2. Área:
+
+```{r  8b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente", "x2_area"))
+```
+
+```{r  8b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente"))
+```
+
+### 3. Gênero:
+
+```{r  8b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente", "x3_genero"))
+```
+
+```{r  8b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  8b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  8b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente"))
+```
+
+### 5. Faixa etária:
+
+```{r  8b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente", "x5_faixa_etaria"))
+```
+
+```{r  8b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente"))
+```
+
+### 6. Alocação:
+
+```{r  8b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente", "x6_alocacao"))
+```
+
+```{r  8b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente"))
+```
+
+
+## Questão 8c
+
+> 8. Na Inmetrics: [Os sistemas de acompanhamento de indicadores dos projetos e metas são justos e eficientes]
+
+ 
+### 1. Eu sou:
+
+```{r  8c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes", "x1_eu_sou"))
+```
+
+```{r  8c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes"))
+```
+
+### 2. Área:
+
+```{r  8c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes", "x2_area"))
+```
+
+```{r  8c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes"))
+```
+
+### 3. Gênero:
+
+```{r  8c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes", "x3_genero"))
+```
+
+```{r  8c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  8c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  8c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes"))
+```
+
+### 5. Faixa etária:
+
+```{r  8c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes", "x5_faixa_etaria"))
+```
+
+```{r  8c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes"))
+```
+
+### 6. Alocação:
+
+```{r  8c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes", "x6_alocacao"))
+```
+
+```{r  8c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes"))
+```
+
+
+## Questão 9
+
+> 9. Os colaboradores são preparados de maneira adequada para atuar com excelência em seus projetos e/ou áreas. [->]
+
+ 
+### 1. Eu sou:
+
+```{r  9_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas", "x1_eu_sou"))
+```
+
+```{r  9_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas"))
+```
+
+### 2. Área:
+
+```{r  9_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas", "x2_area"))
+```
+
+```{r  9_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas"))
+```
+
+### 3. Gênero:
+
+```{r  9_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas", "x3_genero"))
+```
+
+```{r  9_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  9_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  9_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas"))
+```
+
+### 5. Faixa etária:
+
+```{r  9_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas", "x5_faixa_etaria"))
+```
+
+```{r  9_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas"))
+```
+
+### 6. Alocação:
+
+```{r  9_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas", "x6_alocacao"))
+```
+
+```{r  9_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas"))
+```
+
+
+## Questão 10a
+
+> 10. Ao iniciar o trabalho, os colaboradores: [Entendem o contexto e os objetivos do cliente]
+
+ 
+### 1. Eu sou:
+
+```{r  10a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente", "x1_eu_sou"))
+```
+
+```{r  10a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente"))
+```
+
+### 2. Área:
+
+```{r  10a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente", "x2_area"))
+```
+
+```{r  10a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente"))
+```
+
+### 3. Gênero:
+
+```{r  10a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente", "x3_genero"))
+```
+
+```{r  10a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  10a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  10a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente"))
+```
+
+### 5. Faixa etária:
+
+```{r  10a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente", "x5_faixa_etaria"))
+```
+
+```{r  10a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente"))
+```
+
+### 6. Alocação:
+
+```{r  10a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente", "x6_alocacao"))
+```
+
+```{r  10a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente"))
+```
+
+
+## Questão 10d
+
+> 10. Ao iniciar o trabalho, os colaboradores: [Utilizam efetivamente suas habilidades e conhecimentos]
+
+ 
+### 1. Eu sou:
+
+```{r  10d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos", "x1_eu_sou"))
+```
+
+```{r  10d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos"))
+```
+
+### 2. Área:
+
+```{r  10d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos", "x2_area"))
+```
+
+```{r  10d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos"))
+```
+
+### 3. Gênero:
+
+```{r  10d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos", "x3_genero"))
+```
+
+```{r  10d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  10d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  10d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos"))
+```
+
+### 5. Faixa etária:
+
+```{r  10d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos", "x5_faixa_etaria"))
+```
+
+```{r  10d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos"))
+```
+
+### 6. Alocação:
+
+```{r  10d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos", "x6_alocacao"))
+```
+
+```{r  10d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos"))
+```
+
+
+## Questão 10e
+
+> 10. Ao iniciar o trabalho, os colaboradores: [Sentem-se capacitados para a função]
+
+ 
+### 1. Eu sou:
+
+```{r  10e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao", "x1_eu_sou"))
+```
+
+```{r  10e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao"))
+```
+
+### 2. Área:
+
+```{r  10e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao", "x2_area"))
+```
+
+```{r  10e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao"))
+```
+
+### 3. Gênero:
+
+```{r  10e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao", "x3_genero"))
+```
+
+```{r  10e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  10e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  10e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao"))
+```
+
+### 5. Faixa etária:
+
+```{r  10e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao", "x5_faixa_etaria"))
+```
+
+```{r  10e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao"))
+```
+
+### 6. Alocação:
+
+```{r  10e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao", "x6_alocacao"))
+```
+
+```{r  10e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao"))
+```
+
+
+## Questão 10f
+
+> 10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]
+
+ 
+### 1. Eu sou:
+
+```{r  10f_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar", "x1_eu_sou"))
+```
+
+```{r  10f_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar"))
+```
+
+### 2. Área:
+
+```{r  10f_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar", "x2_area"))
+```
+
+```{r  10f_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar"))
+```
+
+### 3. Gênero:
+
+```{r  10f_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar", "x3_genero"))
+```
+
+```{r  10f_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  10f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  10f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar"))
+```
+
+### 5. Faixa etária:
+
+```{r  10f_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar", "x5_faixa_etaria"))
+```
+
+```{r  10f_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar"))
+```
+
+### 6. Alocação:
+
+```{r  10f_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar", "x6_alocacao"))
+```
+
+```{r  10f_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar"))
+```
+
+
+## Questão 10g
+
+> 10. Ao iniciar o trabalho, os colaboradores: [Têm espaço físico de trabalho e equipamentos adequados]
+
+ 
+### 1. Eu sou:
+
+```{r  10g_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados", "x1_eu_sou"))
+```
+
+```{r  10g_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados"))
+```
+
+### 2. Área:
+
+```{r  10g_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados", "x2_area"))
+```
+
+```{r  10g_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados"))
+```
+
+### 3. Gênero:
+
+```{r  10g_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados", "x3_genero"))
+```
+
+```{r  10g_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  10g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  10g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados"))
+```
+
+### 5. Faixa etária:
+
+```{r  10g_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados", "x5_faixa_etaria"))
+```
+
+```{r  10g_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados"))
+```
+
+### 6. Alocação:
+
+```{r  10g_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados", "x6_alocacao"))
+```
+
+```{r  10g_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados"))
+```
+
+
+## Questão 10b
+
+> 10. Ao iniciar o trabalho, os colaboradores: [Compreendem o propósito de suas entregas]
+
+ 
+### 1. Eu sou:
+
+```{r  10b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas", "x1_eu_sou"))
+```
+
+```{r  10b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas"))
+```
+
+### 2. Área:
+
+```{r  10b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas", "x2_area"))
+```
+
+```{r  10b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas"))
+```
+
+### 3. Gênero:
+
+```{r  10b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas", "x3_genero"))
+```
+
+```{r  10b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  10b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  10b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas"))
+```
+
+### 5. Faixa etária:
+
+```{r  10b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas", "x5_faixa_etaria"))
+```
+
+```{r  10b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas"))
+```
+
+### 6. Alocação:
+
+```{r  10b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas", "x6_alocacao"))
+```
+
+```{r  10b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas"))
+```
+
+
+## Questão 10c
+
+> 10. Ao iniciar o trabalho, os colaboradores: [Conhecem seu/sua líder]
+
+ 
+### 1. Eu sou:
+
+```{r  10c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider", "x1_eu_sou"))
+```
+
+```{r  10c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider"))
+```
+
+### 2. Área:
+
+```{r  10c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider", "x2_area"))
+```
+
+```{r  10c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider"))
+```
+
+### 3. Gênero:
+
+```{r  10c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider", "x3_genero"))
+```
+
+```{r  10c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  10c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  10c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider"))
+```
+
+### 5. Faixa etária:
+
+```{r  10c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider", "x5_faixa_etaria"))
+```
+
+```{r  10c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider"))
+```
+
+### 6. Alocação:
+
+```{r  10c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider", "x6_alocacao"))
+```
+
+```{r  10c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider"))
+```
+
+
+## Questão 14
+
+> 14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo. [->]
+
+ 
+### 1. Eu sou:
+
+```{r  14_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo", "x1_eu_sou"))
+```
+
+```{r  14_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo"))
+```
+
+### 2. Área:
+
+```{r  14_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo", "x2_area"))
+```
+
+```{r  14_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo"))
+```
+
+### 3. Gênero:
+
+```{r  14_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo", "x3_genero"))
+```
+
+```{r  14_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  14_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  14_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo"))
+```
+
+### 5. Faixa etária:
+
+```{r  14_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo", "x5_faixa_etaria"))
+```
+
+```{r  14_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo"))
+```
+
+### 6. Alocação:
+
+```{r  14_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo", "x6_alocacao"))
+```
+
+```{r  14_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo"))
+```
+
+
+## Questão 11a
+
+> 11. O ambiente na Inmetrics é: [Informal]
+
+ 
+### 1. Eu sou:
+
+```{r  11a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_informal", "x1_eu_sou"))
+```
+
+```{r  11a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x11_o_ambiente_na_inmetrics_e_informal"))
+```
+
+### 2. Área:
+
+```{r  11a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_informal", "x2_area"))
+```
+
+```{r  11a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x11_o_ambiente_na_inmetrics_e_informal"))
+```
+
+### 3. Gênero:
+
+```{r  11a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_informal", "x3_genero"))
+```
+
+```{r  11a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x11_o_ambiente_na_inmetrics_e_informal"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  11a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_informal", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  11a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x11_o_ambiente_na_inmetrics_e_informal"))
+```
+
+### 5. Faixa etária:
+
+```{r  11a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_informal", "x5_faixa_etaria"))
+```
+
+```{r  11a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x11_o_ambiente_na_inmetrics_e_informal"))
+```
+
+### 6. Alocação:
+
+```{r  11a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_informal", "x6_alocacao"))
+```
+
+```{r  11a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x11_o_ambiente_na_inmetrics_e_informal"))
+```
+
+
+## Questão 11b
+
+> 11. O ambiente na Inmetrics é: [De pressão]
+
+ 
+### 1. Eu sou:
+
+```{r  11b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_de_pressao", "x1_eu_sou"))
+```
+
+```{r  11b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x11_o_ambiente_na_inmetrics_e_de_pressao"))
+```
+
+### 2. Área:
+
+```{r  11b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_de_pressao", "x2_area"))
+```
+
+```{r  11b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x11_o_ambiente_na_inmetrics_e_de_pressao"))
+```
+
+### 3. Gênero:
+
+```{r  11b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_de_pressao", "x3_genero"))
+```
+
+```{r  11b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x11_o_ambiente_na_inmetrics_e_de_pressao"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  11b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_de_pressao", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  11b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x11_o_ambiente_na_inmetrics_e_de_pressao"))
+```
+
+### 5. Faixa etária:
+
+```{r  11b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_de_pressao", "x5_faixa_etaria"))
+```
+
+```{r  11b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x11_o_ambiente_na_inmetrics_e_de_pressao"))
+```
+
+### 6. Alocação:
+
+```{r  11b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_de_pressao", "x6_alocacao"))
+```
+
+```{r  11b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x11_o_ambiente_na_inmetrics_e_de_pressao"))
+```
+
+
+## Questão 11c
+
+> 11. O ambiente na Inmetrics é: [Flexível]
+
+ 
+### 1. Eu sou:
+
+```{r  11c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_flexivel", "x1_eu_sou"))
+```
+
+```{r  11c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x11_o_ambiente_na_inmetrics_e_flexivel"))
+```
+
+### 2. Área:
+
+```{r  11c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_flexivel", "x2_area"))
+```
+
+```{r  11c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x11_o_ambiente_na_inmetrics_e_flexivel"))
+```
+
+### 3. Gênero:
+
+```{r  11c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_flexivel", "x3_genero"))
+```
+
+```{r  11c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x11_o_ambiente_na_inmetrics_e_flexivel"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  11c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_flexivel", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  11c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x11_o_ambiente_na_inmetrics_e_flexivel"))
+```
+
+### 5. Faixa etária:
+
+```{r  11c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_flexivel", "x5_faixa_etaria"))
+```
+
+```{r  11c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x11_o_ambiente_na_inmetrics_e_flexivel"))
+```
+
+### 6. Alocação:
+
+```{r  11c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_flexivel", "x6_alocacao"))
+```
+
+```{r  11c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x11_o_ambiente_na_inmetrics_e_flexivel"))
+```
+
+
+## Questão 11d
+
+> 11. O ambiente na Inmetrics é: [Desorganizado]
+
+ 
+### 1. Eu sou:
+
+```{r  11d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_desorganizado", "x1_eu_sou"))
+```
+
+```{r  11d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x11_o_ambiente_na_inmetrics_e_desorganizado"))
+```
+
+### 2. Área:
+
+```{r  11d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_desorganizado", "x2_area"))
+```
+
+```{r  11d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x11_o_ambiente_na_inmetrics_e_desorganizado"))
+```
+
+### 3. Gênero:
+
+```{r  11d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_desorganizado", "x3_genero"))
+```
+
+```{r  11d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x11_o_ambiente_na_inmetrics_e_desorganizado"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  11d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_desorganizado", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  11d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x11_o_ambiente_na_inmetrics_e_desorganizado"))
+```
+
+### 5. Faixa etária:
+
+```{r  11d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_desorganizado", "x5_faixa_etaria"))
+```
+
+```{r  11d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x11_o_ambiente_na_inmetrics_e_desorganizado"))
+```
+
+### 6. Alocação:
+
+```{r  11d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_desorganizado", "x6_alocacao"))
+```
+
+```{r  11d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x11_o_ambiente_na_inmetrics_e_desorganizado"))
+```
+
+
+## Questão 11e
+
+> 11. O ambiente na Inmetrics é: [Leve]
+
+ 
+### 1. Eu sou:
+
+```{r  11e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_leve", "x1_eu_sou"))
+```
+
+```{r  11e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x11_o_ambiente_na_inmetrics_e_leve"))
+```
+
+### 2. Área:
+
+```{r  11e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_leve", "x2_area"))
+```
+
+```{r  11e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x11_o_ambiente_na_inmetrics_e_leve"))
+```
+
+### 3. Gênero:
+
+```{r  11e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_leve", "x3_genero"))
+```
+
+```{r  11e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x11_o_ambiente_na_inmetrics_e_leve"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  11e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_leve", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  11e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x11_o_ambiente_na_inmetrics_e_leve"))
+```
+
+### 5. Faixa etária:
+
+```{r  11e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_leve", "x5_faixa_etaria"))
+```
+
+```{r  11e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x11_o_ambiente_na_inmetrics_e_leve"))
+```
+
+### 6. Alocação:
+
+```{r  11e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x11_o_ambiente_na_inmetrics_e_leve", "x6_alocacao"))
+```
+
+```{r  11e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x11_o_ambiente_na_inmetrics_e_leve"))
+```
+
+
+## Questão 13a
+
+> 13. Na Inmetrics, o que mais importa é (são): [O ambiente de trabalho]
+
+ 
+### 1. Eu sou:
+
+```{r  13a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho", "x1_eu_sou"))
+```
+
+```{r  13a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho"))
+```
+
+### 2. Área:
+
+```{r  13a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho", "x2_area"))
+```
+
+```{r  13a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho"))
+```
+
+### 3. Gênero:
+
+```{r  13a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho", "x3_genero"))
+```
+
+```{r  13a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  13a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  13a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho"))
+```
+
+### 5. Faixa etária:
+
+```{r  13a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho", "x5_faixa_etaria"))
+```
+
+```{r  13a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho"))
+```
+
+### 6. Alocação:
+
+```{r  13a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho", "x6_alocacao"))
+```
+
+```{r  13a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho"))
+```
+
+
+## Questão 13b
+
+> 13. Na Inmetrics, o que mais importa é (são): [O resultado financeiro da empresa]
+
+ 
+### 1. Eu sou:
+
+```{r  13b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa", "x1_eu_sou"))
+```
+
+```{r  13b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa"))
+```
+
+### 2. Área:
+
+```{r  13b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa", "x2_area"))
+```
+
+```{r  13b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa"))
+```
+
+### 3. Gênero:
+
+```{r  13b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa", "x3_genero"))
+```
+
+```{r  13b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  13b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  13b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa"))
+```
+
+### 5. Faixa etária:
+
+```{r  13b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa", "x5_faixa_etaria"))
+```
+
+```{r  13b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa"))
+```
+
+### 6. Alocação:
+
+```{r  13b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa", "x6_alocacao"))
+```
+
+```{r  13b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x13_na_inmetrics_o_que_mais_importa_e_sao_o_resultado_financeiro_da_empresa"))
+```
+
+
+## Questão 13c
+
+> 13. Na Inmetrics, o que mais importa é (são): [A satisfação do cliente]
+
+ 
+### 1. Eu sou:
+
+```{r  13c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente", "x1_eu_sou"))
+```
+
+```{r  13c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente"))
+```
+
+### 2. Área:
+
+```{r  13c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente", "x2_area"))
+```
+
+```{r  13c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente"))
+```
+
+### 3. Gênero:
+
+```{r  13c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente", "x3_genero"))
+```
+
+```{r  13c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  13c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  13c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente"))
+```
+
+### 5. Faixa etária:
+
+```{r  13c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente", "x5_faixa_etaria"))
+```
+
+```{r  13c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente"))
+```
+
+### 6. Alocação:
+
+```{r  13c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente", "x6_alocacao"))
+```
+
+```{r  13c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_satisfacao_do_cliente"))
+```
+
+
+## Questão 13d
+
+> 13. Na Inmetrics, o que mais importa é (são): [A opinião dos líderes]
+
+ 
+### 1. Eu sou:
+
+```{r  13d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres", "x1_eu_sou"))
+```
+
+```{r  13d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres"))
+```
+
+### 2. Área:
+
+```{r  13d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres", "x2_area"))
+```
+
+```{r  13d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres"))
+```
+
+### 3. Gênero:
+
+```{r  13d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres", "x3_genero"))
+```
+
+```{r  13d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  13d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  13d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres"))
+```
+
+### 5. Faixa etária:
+
+```{r  13d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres", "x5_faixa_etaria"))
+```
+
+```{r  13d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres"))
+```
+
+### 6. Alocação:
+
+```{r  13d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres", "x6_alocacao"))
+```
+
+```{r  13d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x13_na_inmetrics_o_que_mais_importa_e_sao_a_opiniao_dos_lideres"))
+```
+
+
+## Questão 13e
+
+> 13. Na Inmetrics, o que mais importa é (são): [Qualidade técnica da entrega]
+
+ 
+### 1. Eu sou:
+
+```{r  13e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega", "x1_eu_sou"))
+```
+
+```{r  13e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega"))
+```
+
+### 2. Área:
+
+```{r  13e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega", "x2_area"))
+```
+
+```{r  13e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega"))
+```
+
+### 3. Gênero:
+
+```{r  13e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega", "x3_genero"))
+```
+
+```{r  13e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  13e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  13e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega"))
+```
+
+### 5. Faixa etária:
+
+```{r  13e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega", "x5_faixa_etaria"))
+```
+
+```{r  13e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega"))
+```
+
+### 6. Alocação:
+
+```{r  13e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega", "x6_alocacao"))
+```
+
+```{r  13e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x13_na_inmetrics_o_que_mais_importa_e_sao_qualidade_tecnica_da_entrega"))
+```
+
+
+## Questão 13f
+
+> 13. Na Inmetrics, o que mais importa é (são): [As equipes]
+
+ 
+### 1. Eu sou:
+
+```{r  13f_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes", "x1_eu_sou"))
+```
+
+```{r  13f_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes"))
+```
+
+### 2. Área:
+
+```{r  13f_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes", "x2_area"))
+```
+
+```{r  13f_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes"))
+```
+
+### 3. Gênero:
+
+```{r  13f_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes", "x3_genero"))
+```
+
+```{r  13f_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  13f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  13f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes"))
+```
+
+### 5. Faixa etária:
+
+```{r  13f_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes", "x5_faixa_etaria"))
+```
+
+```{r  13f_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes"))
+```
+
+### 6. Alocação:
+
+```{r  13f_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes", "x6_alocacao"))
+```
+
+```{r  13f_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x13_na_inmetrics_o_que_mais_importa_e_sao_as_equipes"))
+```
+
+
+## Questão 15a
+
+> 15. A Inmetrics valoriza: [Inovação]
+
+ 
+### 1. Eu sou:
+
+```{r  15a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_inovacao", "x1_eu_sou"))
+```
+
+```{r  15a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x15_a_inmetrics_valoriza_inovacao"))
+```
+
+### 2. Área:
+
+```{r  15a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_inovacao", "x2_area"))
+```
+
+```{r  15a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x15_a_inmetrics_valoriza_inovacao"))
+```
+
+### 3. Gênero:
+
+```{r  15a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_inovacao", "x3_genero"))
+```
+
+```{r  15a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x15_a_inmetrics_valoriza_inovacao"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  15a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_inovacao", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  15a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x15_a_inmetrics_valoriza_inovacao"))
+```
+
+### 5. Faixa etária:
+
+```{r  15a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_inovacao", "x5_faixa_etaria"))
+```
+
+```{r  15a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x15_a_inmetrics_valoriza_inovacao"))
+```
+
+### 6. Alocação:
+
+```{r  15a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_inovacao", "x6_alocacao"))
+```
+
+```{r  15a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x15_a_inmetrics_valoriza_inovacao"))
+```
+
+
+## Questão 15b
+
+> 15. A Inmetrics valoriza: [Desempenho]
+
+ 
+### 1. Eu sou:
+
+```{r  15b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_desempenho", "x1_eu_sou"))
+```
+
+```{r  15b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x15_a_inmetrics_valoriza_desempenho"))
+```
+
+### 2. Área:
+
+```{r  15b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_desempenho", "x2_area"))
+```
+
+```{r  15b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x15_a_inmetrics_valoriza_desempenho"))
+```
+
+### 3. Gênero:
+
+```{r  15b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_desempenho", "x3_genero"))
+```
+
+```{r  15b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x15_a_inmetrics_valoriza_desempenho"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  15b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_desempenho", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  15b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x15_a_inmetrics_valoriza_desempenho"))
+```
+
+### 5. Faixa etária:
+
+```{r  15b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_desempenho", "x5_faixa_etaria"))
+```
+
+```{r  15b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x15_a_inmetrics_valoriza_desempenho"))
+```
+
+### 6. Alocação:
+
+```{r  15b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_desempenho", "x6_alocacao"))
+```
+
+```{r  15b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x15_a_inmetrics_valoriza_desempenho"))
+```
+
+
+## Questão 15c
+
+> 15. A Inmetrics valoriza: [Qualidade]
+
+ 
+### 1. Eu sou:
+
+```{r  15c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_qualidade", "x1_eu_sou"))
+```
+
+```{r  15c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x15_a_inmetrics_valoriza_qualidade"))
+```
+
+### 2. Área:
+
+```{r  15c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_qualidade", "x2_area"))
+```
+
+```{r  15c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x15_a_inmetrics_valoriza_qualidade"))
+```
+
+### 3. Gênero:
+
+```{r  15c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_qualidade", "x3_genero"))
+```
+
+```{r  15c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x15_a_inmetrics_valoriza_qualidade"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  15c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_qualidade", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  15c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x15_a_inmetrics_valoriza_qualidade"))
+```
+
+### 5. Faixa etária:
+
+```{r  15c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_qualidade", "x5_faixa_etaria"))
+```
+
+```{r  15c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x15_a_inmetrics_valoriza_qualidade"))
+```
+
+### 6. Alocação:
+
+```{r  15c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_qualidade", "x6_alocacao"))
+```
+
+```{r  15c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x15_a_inmetrics_valoriza_qualidade"))
+```
+
+
+## Questão 15d
+
+> 15. A Inmetrics valoriza: [Rapidez]
+
+ 
+### 1. Eu sou:
+
+```{r  15d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_rapidez", "x1_eu_sou"))
+```
+
+```{r  15d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x15_a_inmetrics_valoriza_rapidez"))
+```
+
+### 2. Área:
+
+```{r  15d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_rapidez", "x2_area"))
+```
+
+```{r  15d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x15_a_inmetrics_valoriza_rapidez"))
+```
+
+### 3. Gênero:
+
+```{r  15d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_rapidez", "x3_genero"))
+```
+
+```{r  15d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x15_a_inmetrics_valoriza_rapidez"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  15d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_rapidez", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  15d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x15_a_inmetrics_valoriza_rapidez"))
+```
+
+### 5. Faixa etária:
+
+```{r  15d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_rapidez", "x5_faixa_etaria"))
+```
+
+```{r  15d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x15_a_inmetrics_valoriza_rapidez"))
+```
+
+### 6. Alocação:
+
+```{r  15d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_rapidez", "x6_alocacao"))
+```
+
+```{r  15d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x15_a_inmetrics_valoriza_rapidez"))
+```
+
+
+## Questão 15e
+
+> 15. A Inmetrics valoriza: [Satisfação do cliente]
+
+ 
+### 1. Eu sou:
+
+```{r  15e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_satisfacao_do_cliente", "x1_eu_sou"))
+```
+
+```{r  15e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x15_a_inmetrics_valoriza_satisfacao_do_cliente"))
+```
+
+### 2. Área:
+
+```{r  15e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_satisfacao_do_cliente", "x2_area"))
+```
+
+```{r  15e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x15_a_inmetrics_valoriza_satisfacao_do_cliente"))
+```
+
+### 3. Gênero:
+
+```{r  15e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_satisfacao_do_cliente", "x3_genero"))
+```
+
+```{r  15e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x15_a_inmetrics_valoriza_satisfacao_do_cliente"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  15e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_satisfacao_do_cliente", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  15e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x15_a_inmetrics_valoriza_satisfacao_do_cliente"))
+```
+
+### 5. Faixa etária:
+
+```{r  15e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_satisfacao_do_cliente", "x5_faixa_etaria"))
+```
+
+```{r  15e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x15_a_inmetrics_valoriza_satisfacao_do_cliente"))
+```
+
+### 6. Alocação:
+
+```{r  15e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_satisfacao_do_cliente", "x6_alocacao"))
+```
+
+```{r  15e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x15_a_inmetrics_valoriza_satisfacao_do_cliente"))
+```
+
+
+## Questão 15f
+
+> 15. A Inmetrics valoriza: [Colaboradores]
+
+ 
+### 1. Eu sou:
+
+```{r  15f_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_colaboradores", "x1_eu_sou"))
+```
+
+```{r  15f_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x15_a_inmetrics_valoriza_colaboradores"))
+```
+
+### 2. Área:
+
+```{r  15f_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_colaboradores", "x2_area"))
+```
+
+```{r  15f_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x15_a_inmetrics_valoriza_colaboradores"))
+```
+
+### 3. Gênero:
+
+```{r  15f_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_colaboradores", "x3_genero"))
+```
+
+```{r  15f_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x15_a_inmetrics_valoriza_colaboradores"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  15f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_colaboradores", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  15f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x15_a_inmetrics_valoriza_colaboradores"))
+```
+
+### 5. Faixa etária:
+
+```{r  15f_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_colaboradores", "x5_faixa_etaria"))
+```
+
+```{r  15f_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x15_a_inmetrics_valoriza_colaboradores"))
+```
+
+### 6. Alocação:
+
+```{r  15f_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x15_a_inmetrics_valoriza_colaboradores", "x6_alocacao"))
+```
+
+```{r  15f_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x15_a_inmetrics_valoriza_colaboradores"))
+```
+
+
+## Questão 16a
+
+> 16. A Inmetrics é uma empresa que: [Cumpre suas obrigações trabalhistas (salários em dia, 13º etc.)]
+
+ 
+### 1. Eu sou:
+
+```{r  16a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc", "x1_eu_sou"))
+```
+
+```{r  16a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc"))
+```
+
+### 2. Área:
+
+```{r  16a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc", "x2_area"))
+```
+
+```{r  16a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc"))
+```
+
+### 3. Gênero:
+
+```{r  16a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc", "x3_genero"))
+```
+
+```{r  16a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  16a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  16a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc"))
+```
+
+### 5. Faixa etária:
+
+```{r  16a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc", "x5_faixa_etaria"))
+```
+
+```{r  16a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc"))
+```
+
+### 6. Alocação:
+
+```{r  16a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc", "x6_alocacao"))
+```
+
+```{r  16a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x16_a_inmetrics_e_uma_empresa_que_cumpre_suas_obrigacoes_trabalhistas_salarios_em_dia_13º_etc"))
+```
+
+
+## Questão 16b
+
+> 16. A Inmetrics é uma empresa que: [Se destaca positivamente em termos de ambiente de trabalho]
+
+ 
+### 1. Eu sou:
+
+```{r  16b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho", "x1_eu_sou"))
+```
+
+```{r  16b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho"))
+```
+
+### 2. Área:
+
+```{r  16b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho", "x2_area"))
+```
+
+```{r  16b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho"))
+```
+
+### 3. Gênero:
+
+```{r  16b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho", "x3_genero"))
+```
+
+```{r  16b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  16b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  16b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho"))
+```
+
+### 5. Faixa etária:
+
+```{r  16b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho", "x5_faixa_etaria"))
+```
+
+```{r  16b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho"))
+```
+
+### 6. Alocação:
+
+```{r  16b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho", "x6_alocacao"))
+```
+
+```{r  16b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho"))
+```
+
+
+## Questão 16c
+
+> 16. A Inmetrics é uma empresa que: [Oferece bons salários]
+
+ 
+### 1. Eu sou:
+
+```{r  16c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios", "x1_eu_sou"))
+```
+
+```{r  16c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios"))
+```
+
+### 2. Área:
+
+```{r  16c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios", "x2_area"))
+```
+
+```{r  16c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios"))
+```
+
+### 3. Gênero:
+
+```{r  16c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios", "x3_genero"))
+```
+
+```{r  16c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  16c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  16c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios"))
+```
+
+### 5. Faixa etária:
+
+```{r  16c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios", "x5_faixa_etaria"))
+```
+
+```{r  16c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios"))
+```
+
+### 6. Alocação:
+
+```{r  16c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios", "x6_alocacao"))
+```
+
+```{r  16c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios"))
+```
+
+
+## Questão 16d
+
+> 16. A Inmetrics é uma empresa que: [Oferece oportunidades de aprendizado e desenvolvimento]
+
+ 
+### 1. Eu sou:
+
+```{r  16d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento", "x1_eu_sou"))
+```
+
+```{r  16d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento"))
+```
+
+### 2. Área:
+
+```{r  16d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento", "x2_area"))
+```
+
+```{r  16d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento"))
+```
+
+### 3. Gênero:
+
+```{r  16d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento", "x3_genero"))
+```
+
+```{r  16d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  16d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  16d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento"))
+```
+
+### 5. Faixa etária:
+
+```{r  16d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento", "x5_faixa_etaria"))
+```
+
+```{r  16d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento"))
+```
+
+### 6. Alocação:
+
+```{r  16d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento", "x6_alocacao"))
+```
+
+```{r  16d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento"))
+```
+
+
+## Questão 16e
+
+> 16. A Inmetrics é uma empresa que: [Oferece oportunidades de crescimento interno]
+
+ 
+### 1. Eu sou:
+
+```{r  16e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno", "x1_eu_sou"))
+```
+
+```{r  16e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno"))
+```
+
+### 2. Área:
+
+```{r  16e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno", "x2_area"))
+```
+
+```{r  16e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno"))
+```
+
+### 3. Gênero:
+
+```{r  16e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno", "x3_genero"))
+```
+
+```{r  16e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  16e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  16e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno"))
+```
+
+### 5. Faixa etária:
+
+```{r  16e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno", "x5_faixa_etaria"))
+```
+
+```{r  16e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno"))
+```
+
+### 6. Alocação:
+
+```{r  16e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno", "x6_alocacao"))
+```
+
+```{r  16e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno"))
+```
+
+
+## Questão 16f
+
+> 16. A Inmetrics é uma empresa que: [Gera engajamento em seus colaboradores]
+
+ 
+### 1. Eu sou:
+
+```{r  16f_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores", "x1_eu_sou"))
+```
+
+```{r  16f_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores"))
+```
+
+### 2. Área:
+
+```{r  16f_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores", "x2_area"))
+```
+
+```{r  16f_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores"))
+```
+
+### 3. Gênero:
+
+```{r  16f_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores", "x3_genero"))
+```
+
+```{r  16f_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  16f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  16f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores"))
+```
+
+### 5. Faixa etária:
+
+```{r  16f_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores", "x5_faixa_etaria"))
+```
+
+```{r  16f_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores"))
+```
+
+### 6. Alocação:
+
+```{r  16f_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores", "x6_alocacao"))
+```
+
+```{r  16f_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores"))
+```
+
+
+## Questão 17a
+
+> 17. Para você, os maiores fatores de satisfação do cliente são: [Entrega de qualidade]
+
+ 
+### 1. Eu sou:
+
+```{r  17a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade", "x1_eu_sou"))
+```
+
+```{r  17a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade"))
+```
+
+### 2. Área:
+
+```{r  17a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade", "x2_area"))
+```
+
+```{r  17a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade"))
+```
+
+### 3. Gênero:
+
+```{r  17a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade", "x3_genero"))
+```
+
+```{r  17a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  17a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  17a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade"))
+```
+
+### 5. Faixa etária:
+
+```{r  17a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade", "x5_faixa_etaria"))
+```
+
+```{r  17a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade"))
+```
+
+### 6. Alocação:
+
+```{r  17a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade", "x6_alocacao"))
+```
+
+```{r  17a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_entrega_de_qualidade"))
+```
+
+
+## Questão 17b
+
+> 17. Para você, os maiores fatores de satisfação do cliente são: [Rapidez na entrega]
+
+ 
+### 1. Eu sou:
+
+```{r  17b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega", "x1_eu_sou"))
+```
+
+```{r  17b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega"))
+```
+
+### 2. Área:
+
+```{r  17b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega", "x2_area"))
+```
+
+```{r  17b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega"))
+```
+
+### 3. Gênero:
+
+```{r  17b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega", "x3_genero"))
+```
+
+```{r  17b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  17b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  17b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega"))
+```
+
+### 5. Faixa etária:
+
+```{r  17b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega", "x5_faixa_etaria"))
+```
+
+```{r  17b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega"))
+```
+
+### 6. Alocação:
+
+```{r  17b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega", "x6_alocacao"))
+```
+
+```{r  17b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega"))
+```
+
+
+## Questão 17c
+
+> 17. Para você, os maiores fatores de satisfação do cliente são: [Equipe técnica de alta qualidade]
+
+ 
+### 1. Eu sou:
+
+```{r  17c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade", "x1_eu_sou"))
+```
+
+```{r  17c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade"))
+```
+
+### 2. Área:
+
+```{r  17c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade", "x2_area"))
+```
+
+```{r  17c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade"))
+```
+
+### 3. Gênero:
+
+```{r  17c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade", "x3_genero"))
+```
+
+```{r  17c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  17c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  17c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade"))
+```
+
+### 5. Faixa etária:
+
+```{r  17c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade", "x5_faixa_etaria"))
+```
+
+```{r  17c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade"))
+```
+
+### 6. Alocação:
+
+```{r  17c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade", "x6_alocacao"))
+```
+
+```{r  17c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_equipe_tecnica_de_alta_qualidade"))
+```
+
+
+## Questão 17d
+
+> 17. Para você, os maiores fatores de satisfação do cliente são: [Baixo custo]
+
+ 
+### 1. Eu sou:
+
+```{r  17d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo", "x1_eu_sou"))
+```
+
+```{r  17d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo"))
+```
+
+### 2. Área:
+
+```{r  17d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo", "x2_area"))
+```
+
+```{r  17d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo"))
+```
+
+### 3. Gênero:
+
+```{r  17d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo", "x3_genero"))
+```
+
+```{r  17d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  17d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  17d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo"))
+```
+
+### 5. Faixa etária:
+
+```{r  17d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo", "x5_faixa_etaria"))
+```
+
+```{r  17d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo"))
+```
+
+### 6. Alocação:
+
+```{r  17d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo", "x6_alocacao"))
+```
+
+```{r  17d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_baixo_custo"))
+```
+
+
+## Questão 17e
+
+> 17. Para você, os maiores fatores de satisfação do cliente são: [Soluções inovadoras]
+
+ 
+### 1. Eu sou:
+
+```{r  17e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras", "x1_eu_sou"))
+```
+
+```{r  17e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras"))
+```
+
+### 2. Área:
+
+```{r  17e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras", "x2_area"))
+```
+
+```{r  17e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras"))
+```
+
+### 3. Gênero:
+
+```{r  17e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras", "x3_genero"))
+```
+
+```{r  17e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  17e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  17e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras"))
+```
+
+### 5. Faixa etária:
+
+```{r  17e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras", "x5_faixa_etaria"))
+```
+
+```{r  17e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras"))
+```
+
+### 6. Alocação:
+
+```{r  17e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras", "x6_alocacao"))
+```
+
+```{r  17e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_solucoes_inovadoras"))
+```
+
+
+## Questão 18a
+
+> 18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus colegas]
+
+ 
+### 1. Eu sou:
+
+```{r  18a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas", "x1_eu_sou"))
+```
+
+```{r  18a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas"))
+```
+
+### 2. Área:
+
+```{r  18a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas", "x2_area"))
+```
+
+```{r  18a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas"))
+```
+
+### 3. Gênero:
+
+```{r  18a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas", "x3_genero"))
+```
+
+```{r  18a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  18a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  18a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas"))
+```
+
+### 5. Faixa etária:
+
+```{r  18a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas", "x5_faixa_etaria"))
+```
+
+```{r  18a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas"))
+```
+
+### 6. Alocação:
+
+```{r  18a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas", "x6_alocacao"))
+```
+
+```{r  18a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas"))
+```
+
+
+## Questão 18b
+
+> 18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meu/minha líder]
+
+ 
+### 1. Eu sou:
+
+```{r  18b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider", "x1_eu_sou"))
+```
+
+```{r  18b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider"))
+```
+
+### 2. Área:
+
+```{r  18b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider", "x2_area"))
+```
+
+```{r  18b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider"))
+```
+
+### 3. Gênero:
+
+```{r  18b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider", "x3_genero"))
+```
+
+```{r  18b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  18b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  18b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider"))
+```
+
+### 5. Faixa etária:
+
+```{r  18b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider", "x5_faixa_etaria"))
+```
+
+```{r  18b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider"))
+```
+
+### 6. Alocação:
+
+```{r  18b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider", "x6_alocacao"))
+```
+
+```{r  18b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider"))
+```
+
+
+## Questão 18c
+
+> 18. No meu dia a dia, sinto colaboração e apoio por parte de: [Liderança sênior (diretoria e CEO)]
+
+ 
+### 1. Eu sou:
+
+```{r  18c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo", "x1_eu_sou"))
+```
+
+```{r  18c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo"))
+```
+
+### 2. Área:
+
+```{r  18c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo", "x2_area"))
+```
+
+```{r  18c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo"))
+```
+
+### 3. Gênero:
+
+```{r  18c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo", "x3_genero"))
+```
+
+```{r  18c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  18c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  18c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo"))
+```
+
+### 5. Faixa etária:
+
+```{r  18c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo", "x5_faixa_etaria"))
+```
+
+```{r  18c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo"))
+```
+
+### 6. Alocação:
+
+```{r  18c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo", "x6_alocacao"))
+```
+
+```{r  18c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo"))
+```
+
+
+## Questão 18d
+
+> 18. No meu dia a dia, sinto colaboração e apoio por parte de: [Colaboradores de outras áreas]
+
+ 
+### 1. Eu sou:
+
+```{r  18d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas", "x1_eu_sou"))
+```
+
+```{r  18d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas"))
+```
+
+### 2. Área:
+
+```{r  18d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas", "x2_area"))
+```
+
+```{r  18d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas"))
+```
+
+### 3. Gênero:
+
+```{r  18d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas", "x3_genero"))
+```
+
+```{r  18d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  18d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  18d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas"))
+```
+
+### 5. Faixa etária:
+
+```{r  18d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas", "x5_faixa_etaria"))
+```
+
+```{r  18d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas"))
+```
+
+### 6. Alocação:
+
+```{r  18d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas", "x6_alocacao"))
+```
+
+```{r  18d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas"))
+```
+
+
+## Questão 18e
+
+> 18. No meu dia a dia, sinto colaboração e apoio por parte de: [Meus liderados (minha equipe)]
+
+ 
+### 1. Eu sou:
+
+```{r  18e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe", "x1_eu_sou"))
+```
+
+```{r  18e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe"))
+```
+
+### 2. Área:
+
+```{r  18e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe", "x2_area"))
+```
+
+```{r  18e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe"))
+```
+
+### 3. Gênero:
+
+```{r  18e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe", "x3_genero"))
+```
+
+```{r  18e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  18e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  18e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe"))
+```
+
+### 5. Faixa etária:
+
+```{r  18e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe", "x5_faixa_etaria"))
+```
+
+```{r  18e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe"))
+```
+
+### 6. Alocação:
+
+```{r  18e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe", "x6_alocacao"))
+```
+
+```{r  18e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe"))
+```
+
+
+## Questão 19a
+
+> 19. Meu líder é: [Inspirador]
+
+ 
+### 1. Eu sou:
+
+```{r  19a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_inspirador", "x1_eu_sou"))
+```
+
+```{r  19a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_inspirador"))
+```
+
+### 2. Área:
+
+```{r  19a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_inspirador", "x2_area"))
+```
+
+```{r  19a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_inspirador"))
+```
+
+### 3. Gênero:
+
+```{r  19a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_inspirador", "x3_genero"))
+```
+
+```{r  19a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_inspirador"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_inspirador", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_inspirador"))
+```
+
+### 5. Faixa etária:
+
+```{r  19a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_inspirador", "x5_faixa_etaria"))
+```
+
+```{r  19a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_inspirador"))
+```
+
+### 6. Alocação:
+
+```{r  19a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_inspirador", "x6_alocacao"))
+```
+
+```{r  19a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_inspirador"))
+```
+
+
+## Questão 19b
+
+> 19. Meu líder é: [Preparado]
+
+ 
+### 1. Eu sou:
+
+```{r  19b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_preparado", "x1_eu_sou"))
+```
+
+```{r  19b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_preparado"))
+```
+
+### 2. Área:
+
+```{r  19b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_preparado", "x2_area"))
+```
+
+```{r  19b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_preparado"))
+```
+
+### 3. Gênero:
+
+```{r  19b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_preparado", "x3_genero"))
+```
+
+```{r  19b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_preparado"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_preparado", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_preparado"))
+```
+
+### 5. Faixa etária:
+
+```{r  19b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_preparado", "x5_faixa_etaria"))
+```
+
+```{r  19b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_preparado"))
+```
+
+### 6. Alocação:
+
+```{r  19b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_preparado", "x6_alocacao"))
+```
+
+```{r  19b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_preparado"))
+```
+
+
+## Questão 19c
+
+> 19. Meu líder é: [Comercial]
+
+ 
+### 1. Eu sou:
+
+```{r  19c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_comercial", "x1_eu_sou"))
+```
+
+```{r  19c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_comercial"))
+```
+
+### 2. Área:
+
+```{r  19c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_comercial", "x2_area"))
+```
+
+```{r  19c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_comercial"))
+```
+
+### 3. Gênero:
+
+```{r  19c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_comercial", "x3_genero"))
+```
+
+```{r  19c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_comercial"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_comercial", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_comercial"))
+```
+
+### 5. Faixa etária:
+
+```{r  19c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_comercial", "x5_faixa_etaria"))
+```
+
+```{r  19c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_comercial"))
+```
+
+### 6. Alocação:
+
+```{r  19c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_comercial", "x6_alocacao"))
+```
+
+```{r  19c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_comercial"))
+```
+
+
+## Questão 19d
+
+> 19. Meu líder é: [Bem intencionado]
+
+ 
+### 1. Eu sou:
+
+```{r  19d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_bem_intencionado", "x1_eu_sou"))
+```
+
+```{r  19d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_bem_intencionado"))
+```
+
+### 2. Área:
+
+```{r  19d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_bem_intencionado", "x2_area"))
+```
+
+```{r  19d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_bem_intencionado"))
+```
+
+### 3. Gênero:
+
+```{r  19d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_bem_intencionado", "x3_genero"))
+```
+
+```{r  19d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_bem_intencionado"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_bem_intencionado", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_bem_intencionado"))
+```
+
+### 5. Faixa etária:
+
+```{r  19d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_bem_intencionado", "x5_faixa_etaria"))
+```
+
+```{r  19d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_bem_intencionado"))
+```
+
+### 6. Alocação:
+
+```{r  19d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_bem_intencionado", "x6_alocacao"))
+```
+
+```{r  19d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_bem_intencionado"))
+```
+
+
+## Questão 19e
+
+> 19. Meu líder é: [Técnico]
+
+ 
+### 1. Eu sou:
+
+```{r  19e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_tecnico", "x1_eu_sou"))
+```
+
+```{r  19e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_tecnico"))
+```
+
+### 2. Área:
+
+```{r  19e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_tecnico", "x2_area"))
+```
+
+```{r  19e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_tecnico"))
+```
+
+### 3. Gênero:
+
+```{r  19e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_tecnico", "x3_genero"))
+```
+
+```{r  19e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_tecnico"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_tecnico", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_tecnico"))
+```
+
+### 5. Faixa etária:
+
+```{r  19e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_tecnico", "x5_faixa_etaria"))
+```
+
+```{r  19e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_tecnico"))
+```
+
+### 6. Alocação:
+
+```{r  19e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_tecnico", "x6_alocacao"))
+```
+
+```{r  19e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_tecnico"))
+```
+
+
+## Questão 19f
+
+> 19. Meu líder é: [Gestor de pessoas]
+
+ 
+### 1. Eu sou:
+
+```{r  19f_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_gestor_de_pessoas", "x1_eu_sou"))
+```
+
+```{r  19f_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_gestor_de_pessoas"))
+```
+
+### 2. Área:
+
+```{r  19f_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_gestor_de_pessoas", "x2_area"))
+```
+
+```{r  19f_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_gestor_de_pessoas"))
+```
+
+### 3. Gênero:
+
+```{r  19f_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_gestor_de_pessoas", "x3_genero"))
+```
+
+```{r  19f_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_gestor_de_pessoas"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_gestor_de_pessoas", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_gestor_de_pessoas"))
+```
+
+### 5. Faixa etária:
+
+```{r  19f_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_gestor_de_pessoas", "x5_faixa_etaria"))
+```
+
+```{r  19f_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_gestor_de_pessoas"))
+```
+
+### 6. Alocação:
+
+```{r  19f_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_gestor_de_pessoas", "x6_alocacao"))
+```
+
+```{r  19f_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_gestor_de_pessoas"))
+```
+
+
+## Questão 19g
+
+> 19. Meu líder é: [Focado no cliente]
+
+ 
+### 1. Eu sou:
+
+```{r  19g_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_focado_no_cliente", "x1_eu_sou"))
+```
+
+```{r  19g_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_focado_no_cliente"))
+```
+
+### 2. Área:
+
+```{r  19g_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_focado_no_cliente", "x2_area"))
+```
+
+```{r  19g_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_focado_no_cliente"))
+```
+
+### 3. Gênero:
+
+```{r  19g_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_focado_no_cliente", "x3_genero"))
+```
+
+```{r  19g_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_focado_no_cliente"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_focado_no_cliente", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_focado_no_cliente"))
+```
+
+### 5. Faixa etária:
+
+```{r  19g_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_focado_no_cliente", "x5_faixa_etaria"))
+```
+
+```{r  19g_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_focado_no_cliente"))
+```
+
+### 6. Alocação:
+
+```{r  19g_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_focado_no_cliente", "x6_alocacao"))
+```
+
+```{r  19g_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_focado_no_cliente"))
+```
+
+
+## Questão 19h
+
+> 19. Meu líder é: [Próximo]
+
+ 
+### 1. Eu sou:
+
+```{r  19h_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_proximo", "x1_eu_sou"))
+```
+
+```{r  19h_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x19_meu_lider_e_proximo"))
+```
+
+### 2. Área:
+
+```{r  19h_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_proximo", "x2_area"))
+```
+
+```{r  19h_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x19_meu_lider_e_proximo"))
+```
+
+### 3. Gênero:
+
+```{r  19h_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_proximo", "x3_genero"))
+```
+
+```{r  19h_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x19_meu_lider_e_proximo"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  19h_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_proximo", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  19h_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x19_meu_lider_e_proximo"))
+```
+
+### 5. Faixa etária:
+
+```{r  19h_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_proximo", "x5_faixa_etaria"))
+```
+
+```{r  19h_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x19_meu_lider_e_proximo"))
+```
+
+### 6. Alocação:
+
+```{r  19h_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x19_meu_lider_e_proximo", "x6_alocacao"))
+```
+
+```{r  19h_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x19_meu_lider_e_proximo"))
+```
+
+
+## Questão 20a
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Inspiradora]
+
+ 
+### 1. Eu sou:
+
+```{r  20a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora", "x1_eu_sou"))
+```
+
+```{r  20a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora"))
+```
+
+### 2. Área:
+
+```{r  20a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora", "x2_area"))
+```
+
+```{r  20a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora"))
+```
+
+### 3. Gênero:
+
+```{r  20a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora", "x3_genero"))
+```
+
+```{r  20a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora"))
+```
+
+### 5. Faixa etária:
+
+```{r  20a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora", "x5_faixa_etaria"))
+```
+
+```{r  20a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora"))
+```
+
+### 6. Alocação:
+
+```{r  20a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora", "x6_alocacao"))
+```
+
+```{r  20a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora"))
+```
+
+
+## Questão 20b
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Preparada]
+
+ 
+### 1. Eu sou:
+
+```{r  20b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada", "x1_eu_sou"))
+```
+
+```{r  20b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada"))
+```
+
+### 2. Área:
+
+```{r  20b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada", "x2_area"))
+```
+
+```{r  20b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada"))
+```
+
+### 3. Gênero:
+
+```{r  20b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada", "x3_genero"))
+```
+
+```{r  20b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada"))
+```
+
+### 5. Faixa etária:
+
+```{r  20b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada", "x5_faixa_etaria"))
+```
+
+```{r  20b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada"))
+```
+
+### 6. Alocação:
+
+```{r  20b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada", "x6_alocacao"))
+```
+
+```{r  20b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada"))
+```
+
+
+## Questão 20c
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Comercial]
+
+ 
+### 1. Eu sou:
+
+```{r  20c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial", "x1_eu_sou"))
+```
+
+```{r  20c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial"))
+```
+
+### 2. Área:
+
+```{r  20c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial", "x2_area"))
+```
+
+```{r  20c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial"))
+```
+
+### 3. Gênero:
+
+```{r  20c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial", "x3_genero"))
+```
+
+```{r  20c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial"))
+```
+
+### 5. Faixa etária:
+
+```{r  20c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial", "x5_faixa_etaria"))
+```
+
+```{r  20c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial"))
+```
+
+### 6. Alocação:
+
+```{r  20c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial", "x6_alocacao"))
+```
+
+```{r  20c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial"))
+```
+
+
+## Questão 20d
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Bem intencionada]
+
+ 
+### 1. Eu sou:
+
+```{r  20d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada", "x1_eu_sou"))
+```
+
+```{r  20d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada"))
+```
+
+### 2. Área:
+
+```{r  20d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada", "x2_area"))
+```
+
+```{r  20d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada"))
+```
+
+### 3. Gênero:
+
+```{r  20d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada", "x3_genero"))
+```
+
+```{r  20d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada"))
+```
+
+### 5. Faixa etária:
+
+```{r  20d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada", "x5_faixa_etaria"))
+```
+
+```{r  20d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada"))
+```
+
+### 6. Alocação:
+
+```{r  20d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada", "x6_alocacao"))
+```
+
+```{r  20d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada"))
+```
+
+
+## Questão 20e
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Técnica]
+
+ 
+### 1. Eu sou:
+
+```{r  20e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica", "x1_eu_sou"))
+```
+
+```{r  20e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica"))
+```
+
+### 2. Área:
+
+```{r  20e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica", "x2_area"))
+```
+
+```{r  20e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica"))
+```
+
+### 3. Gênero:
+
+```{r  20e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica", "x3_genero"))
+```
+
+```{r  20e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica"))
+```
+
+### 5. Faixa etária:
+
+```{r  20e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica", "x5_faixa_etaria"))
+```
+
+```{r  20e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica"))
+```
+
+### 6. Alocação:
+
+```{r  20e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica", "x6_alocacao"))
+```
+
+```{r  20e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica"))
+```
+
+
+## Questão 20f
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Gestora de pessoas]
+
+ 
+### 1. Eu sou:
+
+```{r  20f_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas", "x1_eu_sou"))
+```
+
+```{r  20f_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas"))
+```
+
+### 2. Área:
+
+```{r  20f_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas", "x2_area"))
+```
+
+```{r  20f_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas"))
+```
+
+### 3. Gênero:
+
+```{r  20f_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas", "x3_genero"))
+```
+
+```{r  20f_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas"))
+```
+
+### 5. Faixa etária:
+
+```{r  20f_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas", "x5_faixa_etaria"))
+```
+
+```{r  20f_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas"))
+```
+
+### 6. Alocação:
+
+```{r  20f_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas", "x6_alocacao"))
+```
+
+```{r  20f_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas"))
+```
+
+
+## Questão 20g
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Focada no cliente]
+
+ 
+### 1. Eu sou:
+
+```{r  20g_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente", "x1_eu_sou"))
+```
+
+```{r  20g_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente"))
+```
+
+### 2. Área:
+
+```{r  20g_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente", "x2_area"))
+```
+
+```{r  20g_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente"))
+```
+
+### 3. Gênero:
+
+```{r  20g_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente", "x3_genero"))
+```
+
+```{r  20g_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente"))
+```
+
+### 5. Faixa etária:
+
+```{r  20g_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente", "x5_faixa_etaria"))
+```
+
+```{r  20g_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente"))
+```
+
+### 6. Alocação:
+
+```{r  20g_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente", "x6_alocacao"))
+```
+
+```{r  20g_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente"))
+```
+
+
+## Questão 20h
+
+> 20. A liderança sênior (diretoria e CEO) da Inmetrics é: [Próxima das equipes]
+
+ 
+### 1. Eu sou:
+
+```{r  20h_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes", "x1_eu_sou"))
+```
+
+```{r  20h_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes"))
+```
+
+### 2. Área:
+
+```{r  20h_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes", "x2_area"))
+```
+
+```{r  20h_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes"))
+```
+
+### 3. Gênero:
+
+```{r  20h_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes", "x3_genero"))
+```
+
+```{r  20h_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  20h_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  20h_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes"))
+```
+
+### 5. Faixa etária:
+
+```{r  20h_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes", "x5_faixa_etaria"))
+```
+
+```{r  20h_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes"))
+```
+
+### 6. Alocação:
+
+```{r  20h_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes", "x6_alocacao"))
+```
+
+```{r  20h_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes"))
+```
+
+
+## Questão 21a
+
+> 21. Inovação na Inmetrics é: [Incentivada]
+
+ 
+### 1. Eu sou:
+
+```{r  21a_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_incentivada", "x1_eu_sou"))
+```
+
+```{r  21a_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x21_inovacao_na_inmetrics_e_incentivada"))
+```
+
+### 2. Área:
+
+```{r  21a_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_incentivada", "x2_area"))
+```
+
+```{r  21a_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x21_inovacao_na_inmetrics_e_incentivada"))
+```
+
+### 3. Gênero:
+
+```{r  21a_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_incentivada", "x3_genero"))
+```
+
+```{r  21a_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x21_inovacao_na_inmetrics_e_incentivada"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  21a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_incentivada", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  21a_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x21_inovacao_na_inmetrics_e_incentivada"))
+```
+
+### 5. Faixa etária:
+
+```{r  21a_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_incentivada", "x5_faixa_etaria"))
+```
+
+```{r  21a_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x21_inovacao_na_inmetrics_e_incentivada"))
+```
+
+### 6. Alocação:
+
+```{r  21a_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_incentivada", "x6_alocacao"))
+```
+
+```{r  21a_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x21_inovacao_na_inmetrics_e_incentivada"))
+```
+
+
+## Questão 21b
+
+> 21. Inovação na Inmetrics é: [Teórica]
+
+ 
+### 1. Eu sou:
+
+```{r  21b_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_teorica", "x1_eu_sou"))
+```
+
+```{r  21b_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x21_inovacao_na_inmetrics_e_teorica"))
+```
+
+### 2. Área:
+
+```{r  21b_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_teorica", "x2_area"))
+```
+
+```{r  21b_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x21_inovacao_na_inmetrics_e_teorica"))
+```
+
+### 3. Gênero:
+
+```{r  21b_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_teorica", "x3_genero"))
+```
+
+```{r  21b_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x21_inovacao_na_inmetrics_e_teorica"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  21b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_teorica", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  21b_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x21_inovacao_na_inmetrics_e_teorica"))
+```
+
+### 5. Faixa etária:
+
+```{r  21b_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_teorica", "x5_faixa_etaria"))
+```
+
+```{r  21b_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x21_inovacao_na_inmetrics_e_teorica"))
+```
+
+### 6. Alocação:
+
+```{r  21b_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_teorica", "x6_alocacao"))
+```
+
+```{r  21b_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x21_inovacao_na_inmetrics_e_teorica"))
+```
+
+
+## Questão 21c
+
+> 21. Inovação na Inmetrics é: [Voltada às necessidades dos clientes]
+
+ 
+### 1. Eu sou:
+
+```{r  21c_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes", "x1_eu_sou"))
+```
+
+```{r  21c_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes"))
+```
+
+### 2. Área:
+
+```{r  21c_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes", "x2_area"))
+```
+
+```{r  21c_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes"))
+```
+
+### 3. Gênero:
+
+```{r  21c_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes", "x3_genero"))
+```
+
+```{r  21c_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  21c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  21c_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes"))
+```
+
+### 5. Faixa etária:
+
+```{r  21c_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes", "x5_faixa_etaria"))
+```
+
+```{r  21c_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes"))
+```
+
+### 6. Alocação:
+
+```{r  21c_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes", "x6_alocacao"))
+```
+
+```{r  21c_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes"))
+```
+
+
+## Questão 21d
+
+> 21. Inovação na Inmetrics é: [Voltada ao desenvolvimento de novos produtos]
+
+ 
+### 1. Eu sou:
+
+```{r  21d_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos", "x1_eu_sou"))
+```
+
+```{r  21d_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos"))
+```
+
+### 2. Área:
+
+```{r  21d_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos", "x2_area"))
+```
+
+```{r  21d_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos"))
+```
+
+### 3. Gênero:
+
+```{r  21d_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos", "x3_genero"))
+```
+
+```{r  21d_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  21d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  21d_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos"))
+```
+
+### 5. Faixa etária:
+
+```{r  21d_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos", "x5_faixa_etaria"))
+```
+
+```{r  21d_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos"))
+```
+
+### 6. Alocação:
+
+```{r  21d_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos", "x6_alocacao"))
+```
+
+```{r  21d_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos"))
+```
+
+
+## Questão 21e
+
+> 21. Inovação na Inmetrics é: [Parte do DNA da empresa]
+
+ 
+### 1. Eu sou:
+
+```{r  21e_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa", "x1_eu_sou"))
+```
+
+```{r  21e_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa"))
+```
+
+### 2. Área:
+
+```{r  21e_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa", "x2_area"))
+```
+
+```{r  21e_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa"))
+```
+
+### 3. Gênero:
+
+```{r  21e_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa", "x3_genero"))
+```
+
+```{r  21e_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  21e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  21e_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa"))
+```
+
+### 5. Faixa etária:
+
+```{r  21e_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa", "x5_faixa_etaria"))
+```
+
+```{r  21e_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa"))
+```
+
+### 6. Alocação:
+
+```{r  21e_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa", "x6_alocacao"))
+```
+
+```{r  21e_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa"))
+```
+
+
+## Questão 21f
+
+> 21. Inovação na Inmetrics é: [Isolada]
+
+ 
+### 1. Eu sou:
+
+```{r  21f_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_isolada", "x1_eu_sou"))
+```
+
+```{r  21f_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x21_inovacao_na_inmetrics_e_isolada"))
+```
+
+### 2. Área:
+
+```{r  21f_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_isolada", "x2_area"))
+```
+
+```{r  21f_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x21_inovacao_na_inmetrics_e_isolada"))
+```
+
+### 3. Gênero:
+
+```{r  21f_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_isolada", "x3_genero"))
+```
+
+```{r  21f_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x21_inovacao_na_inmetrics_e_isolada"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  21f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_isolada", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  21f_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x21_inovacao_na_inmetrics_e_isolada"))
+```
+
+### 5. Faixa etária:
+
+```{r  21f_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_isolada", "x5_faixa_etaria"))
+```
+
+```{r  21f_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x21_inovacao_na_inmetrics_e_isolada"))
+```
+
+### 6. Alocação:
+
+```{r  21f_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_isolada", "x6_alocacao"))
+```
+
+```{r  21f_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x21_inovacao_na_inmetrics_e_isolada"))
+```
+
+
+## Questão 21g
+
+> 21. Inovação na Inmetrics é: [Dificultada]
+
+ 
+### 1. Eu sou:
+
+```{r  21g_x1_eu_sou_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_dificultada", "x1_eu_sou"))
+```
+
+```{r  21g_x1_eu_sou_sjxtab}
+print.contintab(sjxtab("x1_eu_sou", "x21_inovacao_na_inmetrics_e_dificultada"))
+```
+
+### 2. Área:
+
+```{r  21g_x2_area_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_dificultada", "x2_area"))
+```
+
+```{r  21g_x2_area_sjxtab}
+print.contintab(sjxtab("x2_area", "x21_inovacao_na_inmetrics_e_dificultada"))
+```
+
+### 3. Gênero:
+
+```{r  21g_x3_genero_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_dificultada", "x3_genero"))
+```
+
+```{r  21g_x3_genero_sjxtab}
+print.contintab(sjxtab("x3_genero", "x21_inovacao_na_inmetrics_e_dificultada"))
+```
+
+### 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)
+
+```{r  21g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_dificultada", "x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics"))
+```
+
+```{r  21g_x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics_sjxtab}
+print.contintab(sjxtab("x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics", "x21_inovacao_na_inmetrics_e_dificultada"))
+```
+
+### 5. Faixa etária:
+
+```{r  21g_x5_faixa_etaria_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_dificultada", "x5_faixa_etaria"))
+```
+
+```{r  21g_x5_faixa_etaria_sjxtab}
+print.contintab(sjxtab("x5_faixa_etaria", "x21_inovacao_na_inmetrics_e_dificultada"))
+```
+
+### 6. Alocação:
+
+```{r  21g_x6_alocacao_grafico, fig.height=5}
+grafico_uma_likert(sumariza_uma_likert("x21_inovacao_na_inmetrics_e_dificultada", "x6_alocacao"))
+```
+
+```{r  21g_x6_alocacao_sjxtab}
+print.contintab(sjxtab("x6_alocacao", "x21_inovacao_na_inmetrics_e_dificultada"))
+``` 

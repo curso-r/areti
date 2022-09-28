@@ -1,0 +1,24 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+.book .book-body .page-wrapper .page-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0 40px;
+}
+
+#associacao-entre-construtos-e-cortes table {
+  width: 100%;
+  font-size: small;
+} 

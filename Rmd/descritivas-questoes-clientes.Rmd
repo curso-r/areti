@@ -1,0 +1,267 @@
+---
+title: "Untitled"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+# (PART) Clientes {-}
+
+# Descritivas das Questões
+
+
+```{r setupssssasssssss, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.width = 12
+)
+library(knitr)
+library(JLutils)
+library(kableExtra)
+library(ggplot2)
+library(ggrepel)
+library(tidyverse)
+
+#
+wrap_palavra_grande <- function(palavras, n = 50) {
+  linha1 <- palavras %>% str_sub(1, -n)
+  linha2 <- palavras %>% str_sub(-n+1)
+  map2_chr(linha1, linha2, paste, sep = "\n")
+}
+
+#
+categs_likert_ordenados <- c(
+  "Discordo totalmente"
+  ,"Discordo parcialmente"
+  ,"Não concordo nem discordo"
+  ,"Concordo parcialmente"
+  ,"Concordo totalmente"
+)
+
+#
+eh_likert <- function(x) {
+  any(x %in% categs_likert_ordenados)
+}
+
+#
+sumariza_likert <- function(data, variaveis_selecionadas, cortes) {
+  categs_likert_ordenados <- c(
+    "Discordo totalmente"
+    ,"Discordo parcialmente"
+    ,"Não concordo nem discordo"
+    ,"Concordo parcialmente"
+    ,"Concordo totalmente"
+  )
+  
+  data <- data %>%
+    tidyr::gather(question, response, !!variaveis_selecionadas) %>%  
+    dplyr::filter(response %in% categs_likert_ordenados) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      group = do.call(partial(paste, sep = "|"), syms(cortes))
+    ) %>%
+    dplyr::group_by(group) %>%
+    dplyr::mutate(
+      count_group = length(group)
+    ) %>%
+    dplyr::group_by(question, group, response) %>%
+    dplyr::summarise(
+      count_group = first(count_group),
+      count = length(group)
+    ) %>%
+    dplyr::group_by(question, group) %>%
+    dplyr::mutate(
+      group_n = glue::glue("{group} ({sum(count)})"),
+      p = count/sum(count),
+      p_lbl = scales::percent(p, 0.1, decimal.mark = ","),
+      p_lbl = if_else(p < 0.015, "", p_lbl)
+    ) %>%
+    dplyr::select(-count_group) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      count_concordo_totalmente = dplyr::if_else(response %in% "Concordo totalmente", .$p, 0.0),
+      response = fct_relevel(response, !!rev(categs_likert_ordenados))
+    ) %>%
+    dplyr::left_join(papel_das_variaveis %>% dplyr::select(question = variavel_nome, variavel_texto, ordem_das_variaveis) %>% dplyr::distinct()) %>%
+    dplyr::mutate(
+      variavel_texto = str_wrap(variavel_texto, width = 40)
+    )
+  
+  
+  data
+}
+
+#
+grafico_likert <- function(clientes_sumario, titulo = "", ordena_por_concordo = TRUE) {
+  
+  if(ordena_por_concordo) {
+    clientes_sumario  <- clientes_sumario %>%
+      dplyr::mutate(
+        variavel_texto = fct_reorder(
+          factor(variavel_texto), 
+          -count_concordo_totalmente, 
+          .fun = "mean"
+        )
+      )
+  } else {
+    clientes_sumario  <- clientes_sumario %>%
+      dplyr::mutate(
+        variavel_texto = fct_reorder(
+          factor(variavel_texto), 
+          ordem_das_variaveis, 
+          .fun = "mean"
+        )
+      )
+  }
+  
+  clientes_sumario %>%
+    dplyr::filter(!is.na(response)) %>%
+    ggplot(aes(x = group_n, y = p, fill = response)) +
+    geom_col(position = "stack") +
+    geom_label(
+      aes(label = p_lbl), 
+      position = position_stack(vjust = .5), 
+      colour = "white", 
+      fontface = "bold", 
+      label.size = 0
+    ) +
+    coord_flip() +
+    scale_fill_manual(values = rev(c("#CA0020", "#F4A582", "#979797", "#92C5DE", "#0571B0"))) + 
+    theme_minimal(14, base_family = "serif") +
+    theme(legend.position="top",
+          axis.text.y = element_text(hjust = 0),
+          strip.text.y = element_text(angle = 180, hjust = 0),
+          strip.placement = "outside"
+    ) +
+    guides(fill = guide_legend(nrow = 2, byrow = FALSE)) +
+    labs(fill = "Resposta:", x = "", y = "") +
+    scale_y_continuous(labels = scales::percent_format(decimal.mark = ","))+
+    scale_x_discrete(labels = partial(str_wrap, width = 40)) +
+    facet_grid(variavel_texto~., switch = "y", scales = "free_y") +
+    ggtitle(titulo)
+}
+
+```
+
+```{r}
+clientes <- readRDS("D:/OneDrive/Documents/areti/data/clientes.rds") 
+construtos <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "construtos")
+variaveis <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "variaveis")
+papel_das_variaveis <- construtos %>% 
+  left_join(variaveis) %>%
+  dplyr::mutate(
+    variavel_nome = variavel_nome %>% stringr::str_replace_all('\"', ''),
+    ordem_das_variaveis = as.numeric(fct_inorder(variavel_nome))
+  ) 
+  
+
+variaveis_selecionadas <- clientes %>% select_if(eh_likert) %>% names
+```
+
+## Tempo de Clientela
+
+```{r, results='asis'}
+
+
+tabela_cortes <- clientes %>%
+  mutate(x1_ha_quanto_tempo_sua_empresa_e_cliente_da_inmetrics =  factor(x1_ha_quanto_tempo_sua_empresa_e_cliente_da_inmetrics, levels = c("Menos de 1 ano", "1 a 3 anos", "3 a 6 anos", "Mais de 6 anos"))) %>%
+  select(x1_ha_quanto_tempo_sua_empresa_e_cliente_da_inmetrics) %>%
+  gather("Variável", "Categoria") %>%
+  mutate(
+    Categoria = factor(Categoria, levels = c("Menos de 1 ano", "1 a 3 anos", "3 a 6 anos", "Mais de 6 anos"))
+  ) %>%
+  group_by(`Variável`, Categoria, .drop = FALSE) %>%
+  count(.drop = FALSE) %>%
+  group_by(`Variável`) %>%
+  mutate(
+    `%` = scales::percent(n/sum(n), 0.1, decimal.mark = ",")
+  ) %>%
+  ungroup() %>%
+  mutate(
+    `Variável` = ""
+  )
+
+tabela_cortes %>%
+  mutate(`Gráfico` = "preencher_lacuna_com_js") %>%
+  kable(caption = "Variáveis de Perfil", format = "markdown") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 12, 
+    fixed_thead = TRUE
+  ) %>%
+  pack_rows("Posição", 1, 4, label_row_css = "background-color: #666; color: #fff;") %>%
+  column_spec(5, width = "8cm")
+  
+```
+
+```{r, results='asis'}
+codigos_js <- tabela_cortes %>%
+  ungroup %>%
+  mutate(
+    p = `%`,
+    p = stringr::str_replace(p, ",", "."),
+    linha = 1:n() -1,
+    span = glue::glue("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: {p}'>|</span>"),
+    define_objeto = glue::glue("objeto_{linha} = $(\"td:contains(preencher_lacuna_com_js)\").eq({linha})"),
+    empty_texto_do_objeto = glue::glue("objeto_{linha}.empty()"),
+    append_span_no_objeto = glue::glue("objeto_{linha}.append(\"{span}\")"),
+  ) 
+
+htmltools::HTML(paste(collapse = "",
+  "<script>", 
+   codigos_js %>% pull(define_objeto) %>% paste(collapse = ";"), 
+  ";",
+   codigos_js %>% pull(empty_texto_do_objeto) %>% paste(collapse = ";"),
+  ";",
+   codigos_js %>% pull(append_span_no_objeto) %>% paste(collapse = ";"), 
+  "</script>"
+))
+```
+
+
+
+## Questões Likert
+
+```{r}
+clientes_sumario <- clientes %>% 
+  mutate(geral = "geral") %>%
+  sumariza_likert(
+    variaveis_selecionadas = variaveis_selecionadas,
+    cortes = c("geral")
+  ) %>%
+  select(-variavel_texto) %>%
+  left_join(
+    tibble(question = names(clientes),
+          variavel_texto = readr::read_csv("D:/OneDrive/Documents/areti/data-raw/(clientes) Pesquisa de Cultura da InMetrics.csv", n_max = 1, col_names = FALSE) %>% gather(questao, variavel_texto) %>% pluck("variavel_texto")
+    ),
+by = c("question")
+  )
+```
+
+
+```{r aazz, fig.height=10}
+
+graficoaa <- grafico_likert(
+  clientes_sumario,
+  titulo = "Questões no Geral",
+  ordena_por_concordo = TRUE
+)
+
+graficoaa
+```
+
+
+## Questão aberta
+
+"5. Que mudanças trariam maior impacto positivo no seu atual nível de satisfação? (até 300 caracteres)"
+
+```{r}
+clientes %>% 
+select(x5_que_mudancas_trariam_maior_impacto_positivo_no_seu_atual_nivel_de_satisfacao_ate_300_caracteres) %>% mutate(x5_que_mudancas_trariam_maior_impacto_positivo_no_seu_atual_nivel_de_satisfacao_ate_300_caracteres = stringr::str_wrap(x5_que_mudancas_trariam_maior_impacto_positivo_no_seu_atual_nivel_de_satisfacao_ate_300_caracteres, 5))  %>% set_names("")%>% kable() %>% column_spec(1, width = "33em")
+```
+

@@ -1,0 +1,195 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics},
+            pdfauthor={R6 e Aretí},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{R6 e Aretí}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{projeto}{%
+\section{Projeto}\label{projeto}}
+
+Projeto de Pesquisa de Cultura da Inmetrics realizada pela Aretí Desenvolvimento em parceria com a R6.
+
+\hypertarget{part-colaboradores}{%
+\part{Colaboradores}\label{part-colaboradores}}
+
+\hypertarget{descritivas-dos-atributos-de-perfil}{%
+\section{Descritivas dos Atributos de Perfil}\label{descritivas-dos-atributos-de-perfil}}
+
+\begin{table}[t]
+
+\caption{\label{tab:unnamed-chunk-3}Variáveis de Perfil}
+\centering
+\fontsize{12}{14}\selectfont
+\begin{tabular}{l|l|r|l|>{}p{8cm}}
+\hline
+Variável & Categoria & n & \%\\
+\hline
+\multicolumn{4}{l}{\textbf{Posição}}\\
+\hline
+\hspace{1em} & Colaborador & 445 & 85,2\%\\
+\hline
+\hspace{1em} & Líder de equipe & 52 & 10,0\%\\
+\hline
+\hspace{1em} & Líder de líder & 25 & 4,8\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Área}}\\
+\hline
+\hspace{1em} & B.U.'s & 22 & 4,2\%\\
+\hline
+\hspace{1em} & Kernel/Segurança e Cloud & 16 & 3,1\%\\
+\hline
+\hspace{1em} & Operações & 419 & 80,3\%\\
+\hline
+\hspace{1em} & Suportes & 65 & 12,5\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Gênero}}\\
+\hline
+\hspace{1em} & Feminino & 144 & 27,6\%\\
+\hline
+\hspace{1em} & Masculino & 360 & 69,0\%\\
+\hline
+\hspace{1em} & Prefiro não identificar & 18 & 3,4\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Tempo de Empresa}}\\
+\hline
+\hspace{1em} & 1 a 2 anos & 71 & 13,6\%\\
+\hline
+\hspace{1em} & 2 a 4 anos & 137 & 26,2\%\\
+\hline
+\hspace{1em} & 4 a 7 anos & 46 & 8,8\%\\
+\hline
+\hspace{1em} & 6 meses a 1 ano & 145 & 27,8\%\\
+\hline
+\hspace{1em} & Mais de 7 anos & 24 & 4,6\%\\
+\hline
+\hspace{1em} & Menos de 6 meses & 99 & 19,0\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Faixa Etária}}\\
+\hline
+\hspace{1em} & 18 a 20 anos & 23 & 4,4\%\\
+\hline
+\hspace{1em} & 21 a 25 anos & 101 & 19,3\%\\
+\hline
+\hspace{1em} & 26 a 30 anos & 117 & 22,4\%\\
+\hline
+\hspace{1em} & 31 a 35 anos & 107 & 20,5\%\\
+\hline
+\hspace{1em} & 36 a 45 anos & 123 & 23,6\%\\
+\hline
+\hspace{1em} & Mais de 45 anos & 51 & 9,8\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Alocação}}\\
+\hline
+\hspace{1em} & Alocado no cliente & 288 & 55,2\%\\
+\hline
+\hspace{1em} & No Canopus & 201 & 38,5\%\\
+\hline
+\hspace{1em} & No Thera & 33 & 6,3\%\\
+\hline
+\end{tabular}
+\end{table}
+
+
+\end{document}

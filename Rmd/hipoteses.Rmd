@@ -1,0 +1,323 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Associação entre Construtos e Cortes
+
+
+## Resumo 
+
+```{r setuasapasd, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE,
+  fig.width = 12
+)
+library(knitr)
+library(JLutils)
+library(kableExtra)
+library(ggplot2)
+library(ggrepel)
+library(polycor)  
+library(psych)
+library(FactoMineR)
+library(pheatmap)
+library(tidyverse)
+#
+wrap_palavra_grande <- function(palavras, n = 50) {
+  linha1 <- palavras %>% str_sub(1, -n)
+  linha2 <- palavras %>% str_sub(-n+1)
+  map2_chr(linha1, linha2, paste, sep = "\n")
+}
+
+#
+categs_likert_ordenados <- c(
+  "Discordo totalmente"
+  ,"Discordo parcialmente"
+  ,"Não concordo nem discordo"
+  ,"Concordo parcialmente"
+  ,"Concordo totalmente"
+)
+
+#
+eh_likert <- function(x) {
+  any(x %in% categs_likert_ordenados)
+}
+
+#
+sumariza_likert <- function(data, variaveis_selecionadas, cortes) {
+  categs_likert_ordenados <- c(
+    "Discordo totalmente"
+    ,"Discordo parcialmente"
+    ,"Não concordo nem discordo"
+    ,"Concordo parcialmente"
+    ,"Concordo totalmente"
+  )
+  
+  data <- data %>%
+    tidyr::gather("question", "response", !!variaveis_selecionadas) %>%  
+    dplyr::filter(response %in% categs_likert_ordenados) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      group = do.call(partial(paste, sep = "|"), syms(cortes))
+    ) %>%
+    dplyr::group_by(group) %>%
+    dplyr::mutate(
+      count_group = length(group)
+    ) %>%
+    dplyr::group_by(question, group, response) %>%
+    dplyr::summarise(
+      count_group = first(count_group),
+      count = length(group)
+    ) %>%
+    dplyr::group_by(question, group) %>%
+    dplyr::mutate(
+      group_n = glue::glue("{group} ({sum(count)})"),
+      p = count/sum(count),
+      p_lbl = percent(p, 0.1, decimal.mark = ","),
+      p_lbl = if_else(p < 0.015, "", p_lbl)
+    ) %>%
+    dplyr::select(-count_group) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      count_concordo_totalmente = dplyr::if_else(response %in% "Concordo totalmente", .$p, 0.0),
+      response = fct_relevel(response, !!rev(categs_likert_ordenados))
+    ) %>%
+    dplyr::left_join(papel_das_variaveis %>% dplyr::select(question = variavel_nome, variavel_texto, ordem_das_variaveis) %>% dplyr::distinct()) %>%
+    dplyr::mutate(
+      variavel_texto = str_wrap(variavel_texto, width = 40)
+    )
+  
+  
+  data
+}
+
+#
+grafico_likert <- function(colaboradores_sumario, titulo = "", ordena_por_concordo = TRUE) {
+  
+  if(ordena_por_concordo) {
+    colaboradores_sumario  <- colaboradores_sumario %>%
+      dplyr::mutate(
+        variavel_texto = fct_reorder(
+          factor(variavel_texto), 
+          -count_concordo_totalmente, 
+          .fun = "mean"
+        )
+      )
+  } else {
+    colaboradores_sumario  <- colaboradores_sumario %>%
+      dplyr::mutate(
+        variavel_texto = fct_reorder(
+          factor(variavel_texto), 
+          ordem_das_variaveis, 
+          .fun = "mean"
+        )
+      )
+  }
+  
+  colaboradores_sumario %>%
+    dplyr::filter(!is.na(response)) %>%
+    ggplot(aes(x = group_n, y = p, fill = response)) +
+    geom_col(position = "stack") +
+    geom_label(
+      aes(label = p_lbl), 
+      position = position_stack(vjust = .5), 
+      colour = "white", 
+      fontface = "bold", 
+      label.size = 0
+    ) +
+    coord_flip() +
+    scale_fill_manual(values = rev(c("#CA0020", "#F4A582", "#979797", "#92C5DE", "#0571B0"))) + 
+    theme_minimal(14, base_family = "serif") +
+    theme(legend.position="top",
+          axis.text.y = element_text(hjust = 0),
+          strip.text.y = element_text(angle = 180, hjust = 0),
+          strip.placement = "outside"
+    ) +
+    guides(fill = guide_legend(nrow = 2, byrow = FALSE)) +
+    labs(fill = "Resposta:", x = "", y = "") +
+    scale_y_continuous(labels = scales::percent_format(decimal.mark = ","))+
+    scale_x_discrete(labels = partial(str_wrap, width = 40)) +
+    facet_grid(variavel_texto~., switch = "y", scales = "free_y") +
+    ggtitle(titulo)
+}
+
+```
+
+
+
+```{r a32asas}
+#BDs
+colaboradores_com_construtos <- readRDS("D:/OneDrive/Documents/areti/data/colaboradores_com_construtos.rds") %>%
+  mutate(
+    tempo_de_empresa = x4_tempo_de_empresa_ha_quanto_tempo_trabalha_na_inmetrics,
+    tempo_de_empresa = fct_relevel(tempo_de_empresa, c("Menos de 6 meses", "6 meses a 1 ano", "1 a 2 anos", "2 a 4 anos", "4 a 7 anos", "Mais de 7 anos"))
+  )
+construtos <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos v3.xlsx", sheet = "construtos Moema Dani")
+variaveis <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos v3.xlsx", sheet = "variaveis")
+papel_das_variaveis <- construtos %>% 
+  left_join(variaveis) %>%
+  dplyr::mutate(
+    variavel_nome = variavel_nome %>% stringr::str_replace_all('\"', ''),
+    variavel_nome = nome %>% stringr::str_replace_all('\"', ''),
+    ordem_das_variaveis = as.numeric(fct_inorder(variavel_nome))
+  ) %>%
+  dplyr::group_by(variavel_nome) %>%
+  mutate(
+    variavel_texto = first(variavel_texto[!is.na(variavel_texto)])
+  )
+fatores <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos v3.xlsx", sheet = "depara_fatores")
+```
+
+
+```{r}
+tribble(
+  ~Construto,	~`Associado com...`,
+  "Descredibilidade e Injustiça I", "tempo de empresa; gênero",
+  "Descredibilidade e Injustiça II", "tempo de empresa; posição",
+  "Despreparo da Liderança I", "tempo de empresa",
+  "Despreparo da Liderança II", "tempo de empresa",
+  "Baixo Preparo da Empresa Para Exercer Função", "tempo de empresa; gênero; posição",
+  "Planejamento e Método", "tempo de empresa; posição",
+  "Ausência de Meritocracia", "tempo de empresa; gênero",
+  "Proximidade da Liderança I", "tempo de empresa; posição",
+  "Proximidade da Liderança II", "alocação",
+  "Visão do Propósito Comum", "tempo de empresa",
+  "Colaboração", "posição; alocação",
+  "Ambiente Leve e Flexibilidade", "tempo de empresa; gênero; idade",
+  "Liderança Sênior", "tempo de empresa",
+  "Inovação I", "tempo de empresa",
+  "Inovação II", "tempo de empresa",
+) %>%
+  knitr::kable(caption = "Resumo das associações entre construtos e variáveis de corte.") %>%
+  kable_styling(latex_options = c("hold_position"),latex_options = c("hold_position"),
+    font_size = 10
+  ) 
+```
+
+\pagebreak
+
+## Descredibilidade e Injustiça I
+
+**Hipótese:** A percepção de Descredibilidade e Injustiça I pode ser diferente entre alguns perfis.
+
+**Conclusão:** Há evidências que a percepção de Descredibilidade e Injustiça I esteja associada com o tempo de empresa e com o Gênero.
+
+- Quanto maior o tempo de casa, menor a percepção.
+- Gênero "Prefiro Não identificar" apresentou menor percepção.
+
+### Estatísticas Descritivas
+
+```{r descredibilidade_e_injustica1_c, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = descredibilidade_e_injustica1,
+             y = tempo_de_empresa, 
+             colour = tempo_de_empresa, 
+             fill = tempo_de_empresa)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Tempo de Empresa", colour = "Tempo de Empresa", y = "", x = "Percepção de\nDescredibilidade e Injustiça I")
+```
+
+
+```{r descredibilidade_e_injustica1_a}
+colaboradores_com_construtos %>%
+  dplyr::group_by(tempo_de_empresa) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(descredibilidade_e_injustica1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable(caption = "Medidas Resumo do Score de 'Descredibilidade e Injustiça I', por tempo de casa") %>%
+  kable_styling(latex_options = c("hold_position"),
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 10, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+```{r descredibilidade_e_injustica1_cc, fig.height=4, fig.width= 8}
+library(ggridges)
+colaboradores_com_construtos %>%
+  ggplot(aes(x = descredibilidade_e_injustica1,
+             y = x3_genero, 
+             colour = x3_genero, 
+             fill = x3_genero)) +
+  geom_density_ridges(alpha = 0.1) +
+  theme_minimal(14) +
+  labs(fill = "Gênero", colour = "Gênero", y = "", x = "Percepção de\nDescredibilidade e Injustiça I")
+```
+
+
+
+```{r descredibilidade_e_injustica1_aa}
+colaboradores_com_construtos %>%
+  dplyr::group_by(x3_genero) %>%
+  dplyr::summarise(
+    `N`          = n(),
+    `Média`      = mean(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Desv.Pad.`  = sd(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `Mínimo`     = min(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1),
+    `1º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.25, na.rm = TRUE) %>% round(1),
+    `Mediana`    = quantile(descredibilidade_e_injustica1, probs = 0.50, na.rm = TRUE) %>% round(1),
+    `3º Quartil` = quantile(descredibilidade_e_injustica1, probs = 0.75, na.rm = TRUE) %>% round(1),
+    `Máximo`     = max(descredibilidade_e_injustica1, na.rm = TRUE) %>% round(1)
+  ) %>%
+  knitr::kable(caption = "Medidas Resumo do Score de 'Descredibilidade e Injustiça I' por gênero") %>%
+  kable_styling(latex_options = c("hold_position"),
+    #bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 10, 
+    fixed_thead = FALSE
+  ) 
+```
+
+
+\pagebreak
+
+### Testes de Hipótese
+
+```{r descredibilidade_e_injustica1_b, results = "asis"}
+fit_hipotese <- glm(
+  descredibilidade_e_injustica1 ~ 1 
+  + x1_eu_sou 
+  + x2_area 
+  + x3_genero 
+  + tempo_de_empresa
+  + x5_faixa_etaria
+  + x6_alocacao, 
+  data = colaboradores_com_construtos)
+
+fit_reduzido <- glm(
+  descredibilidade_e_injustica1 ~ 1 
+  # + x1_eu_sou
+  # + x2_area
+  + x3_genero
+  + tempo_de_empresa
+  # + x5_faixa_etaria
+  # + x6_alocacao
+  ,data = colaboradores_com_construtos)
+
+stargazer::stargazer(single.row = TRUE,
+  fit_hipotese, 
+  fit_reduzido
+)
+```
+
+
+
+
+
+
+

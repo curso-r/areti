@@ -1,0 +1,96 @@
+---
+title: "Untitled"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+# (PART) Colaboradores {-}
+
+# Descritivas dos Atributos de Perfil
+
+```{r setupassasasasasa, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  error = FALSE,
+  warning = FALSE
+)
+knitr::opts_knit$set(kable.force.latex = FALSE)
+library(tidyverse)
+library(knitr)
+library(formattable)
+library(kableExtra)
+```
+
+```{r}
+colaboradores <- readRDS("D:/OneDrive/Documents/areti/data/colaboradores.rds") 
+construtos <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "construtos")
+variaveis <- readxl::read_xlsx("D:/OneDrive/Documents/areti/data/Questoes_e_Construtos.xlsx", sheet = "variaveis")
+papel_das_variaveis <- construtos %>% 
+  left_join(variaveis)
+```
+
+```{r, results='asis'}
+variaveis_de_corte <- papel_das_variaveis %>% 
+  filter(construto %in% "corte") %>% 
+  pull(variavel_nome)
+
+
+tabela_cortes <- colaboradores %>%
+  select(!!variaveis_de_corte) %>%
+  gather("Variável", "Categoria") %>%
+  group_by(`Variável`, Categoria) %>%
+  count() %>%
+  group_by(`Variável`) %>%
+  mutate(
+    `%` = scales::percent(n/sum(n), 0.1, decimal.mark = ",")
+  ) %>%
+  ungroup() %>%
+  mutate(
+    `Variável` = ""
+  )
+
+tabela_cortes %>%
+  # mutate(`Gráfico` = "preencher_lacuna_com_js") %>%
+  kable(caption = "Variáveis de Perfil", format = "latex") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"), 
+    full_width = FALSE, 
+    font_size = 12, 
+    fixed_thead = TRUE
+  ) %>%
+  pack_rows("Posição", 1, 3, label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Área", 3+1, 3+4, label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Gênero", 3+4+1, 3+4+3, label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Tempo de Empresa", 3+4+3+1, 3+4+3+6, label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Faixa Etária", 3+4+3+6+1, 3+4+3+6+6, label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Alocação", 3+4+3+6+6+1, 3+4+3+6+3+6, label_row_css = "background-color: #666; color: #fff;") %>%
+  column_spec(5, width = "8cm")
+  
+```
+
+```{r, results='asis'}
+codigos_js <- tabela_cortes %>%
+  ungroup %>%
+  mutate(
+    p = `%`,
+    p = stringr::str_replace(p, ",", "."),
+    linha = 1:n() -1,
+    span = glue::glue("<span style='display: inline-block; color: #ffffff00; direction: rtl; border-radius: 1px; padding-right: 2px; background-color: lightgreen; width: {p}'>|</span>"),
+    define_objeto = glue::glue("objeto_{linha} = $(\"td:contains(preencher_lacuna_com_js)\").eq({linha})"),
+    empty_texto_do_objeto = glue::glue("objeto_{linha}.empty()"),
+    append_span_no_objeto = glue::glue("objeto_{linha}.append(\"{span}\")"),
+  ) 
+
+htmltools::HTML(paste(collapse = "",
+  "<script>", 
+   codigos_js %>% pull(define_objeto) %>% paste(collapse = ";"), 
+  ";",
+   codigos_js %>% pull(empty_texto_do_objeto) %>% paste(collapse = ";"),
+  ";",
+   codigos_js %>% pull(append_span_no_objeto) %>% paste(collapse = ";"), 
+  "</script>"
+))
+```
