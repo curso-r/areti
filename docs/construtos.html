@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Construtos | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics</title>
+  <meta name="description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
+  <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Construtos | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Construtos | Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics" />
+  
+  <meta name="twitter:description" content="Documentação da Análise Estatística do Projeto ‘Pesquisa de Cultura da Inmetrics’ da Aretí Desenvolvimento." />
+  
+
+<meta name="author" content="R6 e Aretí" />
+
+
+<meta name="date" content="2019-07-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="questoes-versus-cortes.html">
+<link rel="next" href="associacao-entre-construtos-e-cortes.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.7/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R6 Consultoria</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Projeto</a></li>
+<li class="chapter" data-level="2" data-path="descritivas-dos-atributos-de-perfil.html"><a href="descritivas-dos-atributos-de-perfil.html"><i class="fa fa-check"></i><b>2</b> Descritivas dos Atributos de Perfil</a></li>
+<li class="chapter" data-level="3" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html"><i class="fa fa-check"></i><b>3</b> Descritivas das Questões</a><ul>
+<li class="chapter" data-level="3.1" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#geral"><i class="fa fa-check"></i><b>3.1</b> Geral</a></li>
+<li class="chapter" data-level="3.2" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-posicao-eu-sou"><i class="fa fa-check"></i><b>3.2</b> Questões por Posição (Eu sou…)</a></li>
+<li class="chapter" data-level="3.3" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-area"><i class="fa fa-check"></i><b>3.3</b> Questões por Área</a></li>
+<li class="chapter" data-level="3.4" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-genero"><i class="fa fa-check"></i><b>3.4</b> Questões por Gênero</a></li>
+<li class="chapter" data-level="3.5" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-tempo-de-empresa"><i class="fa fa-check"></i><b>3.5</b> Questões por Tempo de Empresa</a></li>
+<li class="chapter" data-level="3.6" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-faixa-etaria"><i class="fa fa-check"></i><b>3.6</b> Questões por Faixa Etária</a></li>
+<li class="chapter" data-level="3.7" data-path="descritivas-das-questoes.html"><a href="descritivas-das-questoes.html#questoes-por-alocacao"><i class="fa fa-check"></i><b>3.7</b> Questões por Alocação</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html"><i class="fa fa-check"></i><b>4</b> Questões versus Cortes</a><ul>
+<li class="chapter" data-level="4.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-8a"><i class="fa fa-check"></i><b>4.1</b> Questão 8a</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou"><i class="fa fa-check"></i><b>4.1.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.1.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area"><i class="fa fa-check"></i><b>4.1.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.1.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero"><i class="fa fa-check"></i><b>4.1.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.1.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics"><i class="fa fa-check"></i><b>4.1.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria"><i class="fa fa-check"></i><b>4.1.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.1.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao"><i class="fa fa-check"></i><b>4.1.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-8b"><i class="fa fa-check"></i><b>4.2</b> Questão 8b</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-1"><i class="fa fa-check"></i><b>4.2.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.2.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-1"><i class="fa fa-check"></i><b>4.2.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.2.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-1"><i class="fa fa-check"></i><b>4.2.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.2.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-1"><i class="fa fa-check"></i><b>4.2.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.2.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-1"><i class="fa fa-check"></i><b>4.2.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.2.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-1"><i class="fa fa-check"></i><b>4.2.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-8c"><i class="fa fa-check"></i><b>4.3</b> Questão 8c</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-2"><i class="fa fa-check"></i><b>4.3.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.3.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-2"><i class="fa fa-check"></i><b>4.3.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.3.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-2"><i class="fa fa-check"></i><b>4.3.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.3.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-2"><i class="fa fa-check"></i><b>4.3.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.3.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-2"><i class="fa fa-check"></i><b>4.3.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.3.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-2"><i class="fa fa-check"></i><b>4.3.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-9"><i class="fa fa-check"></i><b>4.4</b> Questão 9</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-3"><i class="fa fa-check"></i><b>4.4.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.4.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-3"><i class="fa fa-check"></i><b>4.4.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.4.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-3"><i class="fa fa-check"></i><b>4.4.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.4.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-3"><i class="fa fa-check"></i><b>4.4.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.4.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-3"><i class="fa fa-check"></i><b>4.4.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.4.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-3"><i class="fa fa-check"></i><b>4.4.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-10a"><i class="fa fa-check"></i><b>4.5</b> Questão 10a</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-4"><i class="fa fa-check"></i><b>4.5.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.5.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-4"><i class="fa fa-check"></i><b>4.5.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.5.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-4"><i class="fa fa-check"></i><b>4.5.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.5.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-4"><i class="fa fa-check"></i><b>4.5.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.5.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-4"><i class="fa fa-check"></i><b>4.5.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.5.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-4"><i class="fa fa-check"></i><b>4.5.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-10d"><i class="fa fa-check"></i><b>4.6</b> Questão 10d</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-5"><i class="fa fa-check"></i><b>4.6.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.6.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-5"><i class="fa fa-check"></i><b>4.6.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.6.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-5"><i class="fa fa-check"></i><b>4.6.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.6.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-5"><i class="fa fa-check"></i><b>4.6.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.6.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-5"><i class="fa fa-check"></i><b>4.6.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.6.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-5"><i class="fa fa-check"></i><b>4.6.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-10e"><i class="fa fa-check"></i><b>4.7</b> Questão 10e</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-6"><i class="fa fa-check"></i><b>4.7.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.7.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-6"><i class="fa fa-check"></i><b>4.7.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.7.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-6"><i class="fa fa-check"></i><b>4.7.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.7.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-6"><i class="fa fa-check"></i><b>4.7.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.7.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-6"><i class="fa fa-check"></i><b>4.7.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.7.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-6"><i class="fa fa-check"></i><b>4.7.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-10f"><i class="fa fa-check"></i><b>4.8</b> Questão 10f</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-7"><i class="fa fa-check"></i><b>4.8.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.8.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-7"><i class="fa fa-check"></i><b>4.8.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.8.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-7"><i class="fa fa-check"></i><b>4.8.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.8.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-7"><i class="fa fa-check"></i><b>4.8.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.8.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-7"><i class="fa fa-check"></i><b>4.8.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.8.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-7"><i class="fa fa-check"></i><b>4.8.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-10g"><i class="fa fa-check"></i><b>4.9</b> Questão 10g</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-8"><i class="fa fa-check"></i><b>4.9.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.9.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-8"><i class="fa fa-check"></i><b>4.9.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.9.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-8"><i class="fa fa-check"></i><b>4.9.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.9.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-8"><i class="fa fa-check"></i><b>4.9.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.9.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-8"><i class="fa fa-check"></i><b>4.9.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.9.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-8"><i class="fa fa-check"></i><b>4.9.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-10b"><i class="fa fa-check"></i><b>4.10</b> Questão 10b</a><ul>
+<li class="chapter" data-level="4.10.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-9"><i class="fa fa-check"></i><b>4.10.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.10.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-9"><i class="fa fa-check"></i><b>4.10.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.10.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-9"><i class="fa fa-check"></i><b>4.10.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.10.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-9"><i class="fa fa-check"></i><b>4.10.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.10.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-9"><i class="fa fa-check"></i><b>4.10.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.10.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-9"><i class="fa fa-check"></i><b>4.10.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.11" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-10c"><i class="fa fa-check"></i><b>4.11</b> Questão 10c</a><ul>
+<li class="chapter" data-level="4.11.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-10"><i class="fa fa-check"></i><b>4.11.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.11.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-10"><i class="fa fa-check"></i><b>4.11.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.11.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-10"><i class="fa fa-check"></i><b>4.11.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.11.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-10"><i class="fa fa-check"></i><b>4.11.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.11.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-10"><i class="fa fa-check"></i><b>4.11.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.11.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-10"><i class="fa fa-check"></i><b>4.11.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.12" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-14"><i class="fa fa-check"></i><b>4.12</b> Questão 14</a><ul>
+<li class="chapter" data-level="4.12.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-11"><i class="fa fa-check"></i><b>4.12.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.12.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-11"><i class="fa fa-check"></i><b>4.12.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.12.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-11"><i class="fa fa-check"></i><b>4.12.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.12.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-11"><i class="fa fa-check"></i><b>4.12.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.12.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-11"><i class="fa fa-check"></i><b>4.12.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.12.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-11"><i class="fa fa-check"></i><b>4.12.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.13" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-11a"><i class="fa fa-check"></i><b>4.13</b> Questão 11a</a><ul>
+<li class="chapter" data-level="4.13.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-12"><i class="fa fa-check"></i><b>4.13.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.13.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-12"><i class="fa fa-check"></i><b>4.13.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.13.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-12"><i class="fa fa-check"></i><b>4.13.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.13.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-12"><i class="fa fa-check"></i><b>4.13.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.13.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-12"><i class="fa fa-check"></i><b>4.13.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.13.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-12"><i class="fa fa-check"></i><b>4.13.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.14" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-11b"><i class="fa fa-check"></i><b>4.14</b> Questão 11b</a><ul>
+<li class="chapter" data-level="4.14.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-13"><i class="fa fa-check"></i><b>4.14.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.14.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-13"><i class="fa fa-check"></i><b>4.14.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.14.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-13"><i class="fa fa-check"></i><b>4.14.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.14.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-13"><i class="fa fa-check"></i><b>4.14.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.14.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-13"><i class="fa fa-check"></i><b>4.14.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.14.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-13"><i class="fa fa-check"></i><b>4.14.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.15" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-11c"><i class="fa fa-check"></i><b>4.15</b> Questão 11c</a><ul>
+<li class="chapter" data-level="4.15.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-14"><i class="fa fa-check"></i><b>4.15.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.15.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-14"><i class="fa fa-check"></i><b>4.15.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.15.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-14"><i class="fa fa-check"></i><b>4.15.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.15.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-14"><i class="fa fa-check"></i><b>4.15.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.15.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-14"><i class="fa fa-check"></i><b>4.15.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.15.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-14"><i class="fa fa-check"></i><b>4.15.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.16" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-11d"><i class="fa fa-check"></i><b>4.16</b> Questão 11d</a><ul>
+<li class="chapter" data-level="4.16.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-15"><i class="fa fa-check"></i><b>4.16.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.16.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-15"><i class="fa fa-check"></i><b>4.16.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.16.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-15"><i class="fa fa-check"></i><b>4.16.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.16.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-15"><i class="fa fa-check"></i><b>4.16.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.16.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-15"><i class="fa fa-check"></i><b>4.16.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.16.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-15"><i class="fa fa-check"></i><b>4.16.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.17" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-11e"><i class="fa fa-check"></i><b>4.17</b> Questão 11e</a><ul>
+<li class="chapter" data-level="4.17.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-16"><i class="fa fa-check"></i><b>4.17.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.17.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-16"><i class="fa fa-check"></i><b>4.17.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.17.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-16"><i class="fa fa-check"></i><b>4.17.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.17.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-16"><i class="fa fa-check"></i><b>4.17.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.17.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-16"><i class="fa fa-check"></i><b>4.17.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.17.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-16"><i class="fa fa-check"></i><b>4.17.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.18" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-13a"><i class="fa fa-check"></i><b>4.18</b> Questão 13a</a><ul>
+<li class="chapter" data-level="4.18.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-17"><i class="fa fa-check"></i><b>4.18.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.18.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-17"><i class="fa fa-check"></i><b>4.18.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.18.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-17"><i class="fa fa-check"></i><b>4.18.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.18.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-17"><i class="fa fa-check"></i><b>4.18.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.18.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-17"><i class="fa fa-check"></i><b>4.18.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.18.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-17"><i class="fa fa-check"></i><b>4.18.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.19" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-13b"><i class="fa fa-check"></i><b>4.19</b> Questão 13b</a><ul>
+<li class="chapter" data-level="4.19.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-18"><i class="fa fa-check"></i><b>4.19.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.19.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-18"><i class="fa fa-check"></i><b>4.19.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.19.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-18"><i class="fa fa-check"></i><b>4.19.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.19.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-18"><i class="fa fa-check"></i><b>4.19.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.19.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-18"><i class="fa fa-check"></i><b>4.19.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.19.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-18"><i class="fa fa-check"></i><b>4.19.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.20" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-13c"><i class="fa fa-check"></i><b>4.20</b> Questão 13c</a><ul>
+<li class="chapter" data-level="4.20.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-19"><i class="fa fa-check"></i><b>4.20.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.20.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-19"><i class="fa fa-check"></i><b>4.20.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.20.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-19"><i class="fa fa-check"></i><b>4.20.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.20.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-19"><i class="fa fa-check"></i><b>4.20.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.20.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-19"><i class="fa fa-check"></i><b>4.20.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.20.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-19"><i class="fa fa-check"></i><b>4.20.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.21" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-13d"><i class="fa fa-check"></i><b>4.21</b> Questão 13d</a><ul>
+<li class="chapter" data-level="4.21.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-20"><i class="fa fa-check"></i><b>4.21.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.21.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-20"><i class="fa fa-check"></i><b>4.21.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.21.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-20"><i class="fa fa-check"></i><b>4.21.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.21.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-20"><i class="fa fa-check"></i><b>4.21.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.21.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-20"><i class="fa fa-check"></i><b>4.21.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.21.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-20"><i class="fa fa-check"></i><b>4.21.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.22" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-13e"><i class="fa fa-check"></i><b>4.22</b> Questão 13e</a><ul>
+<li class="chapter" data-level="4.22.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-21"><i class="fa fa-check"></i><b>4.22.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.22.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-21"><i class="fa fa-check"></i><b>4.22.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.22.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-21"><i class="fa fa-check"></i><b>4.22.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.22.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-21"><i class="fa fa-check"></i><b>4.22.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.22.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-21"><i class="fa fa-check"></i><b>4.22.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.22.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-21"><i class="fa fa-check"></i><b>4.22.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.23" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-13f"><i class="fa fa-check"></i><b>4.23</b> Questão 13f</a><ul>
+<li class="chapter" data-level="4.23.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-22"><i class="fa fa-check"></i><b>4.23.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.23.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-22"><i class="fa fa-check"></i><b>4.23.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.23.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-22"><i class="fa fa-check"></i><b>4.23.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.23.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-22"><i class="fa fa-check"></i><b>4.23.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.23.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-22"><i class="fa fa-check"></i><b>4.23.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.23.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-22"><i class="fa fa-check"></i><b>4.23.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.24" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-15a"><i class="fa fa-check"></i><b>4.24</b> Questão 15a</a><ul>
+<li class="chapter" data-level="4.24.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-23"><i class="fa fa-check"></i><b>4.24.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.24.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-23"><i class="fa fa-check"></i><b>4.24.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.24.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-23"><i class="fa fa-check"></i><b>4.24.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.24.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-23"><i class="fa fa-check"></i><b>4.24.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.24.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-23"><i class="fa fa-check"></i><b>4.24.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.24.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-23"><i class="fa fa-check"></i><b>4.24.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.25" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-15b"><i class="fa fa-check"></i><b>4.25</b> Questão 15b</a><ul>
+<li class="chapter" data-level="4.25.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-24"><i class="fa fa-check"></i><b>4.25.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.25.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-24"><i class="fa fa-check"></i><b>4.25.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.25.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-24"><i class="fa fa-check"></i><b>4.25.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.25.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-24"><i class="fa fa-check"></i><b>4.25.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.25.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-24"><i class="fa fa-check"></i><b>4.25.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.25.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-24"><i class="fa fa-check"></i><b>4.25.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.26" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-15c"><i class="fa fa-check"></i><b>4.26</b> Questão 15c</a><ul>
+<li class="chapter" data-level="4.26.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-25"><i class="fa fa-check"></i><b>4.26.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.26.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-25"><i class="fa fa-check"></i><b>4.26.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.26.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-25"><i class="fa fa-check"></i><b>4.26.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.26.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-25"><i class="fa fa-check"></i><b>4.26.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.26.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-25"><i class="fa fa-check"></i><b>4.26.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.26.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-25"><i class="fa fa-check"></i><b>4.26.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.27" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-15d"><i class="fa fa-check"></i><b>4.27</b> Questão 15d</a><ul>
+<li class="chapter" data-level="4.27.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-26"><i class="fa fa-check"></i><b>4.27.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.27.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-26"><i class="fa fa-check"></i><b>4.27.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.27.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-26"><i class="fa fa-check"></i><b>4.27.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.27.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-26"><i class="fa fa-check"></i><b>4.27.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.27.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-26"><i class="fa fa-check"></i><b>4.27.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.27.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-26"><i class="fa fa-check"></i><b>4.27.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.28" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-15e"><i class="fa fa-check"></i><b>4.28</b> Questão 15e</a><ul>
+<li class="chapter" data-level="4.28.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-27"><i class="fa fa-check"></i><b>4.28.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.28.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-27"><i class="fa fa-check"></i><b>4.28.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.28.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-27"><i class="fa fa-check"></i><b>4.28.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.28.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-27"><i class="fa fa-check"></i><b>4.28.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.28.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-27"><i class="fa fa-check"></i><b>4.28.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.28.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-27"><i class="fa fa-check"></i><b>4.28.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.29" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-15f"><i class="fa fa-check"></i><b>4.29</b> Questão 15f</a><ul>
+<li class="chapter" data-level="4.29.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-28"><i class="fa fa-check"></i><b>4.29.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.29.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-28"><i class="fa fa-check"></i><b>4.29.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.29.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-28"><i class="fa fa-check"></i><b>4.29.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.29.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-28"><i class="fa fa-check"></i><b>4.29.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.29.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-28"><i class="fa fa-check"></i><b>4.29.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.29.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-28"><i class="fa fa-check"></i><b>4.29.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.30" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-16a"><i class="fa fa-check"></i><b>4.30</b> Questão 16a</a><ul>
+<li class="chapter" data-level="4.30.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-29"><i class="fa fa-check"></i><b>4.30.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.30.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-29"><i class="fa fa-check"></i><b>4.30.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.30.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-29"><i class="fa fa-check"></i><b>4.30.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.30.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-29"><i class="fa fa-check"></i><b>4.30.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.30.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-29"><i class="fa fa-check"></i><b>4.30.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.30.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-29"><i class="fa fa-check"></i><b>4.30.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.31" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-16b"><i class="fa fa-check"></i><b>4.31</b> Questão 16b</a><ul>
+<li class="chapter" data-level="4.31.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-30"><i class="fa fa-check"></i><b>4.31.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.31.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-30"><i class="fa fa-check"></i><b>4.31.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.31.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-30"><i class="fa fa-check"></i><b>4.31.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.31.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-30"><i class="fa fa-check"></i><b>4.31.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.31.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-30"><i class="fa fa-check"></i><b>4.31.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.31.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-30"><i class="fa fa-check"></i><b>4.31.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.32" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-16c"><i class="fa fa-check"></i><b>4.32</b> Questão 16c</a><ul>
+<li class="chapter" data-level="4.32.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-31"><i class="fa fa-check"></i><b>4.32.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.32.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-31"><i class="fa fa-check"></i><b>4.32.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.32.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-31"><i class="fa fa-check"></i><b>4.32.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.32.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-31"><i class="fa fa-check"></i><b>4.32.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.32.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-31"><i class="fa fa-check"></i><b>4.32.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.32.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-31"><i class="fa fa-check"></i><b>4.32.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.33" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-16d"><i class="fa fa-check"></i><b>4.33</b> Questão 16d</a><ul>
+<li class="chapter" data-level="4.33.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-32"><i class="fa fa-check"></i><b>4.33.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.33.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-32"><i class="fa fa-check"></i><b>4.33.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.33.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-32"><i class="fa fa-check"></i><b>4.33.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.33.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-32"><i class="fa fa-check"></i><b>4.33.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.33.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-32"><i class="fa fa-check"></i><b>4.33.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.33.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-32"><i class="fa fa-check"></i><b>4.33.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.34" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-16e"><i class="fa fa-check"></i><b>4.34</b> Questão 16e</a><ul>
+<li class="chapter" data-level="4.34.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-33"><i class="fa fa-check"></i><b>4.34.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.34.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-33"><i class="fa fa-check"></i><b>4.34.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.34.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-33"><i class="fa fa-check"></i><b>4.34.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.34.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-33"><i class="fa fa-check"></i><b>4.34.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.34.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-33"><i class="fa fa-check"></i><b>4.34.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.34.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-33"><i class="fa fa-check"></i><b>4.34.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.35" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-16f"><i class="fa fa-check"></i><b>4.35</b> Questão 16f</a><ul>
+<li class="chapter" data-level="4.35.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-34"><i class="fa fa-check"></i><b>4.35.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.35.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-34"><i class="fa fa-check"></i><b>4.35.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.35.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-34"><i class="fa fa-check"></i><b>4.35.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.35.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-34"><i class="fa fa-check"></i><b>4.35.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.35.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-34"><i class="fa fa-check"></i><b>4.35.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.35.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-34"><i class="fa fa-check"></i><b>4.35.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.36" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-17a"><i class="fa fa-check"></i><b>4.36</b> Questão 17a</a><ul>
+<li class="chapter" data-level="4.36.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-35"><i class="fa fa-check"></i><b>4.36.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.36.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-35"><i class="fa fa-check"></i><b>4.36.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.36.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-35"><i class="fa fa-check"></i><b>4.36.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.36.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-35"><i class="fa fa-check"></i><b>4.36.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.36.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-35"><i class="fa fa-check"></i><b>4.36.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.36.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-35"><i class="fa fa-check"></i><b>4.36.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.37" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-17b"><i class="fa fa-check"></i><b>4.37</b> Questão 17b</a><ul>
+<li class="chapter" data-level="4.37.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-36"><i class="fa fa-check"></i><b>4.37.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.37.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-36"><i class="fa fa-check"></i><b>4.37.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.37.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-36"><i class="fa fa-check"></i><b>4.37.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.37.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-36"><i class="fa fa-check"></i><b>4.37.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.37.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-36"><i class="fa fa-check"></i><b>4.37.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.37.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-36"><i class="fa fa-check"></i><b>4.37.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.38" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-17c"><i class="fa fa-check"></i><b>4.38</b> Questão 17c</a><ul>
+<li class="chapter" data-level="4.38.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-37"><i class="fa fa-check"></i><b>4.38.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.38.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-37"><i class="fa fa-check"></i><b>4.38.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.38.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-37"><i class="fa fa-check"></i><b>4.38.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.38.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-37"><i class="fa fa-check"></i><b>4.38.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.38.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-37"><i class="fa fa-check"></i><b>4.38.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.38.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-37"><i class="fa fa-check"></i><b>4.38.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.39" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-17d"><i class="fa fa-check"></i><b>4.39</b> Questão 17d</a><ul>
+<li class="chapter" data-level="4.39.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-38"><i class="fa fa-check"></i><b>4.39.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.39.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-38"><i class="fa fa-check"></i><b>4.39.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.39.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-38"><i class="fa fa-check"></i><b>4.39.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.39.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-38"><i class="fa fa-check"></i><b>4.39.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.39.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-38"><i class="fa fa-check"></i><b>4.39.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.39.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-38"><i class="fa fa-check"></i><b>4.39.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.40" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-17e"><i class="fa fa-check"></i><b>4.40</b> Questão 17e</a><ul>
+<li class="chapter" data-level="4.40.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-39"><i class="fa fa-check"></i><b>4.40.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.40.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-39"><i class="fa fa-check"></i><b>4.40.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.40.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-39"><i class="fa fa-check"></i><b>4.40.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.40.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-39"><i class="fa fa-check"></i><b>4.40.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.40.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-39"><i class="fa fa-check"></i><b>4.40.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.40.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-39"><i class="fa fa-check"></i><b>4.40.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.41" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-18a"><i class="fa fa-check"></i><b>4.41</b> Questão 18a</a><ul>
+<li class="chapter" data-level="4.41.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-40"><i class="fa fa-check"></i><b>4.41.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.41.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-40"><i class="fa fa-check"></i><b>4.41.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.41.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-40"><i class="fa fa-check"></i><b>4.41.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.41.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-40"><i class="fa fa-check"></i><b>4.41.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.41.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-40"><i class="fa fa-check"></i><b>4.41.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.41.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-40"><i class="fa fa-check"></i><b>4.41.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.42" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-18b"><i class="fa fa-check"></i><b>4.42</b> Questão 18b</a><ul>
+<li class="chapter" data-level="4.42.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-41"><i class="fa fa-check"></i><b>4.42.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.42.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-41"><i class="fa fa-check"></i><b>4.42.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.42.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-41"><i class="fa fa-check"></i><b>4.42.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.42.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-41"><i class="fa fa-check"></i><b>4.42.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.42.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-41"><i class="fa fa-check"></i><b>4.42.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.42.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-41"><i class="fa fa-check"></i><b>4.42.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.43" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-18c"><i class="fa fa-check"></i><b>4.43</b> Questão 18c</a><ul>
+<li class="chapter" data-level="4.43.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-42"><i class="fa fa-check"></i><b>4.43.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.43.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-42"><i class="fa fa-check"></i><b>4.43.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.43.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-42"><i class="fa fa-check"></i><b>4.43.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.43.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-42"><i class="fa fa-check"></i><b>4.43.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.43.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-42"><i class="fa fa-check"></i><b>4.43.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.43.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-42"><i class="fa fa-check"></i><b>4.43.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.44" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-18d"><i class="fa fa-check"></i><b>4.44</b> Questão 18d</a><ul>
+<li class="chapter" data-level="4.44.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-43"><i class="fa fa-check"></i><b>4.44.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.44.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-43"><i class="fa fa-check"></i><b>4.44.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.44.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-43"><i class="fa fa-check"></i><b>4.44.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.44.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-43"><i class="fa fa-check"></i><b>4.44.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.44.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-43"><i class="fa fa-check"></i><b>4.44.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.44.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-43"><i class="fa fa-check"></i><b>4.44.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.45" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-18e"><i class="fa fa-check"></i><b>4.45</b> Questão 18e</a><ul>
+<li class="chapter" data-level="4.45.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-44"><i class="fa fa-check"></i><b>4.45.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.45.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-44"><i class="fa fa-check"></i><b>4.45.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.45.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-44"><i class="fa fa-check"></i><b>4.45.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.45.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-44"><i class="fa fa-check"></i><b>4.45.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.45.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-44"><i class="fa fa-check"></i><b>4.45.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.45.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-44"><i class="fa fa-check"></i><b>4.45.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.46" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19a"><i class="fa fa-check"></i><b>4.46</b> Questão 19a</a><ul>
+<li class="chapter" data-level="4.46.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-45"><i class="fa fa-check"></i><b>4.46.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.46.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-45"><i class="fa fa-check"></i><b>4.46.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.46.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-45"><i class="fa fa-check"></i><b>4.46.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.46.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-45"><i class="fa fa-check"></i><b>4.46.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.46.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-45"><i class="fa fa-check"></i><b>4.46.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.46.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-45"><i class="fa fa-check"></i><b>4.46.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.47" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19b"><i class="fa fa-check"></i><b>4.47</b> Questão 19b</a><ul>
+<li class="chapter" data-level="4.47.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-46"><i class="fa fa-check"></i><b>4.47.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.47.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-46"><i class="fa fa-check"></i><b>4.47.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.47.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-46"><i class="fa fa-check"></i><b>4.47.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.47.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-46"><i class="fa fa-check"></i><b>4.47.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.47.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-46"><i class="fa fa-check"></i><b>4.47.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.47.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-46"><i class="fa fa-check"></i><b>4.47.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.48" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19c"><i class="fa fa-check"></i><b>4.48</b> Questão 19c</a><ul>
+<li class="chapter" data-level="4.48.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-47"><i class="fa fa-check"></i><b>4.48.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.48.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-47"><i class="fa fa-check"></i><b>4.48.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.48.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-47"><i class="fa fa-check"></i><b>4.48.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.48.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-47"><i class="fa fa-check"></i><b>4.48.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.48.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-47"><i class="fa fa-check"></i><b>4.48.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.48.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-47"><i class="fa fa-check"></i><b>4.48.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.49" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19d"><i class="fa fa-check"></i><b>4.49</b> Questão 19d</a><ul>
+<li class="chapter" data-level="4.49.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-48"><i class="fa fa-check"></i><b>4.49.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.49.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-48"><i class="fa fa-check"></i><b>4.49.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.49.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-48"><i class="fa fa-check"></i><b>4.49.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.49.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-48"><i class="fa fa-check"></i><b>4.49.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.49.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-48"><i class="fa fa-check"></i><b>4.49.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.49.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-48"><i class="fa fa-check"></i><b>4.49.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.50" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19e"><i class="fa fa-check"></i><b>4.50</b> Questão 19e</a><ul>
+<li class="chapter" data-level="4.50.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-49"><i class="fa fa-check"></i><b>4.50.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.50.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-49"><i class="fa fa-check"></i><b>4.50.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.50.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-49"><i class="fa fa-check"></i><b>4.50.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.50.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-49"><i class="fa fa-check"></i><b>4.50.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.50.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-49"><i class="fa fa-check"></i><b>4.50.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.50.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-49"><i class="fa fa-check"></i><b>4.50.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.51" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19f"><i class="fa fa-check"></i><b>4.51</b> Questão 19f</a><ul>
+<li class="chapter" data-level="4.51.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-50"><i class="fa fa-check"></i><b>4.51.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.51.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-50"><i class="fa fa-check"></i><b>4.51.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.51.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-50"><i class="fa fa-check"></i><b>4.51.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.51.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-50"><i class="fa fa-check"></i><b>4.51.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.51.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-50"><i class="fa fa-check"></i><b>4.51.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.51.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-50"><i class="fa fa-check"></i><b>4.51.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.52" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19g"><i class="fa fa-check"></i><b>4.52</b> Questão 19g</a><ul>
+<li class="chapter" data-level="4.52.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-51"><i class="fa fa-check"></i><b>4.52.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.52.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-51"><i class="fa fa-check"></i><b>4.52.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.52.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-51"><i class="fa fa-check"></i><b>4.52.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.52.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-51"><i class="fa fa-check"></i><b>4.52.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.52.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-51"><i class="fa fa-check"></i><b>4.52.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.52.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-51"><i class="fa fa-check"></i><b>4.52.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.53" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-19h"><i class="fa fa-check"></i><b>4.53</b> Questão 19h</a><ul>
+<li class="chapter" data-level="4.53.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-52"><i class="fa fa-check"></i><b>4.53.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.53.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-52"><i class="fa fa-check"></i><b>4.53.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.53.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-52"><i class="fa fa-check"></i><b>4.53.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.53.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-52"><i class="fa fa-check"></i><b>4.53.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.53.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-52"><i class="fa fa-check"></i><b>4.53.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.53.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-52"><i class="fa fa-check"></i><b>4.53.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.54" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20a"><i class="fa fa-check"></i><b>4.54</b> Questão 20a</a><ul>
+<li class="chapter" data-level="4.54.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-53"><i class="fa fa-check"></i><b>4.54.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.54.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-53"><i class="fa fa-check"></i><b>4.54.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.54.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-53"><i class="fa fa-check"></i><b>4.54.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.54.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-53"><i class="fa fa-check"></i><b>4.54.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.54.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-53"><i class="fa fa-check"></i><b>4.54.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.54.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-53"><i class="fa fa-check"></i><b>4.54.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.55" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20b"><i class="fa fa-check"></i><b>4.55</b> Questão 20b</a><ul>
+<li class="chapter" data-level="4.55.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-54"><i class="fa fa-check"></i><b>4.55.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.55.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-54"><i class="fa fa-check"></i><b>4.55.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.55.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-54"><i class="fa fa-check"></i><b>4.55.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.55.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-54"><i class="fa fa-check"></i><b>4.55.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.55.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-54"><i class="fa fa-check"></i><b>4.55.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.55.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-54"><i class="fa fa-check"></i><b>4.55.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.56" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20c"><i class="fa fa-check"></i><b>4.56</b> Questão 20c</a><ul>
+<li class="chapter" data-level="4.56.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-55"><i class="fa fa-check"></i><b>4.56.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.56.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-55"><i class="fa fa-check"></i><b>4.56.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.56.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-55"><i class="fa fa-check"></i><b>4.56.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.56.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-55"><i class="fa fa-check"></i><b>4.56.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.56.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-55"><i class="fa fa-check"></i><b>4.56.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.56.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-55"><i class="fa fa-check"></i><b>4.56.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.57" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20d"><i class="fa fa-check"></i><b>4.57</b> Questão 20d</a><ul>
+<li class="chapter" data-level="4.57.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-56"><i class="fa fa-check"></i><b>4.57.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.57.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-56"><i class="fa fa-check"></i><b>4.57.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.57.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-56"><i class="fa fa-check"></i><b>4.57.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.57.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-56"><i class="fa fa-check"></i><b>4.57.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.57.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-56"><i class="fa fa-check"></i><b>4.57.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.57.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-56"><i class="fa fa-check"></i><b>4.57.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.58" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20e"><i class="fa fa-check"></i><b>4.58</b> Questão 20e</a><ul>
+<li class="chapter" data-level="4.58.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-57"><i class="fa fa-check"></i><b>4.58.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.58.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-57"><i class="fa fa-check"></i><b>4.58.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.58.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-57"><i class="fa fa-check"></i><b>4.58.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.58.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-57"><i class="fa fa-check"></i><b>4.58.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.58.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-57"><i class="fa fa-check"></i><b>4.58.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.58.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-57"><i class="fa fa-check"></i><b>4.58.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.59" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20f"><i class="fa fa-check"></i><b>4.59</b> Questão 20f</a><ul>
+<li class="chapter" data-level="4.59.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-58"><i class="fa fa-check"></i><b>4.59.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.59.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-58"><i class="fa fa-check"></i><b>4.59.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.59.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-58"><i class="fa fa-check"></i><b>4.59.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.59.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-58"><i class="fa fa-check"></i><b>4.59.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.59.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-58"><i class="fa fa-check"></i><b>4.59.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.59.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-58"><i class="fa fa-check"></i><b>4.59.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.60" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20g"><i class="fa fa-check"></i><b>4.60</b> Questão 20g</a><ul>
+<li class="chapter" data-level="4.60.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-59"><i class="fa fa-check"></i><b>4.60.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.60.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-59"><i class="fa fa-check"></i><b>4.60.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.60.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-59"><i class="fa fa-check"></i><b>4.60.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.60.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-59"><i class="fa fa-check"></i><b>4.60.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.60.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-59"><i class="fa fa-check"></i><b>4.60.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.60.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-59"><i class="fa fa-check"></i><b>4.60.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.61" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-20h"><i class="fa fa-check"></i><b>4.61</b> Questão 20h</a><ul>
+<li class="chapter" data-level="4.61.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-60"><i class="fa fa-check"></i><b>4.61.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.61.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-60"><i class="fa fa-check"></i><b>4.61.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.61.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-60"><i class="fa fa-check"></i><b>4.61.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.61.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-60"><i class="fa fa-check"></i><b>4.61.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.61.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-60"><i class="fa fa-check"></i><b>4.61.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.61.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-60"><i class="fa fa-check"></i><b>4.61.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.62" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-21a"><i class="fa fa-check"></i><b>4.62</b> Questão 21a</a><ul>
+<li class="chapter" data-level="4.62.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-61"><i class="fa fa-check"></i><b>4.62.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.62.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-61"><i class="fa fa-check"></i><b>4.62.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.62.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-61"><i class="fa fa-check"></i><b>4.62.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.62.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-61"><i class="fa fa-check"></i><b>4.62.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.62.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-61"><i class="fa fa-check"></i><b>4.62.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.62.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-61"><i class="fa fa-check"></i><b>4.62.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.63" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-21b"><i class="fa fa-check"></i><b>4.63</b> Questão 21b</a><ul>
+<li class="chapter" data-level="4.63.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-62"><i class="fa fa-check"></i><b>4.63.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.63.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-62"><i class="fa fa-check"></i><b>4.63.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.63.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-62"><i class="fa fa-check"></i><b>4.63.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.63.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-62"><i class="fa fa-check"></i><b>4.63.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.63.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-62"><i class="fa fa-check"></i><b>4.63.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.63.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-62"><i class="fa fa-check"></i><b>4.63.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.64" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-21c"><i class="fa fa-check"></i><b>4.64</b> Questão 21c</a><ul>
+<li class="chapter" data-level="4.64.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-63"><i class="fa fa-check"></i><b>4.64.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.64.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-63"><i class="fa fa-check"></i><b>4.64.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.64.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-63"><i class="fa fa-check"></i><b>4.64.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.64.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-63"><i class="fa fa-check"></i><b>4.64.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.64.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-63"><i class="fa fa-check"></i><b>4.64.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.64.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-63"><i class="fa fa-check"></i><b>4.64.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.65" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-21d"><i class="fa fa-check"></i><b>4.65</b> Questão 21d</a><ul>
+<li class="chapter" data-level="4.65.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-64"><i class="fa fa-check"></i><b>4.65.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.65.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-64"><i class="fa fa-check"></i><b>4.65.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.65.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-64"><i class="fa fa-check"></i><b>4.65.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.65.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-64"><i class="fa fa-check"></i><b>4.65.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.65.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-64"><i class="fa fa-check"></i><b>4.65.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.65.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-64"><i class="fa fa-check"></i><b>4.65.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.66" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-21e"><i class="fa fa-check"></i><b>4.66</b> Questão 21e</a><ul>
+<li class="chapter" data-level="4.66.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-65"><i class="fa fa-check"></i><b>4.66.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.66.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-65"><i class="fa fa-check"></i><b>4.66.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.66.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-65"><i class="fa fa-check"></i><b>4.66.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.66.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-65"><i class="fa fa-check"></i><b>4.66.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.66.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-65"><i class="fa fa-check"></i><b>4.66.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.66.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-65"><i class="fa fa-check"></i><b>4.66.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.67" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-21f"><i class="fa fa-check"></i><b>4.67</b> Questão 21f</a><ul>
+<li class="chapter" data-level="4.67.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-66"><i class="fa fa-check"></i><b>4.67.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.67.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-66"><i class="fa fa-check"></i><b>4.67.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.67.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-66"><i class="fa fa-check"></i><b>4.67.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.67.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-66"><i class="fa fa-check"></i><b>4.67.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.67.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-66"><i class="fa fa-check"></i><b>4.67.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.67.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-66"><i class="fa fa-check"></i><b>4.67.6</b> 6. Alocação:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.68" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#questao-21g"><i class="fa fa-check"></i><b>4.68</b> Questão 21g</a><ul>
+<li class="chapter" data-level="4.68.1" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#eu-sou-67"><i class="fa fa-check"></i><b>4.68.1</b> 1. Eu sou:</a></li>
+<li class="chapter" data-level="4.68.2" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#area-67"><i class="fa fa-check"></i><b>4.68.2</b> 2. Área:</a></li>
+<li class="chapter" data-level="4.68.3" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#genero-67"><i class="fa fa-check"></i><b>4.68.3</b> 3. Gênero:</a></li>
+<li class="chapter" data-level="4.68.4" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-67"><i class="fa fa-check"></i><b>4.68.4</b> 4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)</a></li>
+<li class="chapter" data-level="4.68.5" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#faixa-etaria-67"><i class="fa fa-check"></i><b>4.68.5</b> 5. Faixa etária:</a></li>
+<li class="chapter" data-level="4.68.6" data-path="questoes-versus-cortes.html"><a href="questoes-versus-cortes.html#alocacao-67"><i class="fa fa-check"></i><b>4.68.6</b> 6. Alocação:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="construtos.html"><a href="construtos.html"><i class="fa fa-check"></i><b>5</b> Construtos</a><ul>
+<li class="chapter" data-level="5.1" data-path="construtos.html"><a href="construtos.html#descredibilidade-e-injustica"><i class="fa fa-check"></i><b>5.1</b> Descredibilidade e Injustiça</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial"><i class="fa fa-check"></i><b>5.1.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="construtos.html"><a href="construtos.html#despreparo-da-lideranca"><i class="fa fa-check"></i><b>5.2</b> Despreparo da Liderança</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-1"><i class="fa fa-check"></i><b>5.2.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="construtos.html"><a href="construtos.html#baixo-preparo-da-empresa-para-exercer-funcao"><i class="fa fa-check"></i><b>5.3</b> Baixo Preparo da Empresa Para Exercer Função</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-2"><i class="fa fa-check"></i><b>5.3.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="construtos.html"><a href="construtos.html#planejamento-e-metodo"><i class="fa fa-check"></i><b>5.4</b> Planejamento e Método</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-3"><i class="fa fa-check"></i><b>5.4.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="construtos.html"><a href="construtos.html#imediatismo"><i class="fa fa-check"></i><b>5.5</b> Imediatismo</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-4"><i class="fa fa-check"></i><b>5.5.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="construtos.html"><a href="construtos.html#ausencia-de-meritocracia"><i class="fa fa-check"></i><b>5.6</b> Ausência de Meritocracia</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-5"><i class="fa fa-check"></i><b>5.6.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="construtos.html"><a href="construtos.html#proximidade-da-lideranca"><i class="fa fa-check"></i><b>5.7</b> Proximidade da Liderança</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-6"><i class="fa fa-check"></i><b>5.7.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="construtos.html"><a href="construtos.html#visao-do-proposito-comum"><i class="fa fa-check"></i><b>5.8</b> Visão do Propósito Comum</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-7"><i class="fa fa-check"></i><b>5.8.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="construtos.html"><a href="construtos.html#colaboracao"><i class="fa fa-check"></i><b>5.9</b> Colaboração</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-8"><i class="fa fa-check"></i><b>5.9.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="construtos.html"><a href="construtos.html#ambiente-leve-e-flexibilidade"><i class="fa fa-check"></i><b>5.10</b> Ambiente Leve e Flexibilidade</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-9"><i class="fa fa-check"></i><b>5.10.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="construtos.html"><a href="construtos.html#lideranca-senior"><i class="fa fa-check"></i><b>5.11</b> Liderança Sênior</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-10"><i class="fa fa-check"></i><b>5.11.1</b> Análise Fatorial</a></li>
+</ul></li>
+<li class="chapter" data-level="5.12" data-path="construtos.html"><a href="construtos.html#inovacao"><i class="fa fa-check"></i><b>5.12</b> Inovação</a><ul>
+<li class="chapter" data-level="5.12.1" data-path="construtos.html"><a href="construtos.html#analise-fatorial-11"><i class="fa fa-check"></i><b>5.12.1</b> Análise Fatorial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html"><i class="fa fa-check"></i><b>6</b> Associação entre Construtos e Cortes</a><ul>
+<li class="chapter" data-level="6.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#descredibilidade-e-injustica-i"><i class="fa fa-check"></i><b>6.1</b> Descredibilidade e Injustiça I</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas"><i class="fa fa-check"></i><b>6.1.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.1.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese"><i class="fa fa-check"></i><b>6.1.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#descredibilidade-e-injustica-ii"><i class="fa fa-check"></i><b>6.2</b> Descredibilidade e Injustiça II</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-1"><i class="fa fa-check"></i><b>6.2.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.2.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-1"><i class="fa fa-check"></i><b>6.2.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#despreparo-da-lideranca-i"><i class="fa fa-check"></i><b>6.3</b> Despreparo da Liderança I</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-2"><i class="fa fa-check"></i><b>6.3.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.3.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-2"><i class="fa fa-check"></i><b>6.3.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#despreparo-da-lideranca-ii"><i class="fa fa-check"></i><b>6.4</b> Despreparo da Liderança II</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-3"><i class="fa fa-check"></i><b>6.4.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.4.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-3"><i class="fa fa-check"></i><b>6.4.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#baixo-preparo-da-empresa-para-exercer-funcao-1"><i class="fa fa-check"></i><b>6.5</b> Baixo Preparo da Empresa Para Exercer Função</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-4"><i class="fa fa-check"></i><b>6.5.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.5.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-4"><i class="fa fa-check"></i><b>6.5.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#planejamento-e-metodo-1"><i class="fa fa-check"></i><b>6.6</b> Planejamento e Método</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-5"><i class="fa fa-check"></i><b>6.6.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.6.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-5"><i class="fa fa-check"></i><b>6.6.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#ausencia-de-meritocracia-1"><i class="fa fa-check"></i><b>6.7</b> Ausência de Meritocracia</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-6"><i class="fa fa-check"></i><b>6.7.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.7.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-6"><i class="fa fa-check"></i><b>6.7.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#proximidade-da-lideranca-i"><i class="fa fa-check"></i><b>6.8</b> Proximidade da Liderança I</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-7"><i class="fa fa-check"></i><b>6.8.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.8.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-7"><i class="fa fa-check"></i><b>6.8.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#proximidade-da-lideranca-ii"><i class="fa fa-check"></i><b>6.9</b> Proximidade da Liderança II</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-8"><i class="fa fa-check"></i><b>6.9.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.9.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-8"><i class="fa fa-check"></i><b>6.9.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#visao-do-proposito-comum-1"><i class="fa fa-check"></i><b>6.10</b> Visão do Propósito Comum</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-9"><i class="fa fa-check"></i><b>6.10.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.10.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-9"><i class="fa fa-check"></i><b>6.10.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#colaboracao-1"><i class="fa fa-check"></i><b>6.11</b> Colaboração</a><ul>
+<li class="chapter" data-level="6.11.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-10"><i class="fa fa-check"></i><b>6.11.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.11.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-10"><i class="fa fa-check"></i><b>6.11.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.12" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#ambiente-leve-e-flexibilidade-1"><i class="fa fa-check"></i><b>6.12</b> Ambiente Leve e Flexibilidade</a><ul>
+<li class="chapter" data-level="6.12.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-11"><i class="fa fa-check"></i><b>6.12.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.12.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-11"><i class="fa fa-check"></i><b>6.12.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.13" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#lideranca-senior-1"><i class="fa fa-check"></i><b>6.13</b> Liderança Sênior</a><ul>
+<li class="chapter" data-level="6.13.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-12"><i class="fa fa-check"></i><b>6.13.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.13.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-12"><i class="fa fa-check"></i><b>6.13.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.14" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#inovacao-i"><i class="fa fa-check"></i><b>6.14</b> Inovação I</a><ul>
+<li class="chapter" data-level="6.14.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-13"><i class="fa fa-check"></i><b>6.14.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.14.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-13"><i class="fa fa-check"></i><b>6.14.2</b> Testes de Hipótese</a></li>
+</ul></li>
+<li class="chapter" data-level="6.15" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#inovacao-ii"><i class="fa fa-check"></i><b>6.15</b> Inovação II</a><ul>
+<li class="chapter" data-level="6.15.1" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#estatisticas-descritivas-14"><i class="fa fa-check"></i><b>6.15.1</b> Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="6.15.2" data-path="associacao-entre-construtos-e-cortes.html"><a href="associacao-entre-construtos-e-cortes.html#testes-de-hipotese-14"><i class="fa fa-check"></i><b>6.15.2</b> Testes de Hipótese</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Feito com bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="construtos" class="section level1">
+<h1><span class="header-section-number">Capítulo 5</span> Construtos</h1>
+<div id="descredibilidade-e-injustica" class="section level2">
+<h2><span class="header-section-number">5.1</span> Descredibilidade e Injustiça</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/descredibilidade_e_injustica_b-1.png" width="1152" /></p>
+<div id="analise-fatorial" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/descredibilidade_e_injustica_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/descredibilidade_e_injustica_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 2 fatores.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente
+</td>
+<td style="text-align:left;">
+82.4%
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente
+</td>
+<td style="text-align:left;">
+76.8%
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes
+</td>
+<td style="text-align:left;">
+67.2%
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+<td style="text-align:left;">
+56.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+<td style="text-align:left;">
+97.4%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+<td style="text-align:left;">
+43.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x16_a_inmetrics_e_uma_empresa_que_oferece_bons_salarios
+</td>
+<td style="text-align:left;">
+66.4%
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno
+</td>
+<td style="text-align:left;">
+74.8%
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x15_a_inmetrics_valoriza_colaboradores
+</td>
+<td style="text-align:left;">
+75.3%
+</td>
+<td style="text-align:left;">
+0.0%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="despreparo-da-lideranca" class="section level2">
+<h2><span class="header-section-number">5.2</span> Despreparo da Liderança</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/despreparo_da_lideranca_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-1" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/despreparo_da_lideranca_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/despreparo_da_lideranca_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 2 fatores.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas
+</td>
+<td style="text-align:left;">
+71.8%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider
+</td>
+<td style="text-align:left;">
+66.5%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar
+</td>
+<td style="text-align:left;">
+62.8%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados
+</td>
+<td style="text-align:left;">
+54.1%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos
+</td>
+<td style="text-align:left;">
+66.1%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x16_a_inmetrics_e_uma_empresa_que_gera_engajamento_em_seus_colaboradores
+</td>
+<td style="text-align:left;">
+64.8%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x19_meu_lider_e_gestor_de_pessoas
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+75.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x19_meu_lider_e_inspirador
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+92.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x19_meu_lider_e_preparado
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+88.4%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x19_meu_lider_e_tecnico
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+67.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente
+</td>
+<td style="text-align:left;">
+60.9%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente
+</td>
+<td style="text-align:left;">
+68.0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes
+</td>
+<td style="text-align:left;">
+69.9%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas
+</td>
+<td style="text-align:left;">
+67.9%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="baixo-preparo-da-empresa-para-exercer-funcao" class="section level2">
+<h2><span class="header-section-number">5.3</span> Baixo Preparo da Empresa Para Exercer Função</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/baixo_preparo_da_empresa_para_exercer_funcao_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-2" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/baixo_preparo_da_empresa_para_exercer_funcao_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/baixo_preparo_da_empresa_para_exercer_funcao_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 1 fator.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas
+</td>
+<td style="text-align:left;">
+86.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente
+</td>
+<td style="text-align:left;">
+87.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar
+</td>
+<td style="text-align:left;">
+62.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao
+</td>
+<td style="text-align:left;">
+76.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_aprendizado_e_desenvolvimento
+</td>
+<td style="text-align:left;">
+59.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas
+</td>
+<td style="text-align:left;">
+73.2%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="planejamento-e-metodo" class="section level2">
+<h2><span class="header-section-number">5.4</span> Planejamento e Método</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/planejamento_e_metodo_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-3" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/planejamento_e_metodo_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/planejamento_e_metodo_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 2 fatores. Porém, um deles seria composto apenas pela questão <strong>14. As questões e dificuldades que surgem no dia a dia da Inmetrics são abordadas com visão de médio/longo prazo.</strong>. Assim, o construto <code>Baixo Preparo da Empresa Para Exercer Função</code> será definida pelas demais questões, sem considerá-la.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente
+</td>
+<td style="text-align:left;">
+64.6%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao
+</td>
+<td style="text-align:left;">
+77.4%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_tem_espaco_fisico_de_trabalho_e_equipamentos_adequados
+</td>
+<td style="text-align:left;">
+53.4%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos
+</td>
+<td style="text-align:left;">
+77.8%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+92.6%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="imediatismo" class="section level2">
+<h2><span class="header-section-number">5.5</span> Imediatismo</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/imediatismo_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-4" class="section level3">
+<h3><span class="header-section-number">5.5.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/imediatismo_g-1.png" width="1152" /></p>
+<p>A análise foi inconclusiva, com sinais de muitos fatores. Se faz necessária retomar discussão sobre o tema.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR2
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR3
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR4
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR5
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_entendem_o_contexto_e_os_objetivos_do_cliente
+</td>
+<td style="text-align:left;">
+75.1%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x14_as_questoes_e_dificuldades_que_surgem_no_dia_a_dia_da_inmetrics_sao_abordadas_com_visao_de_medio_longo_prazo
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+42.9%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x15_a_inmetrics_valoriza_rapidez
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+55.7%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x17_para_voce_os_maiores_fatores_de_satisfacao_do_cliente_sao_rapidez_na_entrega
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+55.3%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x9_os_colaboradores_sao_preparados_de_maneira_adequada_para_atuar_com_excelencia_em_seus_projetos_e_ou_areas
+</td>
+<td style="text-align:left;">
+70.2%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="ausencia-de-meritocracia" class="section level2">
+<h2><span class="header-section-number">5.6</span> Ausência de Meritocracia</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/ausencia_de_meritocracia_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-5" class="section level3">
+<h3><span class="header-section-number">5.6.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/ausencia_de_meritocracia_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/ausencia_de_meritocracia_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 1 fator.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x16_a_inmetrics_e_uma_empresa_que_oferece_oportunidades_de_crescimento_interno
+</td>
+<td style="text-align:left;">
+73.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_o_reconhecimento_na_forma_de_promocoes_elogios_aumentos_e_justo_e_eficiente
+</td>
+<td style="text-align:left;">
+85.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_o_sistema_de_avaliacao_de_desempenho_da_empresa_e_justo_e_eficiente
+</td>
+<td style="text-align:left;">
+86.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8_na_inmetrics_os_sistemas_de_acompanhamento_de_indicadores_dos_projetos_e_metas_sao_justos_e_eficientes
+</td>
+<td style="text-align:left;">
+77.9%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="proximidade-da-lideranca" class="section level2">
+<h2><span class="header-section-number">5.7</span> Proximidade da Liderança</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/proximidade_da_lideranca_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-6" class="section level3">
+<h3><span class="header-section-number">5.7.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/proximidade_da_lideranca_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/proximidade_da_lideranca_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 2 fatores.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas
+</td>
+<td style="text-align:left;">
+77.6%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_conhecem_seu_sua_lider
+</td>
+<td style="text-align:left;">
+70.2%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_sao_apresentados_a_equipe_com_a_qual_vao_trabalhar
+</td>
+<td style="text-align:left;">
+59.8%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_sentem_se_capacitados_para_a_funcao
+</td>
+<td style="text-align:left;">
+78.0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_utilizam_efetivamente_suas_habilidades_e_conhecimentos
+</td>
+<td style="text-align:left;">
+79.1%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+98.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x19_meu_lider_e_proximo
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+75.4%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="visao-do-proposito-comum" class="section level2">
+<h2><span class="header-section-number">5.8</span> Visão do Propósito Comum</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/visao_do_proposito_comum_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-7" class="section level3">
+<h3><span class="header-section-number">5.8.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/visao_do_proposito_comum_g-1.png" width="960" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/visao_do_proposito_comum_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 1 fator.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x10_ao_iniciar_o_trabalho_os_colaboradores_compreendem_o_proposito_de_suas_entregas
+</td>
+<td style="text-align:left;">
+53.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora
+</td>
+<td style="text-align:left;">
+83.8%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x19_meu_lider_e_inspirador
+</td>
+<td style="text-align:left;">
+53.8%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="colaboracao" class="section level2">
+<h2><span class="header-section-number">5.9</span> Colaboração</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/colaboracao_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-8" class="section level3">
+<h3><span class="header-section-number">5.9.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/colaboracao_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/colaboracao_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 2 fatores. Porém, um deles seria composto apenas pela questão <strong>10. Ao iniciar o trabalho, os colaboradores: [São apresentados à equipe com a qual vão trabalhar]</strong>. Assim, o construto <code>Colaboração</code> será definida pelas demais questões, sem considerá-la.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_colaboradores_de_outras_areas
+</td>
+<td style="text-align:left;">
+53.1%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meu_minha_lider
+</td>
+<td style="text-align:left;">
+78.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_colegas
+</td>
+<td style="text-align:left;">
+72.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_meus_liderados_minha_equipe
+</td>
+<td style="text-align:left;">
+84.2%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="ambiente-leve-e-flexibilidade" class="section level2">
+<h2><span class="header-section-number">5.10</span> Ambiente Leve e Flexibilidade</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/ambiente_leve_e_flexibilidade_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-9" class="section level3">
+<h3><span class="header-section-number">5.10.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/ambiente_leve_e_flexibilidade_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/ambiente_leve_e_flexibilidade_eeee-1.png" width="1152" /></p>
+<p>A análise das paralelas sugerem 2 fatores. Porém, um deles seria composto apenas pela questão <strong>11. O ambiente na Inmetrics é: [Informal]</strong>. Assim, o construto <code>Ambiente Leve e Flexibilidade</code> será definida pelas demais questões, sem considerá-la.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x11_o_ambiente_na_inmetrics_e_de_pressao
+</td>
+<td style="text-align:left;">
+-42.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x11_o_ambiente_na_inmetrics_e_flexivel
+</td>
+<td style="text-align:left;">
+58.3%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x13_na_inmetrics_o_que_mais_importa_e_sao_o_ambiente_de_trabalho
+</td>
+<td style="text-align:left;">
+65.2%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x16_a_inmetrics_e_uma_empresa_que_se_destaca_positivamente_em_termos_de_ambiente_de_trabalho
+</td>
+<td style="text-align:left;">
+78.6%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="lideranca-senior" class="section level2">
+<h2><span class="header-section-number">5.11</span> Liderança Sênior</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/lideranca_senior_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-10" class="section level3">
+<h3><span class="header-section-number">5.11.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/lideranca_senior_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/lideranca_senior_eeee-1.png" width="1152" /></p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x18_no_meu_dia_a_dia_sinto_colaboracao_e_apoio_por_parte_de_lideranca_senior_diretoria_e_ceo
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+65.5%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_bem_intencionada
+</td>
+<td style="text-align:left;">
+73.2%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_comercial
+</td>
+<td style="text-align:left;">
+81.5%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_focada_no_cliente
+</td>
+<td style="text-align:left;">
+75.2%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_gestora_de_pessoas
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+69.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_inspiradora
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+74.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_preparada
+</td>
+<td style="text-align:left;">
+66.0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_proxima_das_equipes
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+84.4%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x20_a_lideranca_senior_diretoria_e_ceo_da_inmetrics_e_tecnica
+</td>
+<td style="text-align:left;">
+60.0%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="inovacao" class="section level2">
+<h2><span class="header-section-number">5.12</span> Inovação</h2>
+<p><img src="relatorio_inmetrics_files/figure-html/inovacao_b-1.png" width="1152" /></p>
+<div id="analise-fatorial-11" class="section level3">
+<h3><span class="header-section-number">5.12.1</span> Análise Fatorial</h3>
+<p><img src="relatorio_inmetrics_files/figure-html/inovacao_g-1.png" width="1152" /></p>
+<p><img src="relatorio_inmetrics_files/figure-html/inovacao_eeee-1.png" width="1152" /></p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Questão
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+MR2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x21_inovacao_na_inmetrics_e_dificultada
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+80.0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x21_inovacao_na_inmetrics_e_incentivada
+</td>
+<td style="text-align:left;">
+81.1%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x21_inovacao_na_inmetrics_e_isolada
+</td>
+<td style="text-align:left;">
+0%
+</td>
+<td style="text-align:left;">
+89.6%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x21_inovacao_na_inmetrics_e_parte_do_dna_da_empresa
+</td>
+<td style="text-align:left;">
+84.1%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x21_inovacao_na_inmetrics_e_voltada_ao_desenvolvimento_de_novos_produtos
+</td>
+<td style="text-align:left;">
+82.7%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x21_inovacao_na_inmetrics_e_voltada_as_necessidades_dos_clientes
+</td>
+<td style="text-align:left;">
+74.5%
+</td>
+<td style="text-align:left;">
+0%
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="questoes-versus-cortes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="associacao-entre-construtos-e-cortes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["relatorio_inmetrics.pdf", "relatorio_inmetrics.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

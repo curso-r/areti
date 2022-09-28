@@ -1,0 +1,1884 @@
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics},
+            pdfauthor={R6 e Aretí},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Análise Estatística do Projeto de Pesquisa de Cultura da Inmetrics}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{R6 e Aretí}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2019-07-21}
+
+\usepackage{booktabs}
+\usepackage{amsthm}
+\usepackage[paperwidth=7in, paperheight=9in]{geometry}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{projeto}{%
+\chapter{Projeto}\label{projeto}}
+
+Placeholder
+
+\hypertarget{part-colaboradores}{%
+\part{Colaboradores}\label{part-colaboradores}}
+
+\hypertarget{descritivas-dos-atributos-de-perfil}{%
+\chapter{Descritivas dos Atributos de Perfil}\label{descritivas-dos-atributos-de-perfil}}
+
+\begin{table}[t]
+
+\caption{\label{tab:unnamed-chunk-2}Variáveis de Perfil}
+\centering
+\fontsize{12}{14}\selectfont
+\begin{tabular}{l|l|r|l|>{}p{8cm}}
+\hline
+Variável & Categoria & n & \%\\
+\hline
+\multicolumn{4}{l}{\textbf{Posição}}\\
+\hline
+\hspace{1em} & Colaborador & 445 & 85,2\%\\
+\hline
+\hspace{1em} & Líder de equipe & 52 & 10,0\%\\
+\hline
+\hspace{1em} & Líder de líder & 25 & 4,8\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Área}}\\
+\hline
+\hspace{1em} & B.U.'s & 22 & 4,2\%\\
+\hline
+\hspace{1em} & Kernel/Segurança e Cloud & 16 & 3,1\%\\
+\hline
+\hspace{1em} & Operações & 419 & 80,3\%\\
+\hline
+\hspace{1em} & Suportes & 65 & 12,5\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Gênero}}\\
+\hline
+\hspace{1em} & Feminino & 144 & 27,6\%\\
+\hline
+\hspace{1em} & Masculino & 360 & 69,0\%\\
+\hline
+\hspace{1em} & Prefiro não identificar & 18 & 3,4\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Tempo de Empresa}}\\
+\hline
+\hspace{1em} & 1 a 2 anos & 71 & 13,6\%\\
+\hline
+\hspace{1em} & 2 a 4 anos & 137 & 26,2\%\\
+\hline
+\hspace{1em} & 4 a 7 anos & 46 & 8,8\%\\
+\hline
+\hspace{1em} & 6 meses a 1 ano & 145 & 27,8\%\\
+\hline
+\hspace{1em} & Mais de 7 anos & 24 & 4,6\%\\
+\hline
+\hspace{1em} & Menos de 6 meses & 99 & 19,0\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Faixa Etária}}\\
+\hline
+\hspace{1em} & 18 a 20 anos & 23 & 4,4\%\\
+\hline
+\hspace{1em} & 21 a 25 anos & 101 & 19,3\%\\
+\hline
+\hspace{1em} & 26 a 30 anos & 117 & 22,4\%\\
+\hline
+\hspace{1em} & 31 a 35 anos & 107 & 20,5\%\\
+\hline
+\hspace{1em} & 36 a 45 anos & 123 & 23,6\%\\
+\hline
+\hspace{1em} & Mais de 45 anos & 51 & 9,8\%\\
+\hline
+\multicolumn{4}{l}{\textbf{Alocação}}\\
+\hline
+\hspace{1em} & Alocado no cliente & 288 & 55,2\%\\
+\hline
+\hspace{1em} & No Canopus & 201 & 38,5\%\\
+\hline
+\hspace{1em} & No Thera & 33 & 6,3\%\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{descritivas-das-questoes}{%
+\chapter{Descritivas das Questões}\label{descritivas-das-questoes}}
+
+Placeholder
+
+\hypertarget{geral}{%
+\section{Geral}\label{geral}}
+
+\hypertarget{questoes-por-posicao-eu-sou}{%
+\section{Questões por Posição (Eu sou\ldots{})}\label{questoes-por-posicao-eu-sou}}
+
+\hypertarget{questoes-por-area}{%
+\section{Questões por Área}\label{questoes-por-area}}
+
+\hypertarget{questoes-por-genero}{%
+\section{Questões por Gênero}\label{questoes-por-genero}}
+
+\hypertarget{questoes-por-tempo-de-empresa}{%
+\section{Questões por Tempo de Empresa}\label{questoes-por-tempo-de-empresa}}
+
+\hypertarget{questoes-por-faixa-etaria}{%
+\section{Questões por Faixa Etária}\label{questoes-por-faixa-etaria}}
+
+\hypertarget{questoes-por-alocacao}{%
+\section{Questões por Alocação}\label{questoes-por-alocacao}}
+
+\hypertarget{questoes-versus-cortes}{%
+\chapter{Questões versus Cortes}\label{questoes-versus-cortes}}
+
+Placeholder
+
+\hypertarget{questao-8a}{%
+\section{Questão 8a}\label{questao-8a}}
+
+\hypertarget{eu-sou}{%
+\subsection{1. Eu sou:}\label{eu-sou}}
+
+\hypertarget{area}{%
+\subsection{2. Área:}\label{area}}
+
+\hypertarget{genero}{%
+\subsection{3. Gênero:}\label{genero}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics}}
+
+\hypertarget{faixa-etaria}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria}}
+
+\hypertarget{alocacao}{%
+\subsection{6. Alocação:}\label{alocacao}}
+
+\hypertarget{questao-8b}{%
+\section{Questão 8b}\label{questao-8b}}
+
+\hypertarget{eu-sou-1}{%
+\subsection{1. Eu sou:}\label{eu-sou-1}}
+
+\hypertarget{area-1}{%
+\subsection{2. Área:}\label{area-1}}
+
+\hypertarget{genero-1}{%
+\subsection{3. Gênero:}\label{genero-1}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-1}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-1}}
+
+\hypertarget{faixa-etaria-1}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-1}}
+
+\hypertarget{alocacao-1}{%
+\subsection{6. Alocação:}\label{alocacao-1}}
+
+\hypertarget{questao-8c}{%
+\section{Questão 8c}\label{questao-8c}}
+
+\hypertarget{eu-sou-2}{%
+\subsection{1. Eu sou:}\label{eu-sou-2}}
+
+\hypertarget{area-2}{%
+\subsection{2. Área:}\label{area-2}}
+
+\hypertarget{genero-2}{%
+\subsection{3. Gênero:}\label{genero-2}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-2}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-2}}
+
+\hypertarget{faixa-etaria-2}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-2}}
+
+\hypertarget{alocacao-2}{%
+\subsection{6. Alocação:}\label{alocacao-2}}
+
+\hypertarget{questao-9}{%
+\section{Questão 9}\label{questao-9}}
+
+\hypertarget{eu-sou-3}{%
+\subsection{1. Eu sou:}\label{eu-sou-3}}
+
+\hypertarget{area-3}{%
+\subsection{2. Área:}\label{area-3}}
+
+\hypertarget{genero-3}{%
+\subsection{3. Gênero:}\label{genero-3}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-3}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-3}}
+
+\hypertarget{faixa-etaria-3}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-3}}
+
+\hypertarget{alocacao-3}{%
+\subsection{6. Alocação:}\label{alocacao-3}}
+
+\hypertarget{questao-10a}{%
+\section{Questão 10a}\label{questao-10a}}
+
+\hypertarget{eu-sou-4}{%
+\subsection{1. Eu sou:}\label{eu-sou-4}}
+
+\hypertarget{area-4}{%
+\subsection{2. Área:}\label{area-4}}
+
+\hypertarget{genero-4}{%
+\subsection{3. Gênero:}\label{genero-4}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-4}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-4}}
+
+\hypertarget{faixa-etaria-4}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-4}}
+
+\hypertarget{alocacao-4}{%
+\subsection{6. Alocação:}\label{alocacao-4}}
+
+\hypertarget{questao-10d}{%
+\section{Questão 10d}\label{questao-10d}}
+
+\hypertarget{eu-sou-5}{%
+\subsection{1. Eu sou:}\label{eu-sou-5}}
+
+\hypertarget{area-5}{%
+\subsection{2. Área:}\label{area-5}}
+
+\hypertarget{genero-5}{%
+\subsection{3. Gênero:}\label{genero-5}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-5}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-5}}
+
+\hypertarget{faixa-etaria-5}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-5}}
+
+\hypertarget{alocacao-5}{%
+\subsection{6. Alocação:}\label{alocacao-5}}
+
+\hypertarget{questao-10e}{%
+\section{Questão 10e}\label{questao-10e}}
+
+\hypertarget{eu-sou-6}{%
+\subsection{1. Eu sou:}\label{eu-sou-6}}
+
+\hypertarget{area-6}{%
+\subsection{2. Área:}\label{area-6}}
+
+\hypertarget{genero-6}{%
+\subsection{3. Gênero:}\label{genero-6}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-6}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-6}}
+
+\hypertarget{faixa-etaria-6}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-6}}
+
+\hypertarget{alocacao-6}{%
+\subsection{6. Alocação:}\label{alocacao-6}}
+
+\hypertarget{questao-10f}{%
+\section{Questão 10f}\label{questao-10f}}
+
+\hypertarget{eu-sou-7}{%
+\subsection{1. Eu sou:}\label{eu-sou-7}}
+
+\hypertarget{area-7}{%
+\subsection{2. Área:}\label{area-7}}
+
+\hypertarget{genero-7}{%
+\subsection{3. Gênero:}\label{genero-7}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-7}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-7}}
+
+\hypertarget{faixa-etaria-7}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-7}}
+
+\hypertarget{alocacao-7}{%
+\subsection{6. Alocação:}\label{alocacao-7}}
+
+\hypertarget{questao-10g}{%
+\section{Questão 10g}\label{questao-10g}}
+
+\hypertarget{eu-sou-8}{%
+\subsection{1. Eu sou:}\label{eu-sou-8}}
+
+\hypertarget{area-8}{%
+\subsection{2. Área:}\label{area-8}}
+
+\hypertarget{genero-8}{%
+\subsection{3. Gênero:}\label{genero-8}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-8}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-8}}
+
+\hypertarget{faixa-etaria-8}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-8}}
+
+\hypertarget{alocacao-8}{%
+\subsection{6. Alocação:}\label{alocacao-8}}
+
+\hypertarget{questao-10b}{%
+\section{Questão 10b}\label{questao-10b}}
+
+\hypertarget{eu-sou-9}{%
+\subsection{1. Eu sou:}\label{eu-sou-9}}
+
+\hypertarget{area-9}{%
+\subsection{2. Área:}\label{area-9}}
+
+\hypertarget{genero-9}{%
+\subsection{3. Gênero:}\label{genero-9}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-9}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-9}}
+
+\hypertarget{faixa-etaria-9}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-9}}
+
+\hypertarget{alocacao-9}{%
+\subsection{6. Alocação:}\label{alocacao-9}}
+
+\hypertarget{questao-10c}{%
+\section{Questão 10c}\label{questao-10c}}
+
+\hypertarget{eu-sou-10}{%
+\subsection{1. Eu sou:}\label{eu-sou-10}}
+
+\hypertarget{area-10}{%
+\subsection{2. Área:}\label{area-10}}
+
+\hypertarget{genero-10}{%
+\subsection{3. Gênero:}\label{genero-10}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-10}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-10}}
+
+\hypertarget{faixa-etaria-10}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-10}}
+
+\hypertarget{alocacao-10}{%
+\subsection{6. Alocação:}\label{alocacao-10}}
+
+\hypertarget{questao-14}{%
+\section{Questão 14}\label{questao-14}}
+
+\hypertarget{eu-sou-11}{%
+\subsection{1. Eu sou:}\label{eu-sou-11}}
+
+\hypertarget{area-11}{%
+\subsection{2. Área:}\label{area-11}}
+
+\hypertarget{genero-11}{%
+\subsection{3. Gênero:}\label{genero-11}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-11}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-11}}
+
+\hypertarget{faixa-etaria-11}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-11}}
+
+\hypertarget{alocacao-11}{%
+\subsection{6. Alocação:}\label{alocacao-11}}
+
+\hypertarget{questao-11a}{%
+\section{Questão 11a}\label{questao-11a}}
+
+\hypertarget{eu-sou-12}{%
+\subsection{1. Eu sou:}\label{eu-sou-12}}
+
+\hypertarget{area-12}{%
+\subsection{2. Área:}\label{area-12}}
+
+\hypertarget{genero-12}{%
+\subsection{3. Gênero:}\label{genero-12}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-12}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-12}}
+
+\hypertarget{faixa-etaria-12}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-12}}
+
+\hypertarget{alocacao-12}{%
+\subsection{6. Alocação:}\label{alocacao-12}}
+
+\hypertarget{questao-11b}{%
+\section{Questão 11b}\label{questao-11b}}
+
+\hypertarget{eu-sou-13}{%
+\subsection{1. Eu sou:}\label{eu-sou-13}}
+
+\hypertarget{area-13}{%
+\subsection{2. Área:}\label{area-13}}
+
+\hypertarget{genero-13}{%
+\subsection{3. Gênero:}\label{genero-13}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-13}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-13}}
+
+\hypertarget{faixa-etaria-13}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-13}}
+
+\hypertarget{alocacao-13}{%
+\subsection{6. Alocação:}\label{alocacao-13}}
+
+\hypertarget{questao-11c}{%
+\section{Questão 11c}\label{questao-11c}}
+
+\hypertarget{eu-sou-14}{%
+\subsection{1. Eu sou:}\label{eu-sou-14}}
+
+\hypertarget{area-14}{%
+\subsection{2. Área:}\label{area-14}}
+
+\hypertarget{genero-14}{%
+\subsection{3. Gênero:}\label{genero-14}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-14}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-14}}
+
+\hypertarget{faixa-etaria-14}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-14}}
+
+\hypertarget{alocacao-14}{%
+\subsection{6. Alocação:}\label{alocacao-14}}
+
+\hypertarget{questao-11d}{%
+\section{Questão 11d}\label{questao-11d}}
+
+\hypertarget{eu-sou-15}{%
+\subsection{1. Eu sou:}\label{eu-sou-15}}
+
+\hypertarget{area-15}{%
+\subsection{2. Área:}\label{area-15}}
+
+\hypertarget{genero-15}{%
+\subsection{3. Gênero:}\label{genero-15}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-15}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-15}}
+
+\hypertarget{faixa-etaria-15}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-15}}
+
+\hypertarget{alocacao-15}{%
+\subsection{6. Alocação:}\label{alocacao-15}}
+
+\hypertarget{questao-11e}{%
+\section{Questão 11e}\label{questao-11e}}
+
+\hypertarget{eu-sou-16}{%
+\subsection{1. Eu sou:}\label{eu-sou-16}}
+
+\hypertarget{area-16}{%
+\subsection{2. Área:}\label{area-16}}
+
+\hypertarget{genero-16}{%
+\subsection{3. Gênero:}\label{genero-16}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-16}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-16}}
+
+\hypertarget{faixa-etaria-16}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-16}}
+
+\hypertarget{alocacao-16}{%
+\subsection{6. Alocação:}\label{alocacao-16}}
+
+\hypertarget{questao-13a}{%
+\section{Questão 13a}\label{questao-13a}}
+
+\hypertarget{eu-sou-17}{%
+\subsection{1. Eu sou:}\label{eu-sou-17}}
+
+\hypertarget{area-17}{%
+\subsection{2. Área:}\label{area-17}}
+
+\hypertarget{genero-17}{%
+\subsection{3. Gênero:}\label{genero-17}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-17}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-17}}
+
+\hypertarget{faixa-etaria-17}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-17}}
+
+\hypertarget{alocacao-17}{%
+\subsection{6. Alocação:}\label{alocacao-17}}
+
+\hypertarget{questao-13b}{%
+\section{Questão 13b}\label{questao-13b}}
+
+\hypertarget{eu-sou-18}{%
+\subsection{1. Eu sou:}\label{eu-sou-18}}
+
+\hypertarget{area-18}{%
+\subsection{2. Área:}\label{area-18}}
+
+\hypertarget{genero-18}{%
+\subsection{3. Gênero:}\label{genero-18}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-18}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-18}}
+
+\hypertarget{faixa-etaria-18}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-18}}
+
+\hypertarget{alocacao-18}{%
+\subsection{6. Alocação:}\label{alocacao-18}}
+
+\hypertarget{questao-13c}{%
+\section{Questão 13c}\label{questao-13c}}
+
+\hypertarget{eu-sou-19}{%
+\subsection{1. Eu sou:}\label{eu-sou-19}}
+
+\hypertarget{area-19}{%
+\subsection{2. Área:}\label{area-19}}
+
+\hypertarget{genero-19}{%
+\subsection{3. Gênero:}\label{genero-19}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-19}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-19}}
+
+\hypertarget{faixa-etaria-19}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-19}}
+
+\hypertarget{alocacao-19}{%
+\subsection{6. Alocação:}\label{alocacao-19}}
+
+\hypertarget{questao-13d}{%
+\section{Questão 13d}\label{questao-13d}}
+
+\hypertarget{eu-sou-20}{%
+\subsection{1. Eu sou:}\label{eu-sou-20}}
+
+\hypertarget{area-20}{%
+\subsection{2. Área:}\label{area-20}}
+
+\hypertarget{genero-20}{%
+\subsection{3. Gênero:}\label{genero-20}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-20}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-20}}
+
+\hypertarget{faixa-etaria-20}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-20}}
+
+\hypertarget{alocacao-20}{%
+\subsection{6. Alocação:}\label{alocacao-20}}
+
+\hypertarget{questao-13e}{%
+\section{Questão 13e}\label{questao-13e}}
+
+\hypertarget{eu-sou-21}{%
+\subsection{1. Eu sou:}\label{eu-sou-21}}
+
+\hypertarget{area-21}{%
+\subsection{2. Área:}\label{area-21}}
+
+\hypertarget{genero-21}{%
+\subsection{3. Gênero:}\label{genero-21}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-21}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-21}}
+
+\hypertarget{faixa-etaria-21}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-21}}
+
+\hypertarget{alocacao-21}{%
+\subsection{6. Alocação:}\label{alocacao-21}}
+
+\hypertarget{questao-13f}{%
+\section{Questão 13f}\label{questao-13f}}
+
+\hypertarget{eu-sou-22}{%
+\subsection{1. Eu sou:}\label{eu-sou-22}}
+
+\hypertarget{area-22}{%
+\subsection{2. Área:}\label{area-22}}
+
+\hypertarget{genero-22}{%
+\subsection{3. Gênero:}\label{genero-22}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-22}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-22}}
+
+\hypertarget{faixa-etaria-22}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-22}}
+
+\hypertarget{alocacao-22}{%
+\subsection{6. Alocação:}\label{alocacao-22}}
+
+\hypertarget{questao-15a}{%
+\section{Questão 15a}\label{questao-15a}}
+
+\hypertarget{eu-sou-23}{%
+\subsection{1. Eu sou:}\label{eu-sou-23}}
+
+\hypertarget{area-23}{%
+\subsection{2. Área:}\label{area-23}}
+
+\hypertarget{genero-23}{%
+\subsection{3. Gênero:}\label{genero-23}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-23}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-23}}
+
+\hypertarget{faixa-etaria-23}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-23}}
+
+\hypertarget{alocacao-23}{%
+\subsection{6. Alocação:}\label{alocacao-23}}
+
+\hypertarget{questao-15b}{%
+\section{Questão 15b}\label{questao-15b}}
+
+\hypertarget{eu-sou-24}{%
+\subsection{1. Eu sou:}\label{eu-sou-24}}
+
+\hypertarget{area-24}{%
+\subsection{2. Área:}\label{area-24}}
+
+\hypertarget{genero-24}{%
+\subsection{3. Gênero:}\label{genero-24}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-24}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-24}}
+
+\hypertarget{faixa-etaria-24}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-24}}
+
+\hypertarget{alocacao-24}{%
+\subsection{6. Alocação:}\label{alocacao-24}}
+
+\hypertarget{questao-15c}{%
+\section{Questão 15c}\label{questao-15c}}
+
+\hypertarget{eu-sou-25}{%
+\subsection{1. Eu sou:}\label{eu-sou-25}}
+
+\hypertarget{area-25}{%
+\subsection{2. Área:}\label{area-25}}
+
+\hypertarget{genero-25}{%
+\subsection{3. Gênero:}\label{genero-25}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-25}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-25}}
+
+\hypertarget{faixa-etaria-25}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-25}}
+
+\hypertarget{alocacao-25}{%
+\subsection{6. Alocação:}\label{alocacao-25}}
+
+\hypertarget{questao-15d}{%
+\section{Questão 15d}\label{questao-15d}}
+
+\hypertarget{eu-sou-26}{%
+\subsection{1. Eu sou:}\label{eu-sou-26}}
+
+\hypertarget{area-26}{%
+\subsection{2. Área:}\label{area-26}}
+
+\hypertarget{genero-26}{%
+\subsection{3. Gênero:}\label{genero-26}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-26}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-26}}
+
+\hypertarget{faixa-etaria-26}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-26}}
+
+\hypertarget{alocacao-26}{%
+\subsection{6. Alocação:}\label{alocacao-26}}
+
+\hypertarget{questao-15e}{%
+\section{Questão 15e}\label{questao-15e}}
+
+\hypertarget{eu-sou-27}{%
+\subsection{1. Eu sou:}\label{eu-sou-27}}
+
+\hypertarget{area-27}{%
+\subsection{2. Área:}\label{area-27}}
+
+\hypertarget{genero-27}{%
+\subsection{3. Gênero:}\label{genero-27}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-27}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-27}}
+
+\hypertarget{faixa-etaria-27}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-27}}
+
+\hypertarget{alocacao-27}{%
+\subsection{6. Alocação:}\label{alocacao-27}}
+
+\hypertarget{questao-15f}{%
+\section{Questão 15f}\label{questao-15f}}
+
+\hypertarget{eu-sou-28}{%
+\subsection{1. Eu sou:}\label{eu-sou-28}}
+
+\hypertarget{area-28}{%
+\subsection{2. Área:}\label{area-28}}
+
+\hypertarget{genero-28}{%
+\subsection{3. Gênero:}\label{genero-28}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-28}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-28}}
+
+\hypertarget{faixa-etaria-28}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-28}}
+
+\hypertarget{alocacao-28}{%
+\subsection{6. Alocação:}\label{alocacao-28}}
+
+\hypertarget{questao-16a}{%
+\section{Questão 16a}\label{questao-16a}}
+
+\hypertarget{eu-sou-29}{%
+\subsection{1. Eu sou:}\label{eu-sou-29}}
+
+\hypertarget{area-29}{%
+\subsection{2. Área:}\label{area-29}}
+
+\hypertarget{genero-29}{%
+\subsection{3. Gênero:}\label{genero-29}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-29}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-29}}
+
+\hypertarget{faixa-etaria-29}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-29}}
+
+\hypertarget{alocacao-29}{%
+\subsection{6. Alocação:}\label{alocacao-29}}
+
+\hypertarget{questao-16b}{%
+\section{Questão 16b}\label{questao-16b}}
+
+\hypertarget{eu-sou-30}{%
+\subsection{1. Eu sou:}\label{eu-sou-30}}
+
+\hypertarget{area-30}{%
+\subsection{2. Área:}\label{area-30}}
+
+\hypertarget{genero-30}{%
+\subsection{3. Gênero:}\label{genero-30}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-30}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-30}}
+
+\hypertarget{faixa-etaria-30}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-30}}
+
+\hypertarget{alocacao-30}{%
+\subsection{6. Alocação:}\label{alocacao-30}}
+
+\hypertarget{questao-16c}{%
+\section{Questão 16c}\label{questao-16c}}
+
+\hypertarget{eu-sou-31}{%
+\subsection{1. Eu sou:}\label{eu-sou-31}}
+
+\hypertarget{area-31}{%
+\subsection{2. Área:}\label{area-31}}
+
+\hypertarget{genero-31}{%
+\subsection{3. Gênero:}\label{genero-31}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-31}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-31}}
+
+\hypertarget{faixa-etaria-31}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-31}}
+
+\hypertarget{alocacao-31}{%
+\subsection{6. Alocação:}\label{alocacao-31}}
+
+\hypertarget{questao-16d}{%
+\section{Questão 16d}\label{questao-16d}}
+
+\hypertarget{eu-sou-32}{%
+\subsection{1. Eu sou:}\label{eu-sou-32}}
+
+\hypertarget{area-32}{%
+\subsection{2. Área:}\label{area-32}}
+
+\hypertarget{genero-32}{%
+\subsection{3. Gênero:}\label{genero-32}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-32}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-32}}
+
+\hypertarget{faixa-etaria-32}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-32}}
+
+\hypertarget{alocacao-32}{%
+\subsection{6. Alocação:}\label{alocacao-32}}
+
+\hypertarget{questao-16e}{%
+\section{Questão 16e}\label{questao-16e}}
+
+\hypertarget{eu-sou-33}{%
+\subsection{1. Eu sou:}\label{eu-sou-33}}
+
+\hypertarget{area-33}{%
+\subsection{2. Área:}\label{area-33}}
+
+\hypertarget{genero-33}{%
+\subsection{3. Gênero:}\label{genero-33}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-33}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-33}}
+
+\hypertarget{faixa-etaria-33}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-33}}
+
+\hypertarget{alocacao-33}{%
+\subsection{6. Alocação:}\label{alocacao-33}}
+
+\hypertarget{questao-16f}{%
+\section{Questão 16f}\label{questao-16f}}
+
+\hypertarget{eu-sou-34}{%
+\subsection{1. Eu sou:}\label{eu-sou-34}}
+
+\hypertarget{area-34}{%
+\subsection{2. Área:}\label{area-34}}
+
+\hypertarget{genero-34}{%
+\subsection{3. Gênero:}\label{genero-34}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-34}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-34}}
+
+\hypertarget{faixa-etaria-34}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-34}}
+
+\hypertarget{alocacao-34}{%
+\subsection{6. Alocação:}\label{alocacao-34}}
+
+\hypertarget{questao-17a}{%
+\section{Questão 17a}\label{questao-17a}}
+
+\hypertarget{eu-sou-35}{%
+\subsection{1. Eu sou:}\label{eu-sou-35}}
+
+\hypertarget{area-35}{%
+\subsection{2. Área:}\label{area-35}}
+
+\hypertarget{genero-35}{%
+\subsection{3. Gênero:}\label{genero-35}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-35}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-35}}
+
+\hypertarget{faixa-etaria-35}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-35}}
+
+\hypertarget{alocacao-35}{%
+\subsection{6. Alocação:}\label{alocacao-35}}
+
+\hypertarget{questao-17b}{%
+\section{Questão 17b}\label{questao-17b}}
+
+\hypertarget{eu-sou-36}{%
+\subsection{1. Eu sou:}\label{eu-sou-36}}
+
+\hypertarget{area-36}{%
+\subsection{2. Área:}\label{area-36}}
+
+\hypertarget{genero-36}{%
+\subsection{3. Gênero:}\label{genero-36}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-36}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-36}}
+
+\hypertarget{faixa-etaria-36}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-36}}
+
+\hypertarget{alocacao-36}{%
+\subsection{6. Alocação:}\label{alocacao-36}}
+
+\hypertarget{questao-17c}{%
+\section{Questão 17c}\label{questao-17c}}
+
+\hypertarget{eu-sou-37}{%
+\subsection{1. Eu sou:}\label{eu-sou-37}}
+
+\hypertarget{area-37}{%
+\subsection{2. Área:}\label{area-37}}
+
+\hypertarget{genero-37}{%
+\subsection{3. Gênero:}\label{genero-37}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-37}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-37}}
+
+\hypertarget{faixa-etaria-37}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-37}}
+
+\hypertarget{alocacao-37}{%
+\subsection{6. Alocação:}\label{alocacao-37}}
+
+\hypertarget{questao-17d}{%
+\section{Questão 17d}\label{questao-17d}}
+
+\hypertarget{eu-sou-38}{%
+\subsection{1. Eu sou:}\label{eu-sou-38}}
+
+\hypertarget{area-38}{%
+\subsection{2. Área:}\label{area-38}}
+
+\hypertarget{genero-38}{%
+\subsection{3. Gênero:}\label{genero-38}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-38}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-38}}
+
+\hypertarget{faixa-etaria-38}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-38}}
+
+\hypertarget{alocacao-38}{%
+\subsection{6. Alocação:}\label{alocacao-38}}
+
+\hypertarget{questao-17e}{%
+\section{Questão 17e}\label{questao-17e}}
+
+\hypertarget{eu-sou-39}{%
+\subsection{1. Eu sou:}\label{eu-sou-39}}
+
+\hypertarget{area-39}{%
+\subsection{2. Área:}\label{area-39}}
+
+\hypertarget{genero-39}{%
+\subsection{3. Gênero:}\label{genero-39}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-39}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-39}}
+
+\hypertarget{faixa-etaria-39}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-39}}
+
+\hypertarget{alocacao-39}{%
+\subsection{6. Alocação:}\label{alocacao-39}}
+
+\hypertarget{questao-18a}{%
+\section{Questão 18a}\label{questao-18a}}
+
+\hypertarget{eu-sou-40}{%
+\subsection{1. Eu sou:}\label{eu-sou-40}}
+
+\hypertarget{area-40}{%
+\subsection{2. Área:}\label{area-40}}
+
+\hypertarget{genero-40}{%
+\subsection{3. Gênero:}\label{genero-40}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-40}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-40}}
+
+\hypertarget{faixa-etaria-40}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-40}}
+
+\hypertarget{alocacao-40}{%
+\subsection{6. Alocação:}\label{alocacao-40}}
+
+\hypertarget{questao-18b}{%
+\section{Questão 18b}\label{questao-18b}}
+
+\hypertarget{eu-sou-41}{%
+\subsection{1. Eu sou:}\label{eu-sou-41}}
+
+\hypertarget{area-41}{%
+\subsection{2. Área:}\label{area-41}}
+
+\hypertarget{genero-41}{%
+\subsection{3. Gênero:}\label{genero-41}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-41}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-41}}
+
+\hypertarget{faixa-etaria-41}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-41}}
+
+\hypertarget{alocacao-41}{%
+\subsection{6. Alocação:}\label{alocacao-41}}
+
+\hypertarget{questao-18c}{%
+\section{Questão 18c}\label{questao-18c}}
+
+\hypertarget{eu-sou-42}{%
+\subsection{1. Eu sou:}\label{eu-sou-42}}
+
+\hypertarget{area-42}{%
+\subsection{2. Área:}\label{area-42}}
+
+\hypertarget{genero-42}{%
+\subsection{3. Gênero:}\label{genero-42}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-42}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-42}}
+
+\hypertarget{faixa-etaria-42}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-42}}
+
+\hypertarget{alocacao-42}{%
+\subsection{6. Alocação:}\label{alocacao-42}}
+
+\hypertarget{questao-18d}{%
+\section{Questão 18d}\label{questao-18d}}
+
+\hypertarget{eu-sou-43}{%
+\subsection{1. Eu sou:}\label{eu-sou-43}}
+
+\hypertarget{area-43}{%
+\subsection{2. Área:}\label{area-43}}
+
+\hypertarget{genero-43}{%
+\subsection{3. Gênero:}\label{genero-43}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-43}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-43}}
+
+\hypertarget{faixa-etaria-43}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-43}}
+
+\hypertarget{alocacao-43}{%
+\subsection{6. Alocação:}\label{alocacao-43}}
+
+\hypertarget{questao-18e}{%
+\section{Questão 18e}\label{questao-18e}}
+
+\hypertarget{eu-sou-44}{%
+\subsection{1. Eu sou:}\label{eu-sou-44}}
+
+\hypertarget{area-44}{%
+\subsection{2. Área:}\label{area-44}}
+
+\hypertarget{genero-44}{%
+\subsection{3. Gênero:}\label{genero-44}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-44}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-44}}
+
+\hypertarget{faixa-etaria-44}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-44}}
+
+\hypertarget{alocacao-44}{%
+\subsection{6. Alocação:}\label{alocacao-44}}
+
+\hypertarget{questao-19a}{%
+\section{Questão 19a}\label{questao-19a}}
+
+\hypertarget{eu-sou-45}{%
+\subsection{1. Eu sou:}\label{eu-sou-45}}
+
+\hypertarget{area-45}{%
+\subsection{2. Área:}\label{area-45}}
+
+\hypertarget{genero-45}{%
+\subsection{3. Gênero:}\label{genero-45}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-45}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-45}}
+
+\hypertarget{faixa-etaria-45}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-45}}
+
+\hypertarget{alocacao-45}{%
+\subsection{6. Alocação:}\label{alocacao-45}}
+
+\hypertarget{questao-19b}{%
+\section{Questão 19b}\label{questao-19b}}
+
+\hypertarget{eu-sou-46}{%
+\subsection{1. Eu sou:}\label{eu-sou-46}}
+
+\hypertarget{area-46}{%
+\subsection{2. Área:}\label{area-46}}
+
+\hypertarget{genero-46}{%
+\subsection{3. Gênero:}\label{genero-46}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-46}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-46}}
+
+\hypertarget{faixa-etaria-46}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-46}}
+
+\hypertarget{alocacao-46}{%
+\subsection{6. Alocação:}\label{alocacao-46}}
+
+\hypertarget{questao-19c}{%
+\section{Questão 19c}\label{questao-19c}}
+
+\hypertarget{eu-sou-47}{%
+\subsection{1. Eu sou:}\label{eu-sou-47}}
+
+\hypertarget{area-47}{%
+\subsection{2. Área:}\label{area-47}}
+
+\hypertarget{genero-47}{%
+\subsection{3. Gênero:}\label{genero-47}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-47}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-47}}
+
+\hypertarget{faixa-etaria-47}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-47}}
+
+\hypertarget{alocacao-47}{%
+\subsection{6. Alocação:}\label{alocacao-47}}
+
+\hypertarget{questao-19d}{%
+\section{Questão 19d}\label{questao-19d}}
+
+\hypertarget{eu-sou-48}{%
+\subsection{1. Eu sou:}\label{eu-sou-48}}
+
+\hypertarget{area-48}{%
+\subsection{2. Área:}\label{area-48}}
+
+\hypertarget{genero-48}{%
+\subsection{3. Gênero:}\label{genero-48}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-48}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-48}}
+
+\hypertarget{faixa-etaria-48}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-48}}
+
+\hypertarget{alocacao-48}{%
+\subsection{6. Alocação:}\label{alocacao-48}}
+
+\hypertarget{questao-19e}{%
+\section{Questão 19e}\label{questao-19e}}
+
+\hypertarget{eu-sou-49}{%
+\subsection{1. Eu sou:}\label{eu-sou-49}}
+
+\hypertarget{area-49}{%
+\subsection{2. Área:}\label{area-49}}
+
+\hypertarget{genero-49}{%
+\subsection{3. Gênero:}\label{genero-49}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-49}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-49}}
+
+\hypertarget{faixa-etaria-49}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-49}}
+
+\hypertarget{alocacao-49}{%
+\subsection{6. Alocação:}\label{alocacao-49}}
+
+\hypertarget{questao-19f}{%
+\section{Questão 19f}\label{questao-19f}}
+
+\hypertarget{eu-sou-50}{%
+\subsection{1. Eu sou:}\label{eu-sou-50}}
+
+\hypertarget{area-50}{%
+\subsection{2. Área:}\label{area-50}}
+
+\hypertarget{genero-50}{%
+\subsection{3. Gênero:}\label{genero-50}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-50}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-50}}
+
+\hypertarget{faixa-etaria-50}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-50}}
+
+\hypertarget{alocacao-50}{%
+\subsection{6. Alocação:}\label{alocacao-50}}
+
+\hypertarget{questao-19g}{%
+\section{Questão 19g}\label{questao-19g}}
+
+\hypertarget{eu-sou-51}{%
+\subsection{1. Eu sou:}\label{eu-sou-51}}
+
+\hypertarget{area-51}{%
+\subsection{2. Área:}\label{area-51}}
+
+\hypertarget{genero-51}{%
+\subsection{3. Gênero:}\label{genero-51}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-51}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-51}}
+
+\hypertarget{faixa-etaria-51}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-51}}
+
+\hypertarget{alocacao-51}{%
+\subsection{6. Alocação:}\label{alocacao-51}}
+
+\hypertarget{questao-19h}{%
+\section{Questão 19h}\label{questao-19h}}
+
+\hypertarget{eu-sou-52}{%
+\subsection{1. Eu sou:}\label{eu-sou-52}}
+
+\hypertarget{area-52}{%
+\subsection{2. Área:}\label{area-52}}
+
+\hypertarget{genero-52}{%
+\subsection{3. Gênero:}\label{genero-52}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-52}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-52}}
+
+\hypertarget{faixa-etaria-52}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-52}}
+
+\hypertarget{alocacao-52}{%
+\subsection{6. Alocação:}\label{alocacao-52}}
+
+\hypertarget{questao-20a}{%
+\section{Questão 20a}\label{questao-20a}}
+
+\hypertarget{eu-sou-53}{%
+\subsection{1. Eu sou:}\label{eu-sou-53}}
+
+\hypertarget{area-53}{%
+\subsection{2. Área:}\label{area-53}}
+
+\hypertarget{genero-53}{%
+\subsection{3. Gênero:}\label{genero-53}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-53}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-53}}
+
+\hypertarget{faixa-etaria-53}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-53}}
+
+\hypertarget{alocacao-53}{%
+\subsection{6. Alocação:}\label{alocacao-53}}
+
+\hypertarget{questao-20b}{%
+\section{Questão 20b}\label{questao-20b}}
+
+\hypertarget{eu-sou-54}{%
+\subsection{1. Eu sou:}\label{eu-sou-54}}
+
+\hypertarget{area-54}{%
+\subsection{2. Área:}\label{area-54}}
+
+\hypertarget{genero-54}{%
+\subsection{3. Gênero:}\label{genero-54}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-54}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-54}}
+
+\hypertarget{faixa-etaria-54}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-54}}
+
+\hypertarget{alocacao-54}{%
+\subsection{6. Alocação:}\label{alocacao-54}}
+
+\hypertarget{questao-20c}{%
+\section{Questão 20c}\label{questao-20c}}
+
+\hypertarget{eu-sou-55}{%
+\subsection{1. Eu sou:}\label{eu-sou-55}}
+
+\hypertarget{area-55}{%
+\subsection{2. Área:}\label{area-55}}
+
+\hypertarget{genero-55}{%
+\subsection{3. Gênero:}\label{genero-55}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-55}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-55}}
+
+\hypertarget{faixa-etaria-55}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-55}}
+
+\hypertarget{alocacao-55}{%
+\subsection{6. Alocação:}\label{alocacao-55}}
+
+\hypertarget{questao-20d}{%
+\section{Questão 20d}\label{questao-20d}}
+
+\hypertarget{eu-sou-56}{%
+\subsection{1. Eu sou:}\label{eu-sou-56}}
+
+\hypertarget{area-56}{%
+\subsection{2. Área:}\label{area-56}}
+
+\hypertarget{genero-56}{%
+\subsection{3. Gênero:}\label{genero-56}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-56}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-56}}
+
+\hypertarget{faixa-etaria-56}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-56}}
+
+\hypertarget{alocacao-56}{%
+\subsection{6. Alocação:}\label{alocacao-56}}
+
+\hypertarget{questao-20e}{%
+\section{Questão 20e}\label{questao-20e}}
+
+\hypertarget{eu-sou-57}{%
+\subsection{1. Eu sou:}\label{eu-sou-57}}
+
+\hypertarget{area-57}{%
+\subsection{2. Área:}\label{area-57}}
+
+\hypertarget{genero-57}{%
+\subsection{3. Gênero:}\label{genero-57}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-57}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-57}}
+
+\hypertarget{faixa-etaria-57}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-57}}
+
+\hypertarget{alocacao-57}{%
+\subsection{6. Alocação:}\label{alocacao-57}}
+
+\hypertarget{questao-20f}{%
+\section{Questão 20f}\label{questao-20f}}
+
+\hypertarget{eu-sou-58}{%
+\subsection{1. Eu sou:}\label{eu-sou-58}}
+
+\hypertarget{area-58}{%
+\subsection{2. Área:}\label{area-58}}
+
+\hypertarget{genero-58}{%
+\subsection{3. Gênero:}\label{genero-58}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-58}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-58}}
+
+\hypertarget{faixa-etaria-58}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-58}}
+
+\hypertarget{alocacao-58}{%
+\subsection{6. Alocação:}\label{alocacao-58}}
+
+\hypertarget{questao-20g}{%
+\section{Questão 20g}\label{questao-20g}}
+
+\hypertarget{eu-sou-59}{%
+\subsection{1. Eu sou:}\label{eu-sou-59}}
+
+\hypertarget{area-59}{%
+\subsection{2. Área:}\label{area-59}}
+
+\hypertarget{genero-59}{%
+\subsection{3. Gênero:}\label{genero-59}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-59}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-59}}
+
+\hypertarget{faixa-etaria-59}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-59}}
+
+\hypertarget{alocacao-59}{%
+\subsection{6. Alocação:}\label{alocacao-59}}
+
+\hypertarget{questao-20h}{%
+\section{Questão 20h}\label{questao-20h}}
+
+\hypertarget{eu-sou-60}{%
+\subsection{1. Eu sou:}\label{eu-sou-60}}
+
+\hypertarget{area-60}{%
+\subsection{2. Área:}\label{area-60}}
+
+\hypertarget{genero-60}{%
+\subsection{3. Gênero:}\label{genero-60}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-60}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-60}}
+
+\hypertarget{faixa-etaria-60}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-60}}
+
+\hypertarget{alocacao-60}{%
+\subsection{6. Alocação:}\label{alocacao-60}}
+
+\hypertarget{questao-21a}{%
+\section{Questão 21a}\label{questao-21a}}
+
+\hypertarget{eu-sou-61}{%
+\subsection{1. Eu sou:}\label{eu-sou-61}}
+
+\hypertarget{area-61}{%
+\subsection{2. Área:}\label{area-61}}
+
+\hypertarget{genero-61}{%
+\subsection{3. Gênero:}\label{genero-61}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-61}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-61}}
+
+\hypertarget{faixa-etaria-61}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-61}}
+
+\hypertarget{alocacao-61}{%
+\subsection{6. Alocação:}\label{alocacao-61}}
+
+\hypertarget{questao-21b}{%
+\section{Questão 21b}\label{questao-21b}}
+
+\hypertarget{eu-sou-62}{%
+\subsection{1. Eu sou:}\label{eu-sou-62}}
+
+\hypertarget{area-62}{%
+\subsection{2. Área:}\label{area-62}}
+
+\hypertarget{genero-62}{%
+\subsection{3. Gênero:}\label{genero-62}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-62}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-62}}
+
+\hypertarget{faixa-etaria-62}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-62}}
+
+\hypertarget{alocacao-62}{%
+\subsection{6. Alocação:}\label{alocacao-62}}
+
+\hypertarget{questao-21c}{%
+\section{Questão 21c}\label{questao-21c}}
+
+\hypertarget{eu-sou-63}{%
+\subsection{1. Eu sou:}\label{eu-sou-63}}
+
+\hypertarget{area-63}{%
+\subsection{2. Área:}\label{area-63}}
+
+\hypertarget{genero-63}{%
+\subsection{3. Gênero:}\label{genero-63}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-63}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-63}}
+
+\hypertarget{faixa-etaria-63}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-63}}
+
+\hypertarget{alocacao-63}{%
+\subsection{6. Alocação:}\label{alocacao-63}}
+
+\hypertarget{questao-21d}{%
+\section{Questão 21d}\label{questao-21d}}
+
+\hypertarget{eu-sou-64}{%
+\subsection{1. Eu sou:}\label{eu-sou-64}}
+
+\hypertarget{area-64}{%
+\subsection{2. Área:}\label{area-64}}
+
+\hypertarget{genero-64}{%
+\subsection{3. Gênero:}\label{genero-64}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-64}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-64}}
+
+\hypertarget{faixa-etaria-64}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-64}}
+
+\hypertarget{alocacao-64}{%
+\subsection{6. Alocação:}\label{alocacao-64}}
+
+\hypertarget{questao-21e}{%
+\section{Questão 21e}\label{questao-21e}}
+
+\hypertarget{eu-sou-65}{%
+\subsection{1. Eu sou:}\label{eu-sou-65}}
+
+\hypertarget{area-65}{%
+\subsection{2. Área:}\label{area-65}}
+
+\hypertarget{genero-65}{%
+\subsection{3. Gênero:}\label{genero-65}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-65}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-65}}
+
+\hypertarget{faixa-etaria-65}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-65}}
+
+\hypertarget{alocacao-65}{%
+\subsection{6. Alocação:}\label{alocacao-65}}
+
+\hypertarget{questao-21f}{%
+\section{Questão 21f}\label{questao-21f}}
+
+\hypertarget{eu-sou-66}{%
+\subsection{1. Eu sou:}\label{eu-sou-66}}
+
+\hypertarget{area-66}{%
+\subsection{2. Área:}\label{area-66}}
+
+\hypertarget{genero-66}{%
+\subsection{3. Gênero:}\label{genero-66}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-66}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-66}}
+
+\hypertarget{faixa-etaria-66}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-66}}
+
+\hypertarget{alocacao-66}{%
+\subsection{6. Alocação:}\label{alocacao-66}}
+
+\hypertarget{questao-21g}{%
+\section{Questão 21g}\label{questao-21g}}
+
+\hypertarget{eu-sou-67}{%
+\subsection{1. Eu sou:}\label{eu-sou-67}}
+
+\hypertarget{area-67}{%
+\subsection{2. Área:}\label{area-67}}
+
+\hypertarget{genero-67}{%
+\subsection{3. Gênero:}\label{genero-67}}
+
+\hypertarget{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-67}{%
+\subsection{4. Tempo de Empresa (há quanto tempo trabalha na Inmetrics?)}\label{tempo-de-empresa-ha-quanto-tempo-trabalha-na-inmetrics-67}}
+
+\hypertarget{faixa-etaria-67}{%
+\subsection{5. Faixa etária:}\label{faixa-etaria-67}}
+
+\hypertarget{alocacao-67}{%
+\subsection{6. Alocação:}\label{alocacao-67}}
+
+\hypertarget{construtos}{%
+\chapter{Construtos}\label{construtos}}
+
+Placeholder
+
+\hypertarget{descredibilidade-e-injustica}{%
+\section{Descredibilidade e Injustiça}\label{descredibilidade-e-injustica}}
+
+\hypertarget{analise-fatorial}{%
+\subsection{Análise Fatorial}\label{analise-fatorial}}
+
+\hypertarget{despreparo-da-lideranca}{%
+\section{Despreparo da Liderança}\label{despreparo-da-lideranca}}
+
+\hypertarget{analise-fatorial-1}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-1}}
+
+\hypertarget{baixo-preparo-da-empresa-para-exercer-funcao}{%
+\section{Baixo Preparo da Empresa Para Exercer Função}\label{baixo-preparo-da-empresa-para-exercer-funcao}}
+
+\hypertarget{analise-fatorial-2}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-2}}
+
+\hypertarget{planejamento-e-metodo}{%
+\section{Planejamento e Método}\label{planejamento-e-metodo}}
+
+\hypertarget{analise-fatorial-3}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-3}}
+
+\hypertarget{imediatismo}{%
+\section{Imediatismo}\label{imediatismo}}
+
+\hypertarget{analise-fatorial-4}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-4}}
+
+\hypertarget{ausencia-de-meritocracia}{%
+\section{Ausência de Meritocracia}\label{ausencia-de-meritocracia}}
+
+\hypertarget{analise-fatorial-5}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-5}}
+
+\hypertarget{proximidade-da-lideranca}{%
+\section{Proximidade da Liderança}\label{proximidade-da-lideranca}}
+
+\hypertarget{analise-fatorial-6}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-6}}
+
+\hypertarget{visao-do-proposito-comum}{%
+\section{Visão do Propósito Comum}\label{visao-do-proposito-comum}}
+
+\hypertarget{analise-fatorial-7}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-7}}
+
+\hypertarget{colaboracao}{%
+\section{Colaboração}\label{colaboracao}}
+
+\hypertarget{analise-fatorial-8}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-8}}
+
+\hypertarget{ambiente-leve-e-flexibilidade}{%
+\section{Ambiente Leve e Flexibilidade}\label{ambiente-leve-e-flexibilidade}}
+
+\hypertarget{analise-fatorial-9}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-9}}
+
+\hypertarget{lideranca-senior}{%
+\section{Liderança Sênior}\label{lideranca-senior}}
+
+\hypertarget{analise-fatorial-10}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-10}}
+
+\hypertarget{inovacao}{%
+\section{Inovação}\label{inovacao}}
+
+\hypertarget{analise-fatorial-11}{%
+\subsection{Análise Fatorial}\label{analise-fatorial-11}}
+
+\hypertarget{associacao-entre-construtos-e-cortes}{%
+\chapter{Associação entre Construtos e Cortes}\label{associacao-entre-construtos-e-cortes}}
+
+Placeholder
+
+\hypertarget{descredibilidade-e-injustica-i}{%
+\section{Descredibilidade e Injustiça I}\label{descredibilidade-e-injustica-i}}
+
+\hypertarget{estatisticas-descritivas}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas}}
+
+\hypertarget{testes-de-hipotese}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese}}
+
+\hypertarget{descredibilidade-e-injustica-ii}{%
+\section{Descredibilidade e Injustiça II}\label{descredibilidade-e-injustica-ii}}
+
+\hypertarget{estatisticas-descritivas-1}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-1}}
+
+\hypertarget{testes-de-hipotese-1}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-1}}
+
+\hypertarget{despreparo-da-lideranca-i}{%
+\section{Despreparo da Liderança I}\label{despreparo-da-lideranca-i}}
+
+\hypertarget{estatisticas-descritivas-2}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-2}}
+
+\hypertarget{testes-de-hipotese-2}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-2}}
+
+\hypertarget{despreparo-da-lideranca-ii}{%
+\section{Despreparo da Liderança II}\label{despreparo-da-lideranca-ii}}
+
+\hypertarget{estatisticas-descritivas-3}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-3}}
+
+\hypertarget{testes-de-hipotese-3}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-3}}
+
+\hypertarget{baixo-preparo-da-empresa-para-exercer-funcao-1}{%
+\section{Baixo Preparo da Empresa Para Exercer Função}\label{baixo-preparo-da-empresa-para-exercer-funcao-1}}
+
+\hypertarget{estatisticas-descritivas-4}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-4}}
+
+\hypertarget{testes-de-hipotese-4}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-4}}
+
+\hypertarget{planejamento-e-metodo-1}{%
+\section{Planejamento e Método}\label{planejamento-e-metodo-1}}
+
+\hypertarget{estatisticas-descritivas-5}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-5}}
+
+\hypertarget{testes-de-hipotese-5}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-5}}
+
+\hypertarget{ausencia-de-meritocracia-1}{%
+\section{Ausência de Meritocracia}\label{ausencia-de-meritocracia-1}}
+
+\hypertarget{estatisticas-descritivas-6}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-6}}
+
+\hypertarget{testes-de-hipotese-6}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-6}}
+
+\hypertarget{proximidade-da-lideranca-i}{%
+\section{Proximidade da Liderança I}\label{proximidade-da-lideranca-i}}
+
+\hypertarget{estatisticas-descritivas-7}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-7}}
+
+\hypertarget{testes-de-hipotese-7}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-7}}
+
+\hypertarget{proximidade-da-lideranca-ii}{%
+\section{Proximidade da Liderança II}\label{proximidade-da-lideranca-ii}}
+
+\hypertarget{estatisticas-descritivas-8}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-8}}
+
+\hypertarget{testes-de-hipotese-8}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-8}}
+
+\hypertarget{visao-do-proposito-comum-1}{%
+\section{Visão do Propósito Comum}\label{visao-do-proposito-comum-1}}
+
+\hypertarget{estatisticas-descritivas-9}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-9}}
+
+\hypertarget{testes-de-hipotese-9}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-9}}
+
+\hypertarget{colaboracao-1}{%
+\section{Colaboração}\label{colaboracao-1}}
+
+\hypertarget{estatisticas-descritivas-10}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-10}}
+
+\hypertarget{testes-de-hipotese-10}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-10}}
+
+\hypertarget{ambiente-leve-e-flexibilidade-1}{%
+\section{Ambiente Leve e Flexibilidade}\label{ambiente-leve-e-flexibilidade-1}}
+
+\hypertarget{estatisticas-descritivas-11}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-11}}
+
+\hypertarget{testes-de-hipotese-11}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-11}}
+
+\hypertarget{lideranca-senior-1}{%
+\section{Liderança Sênior}\label{lideranca-senior-1}}
+
+\hypertarget{estatisticas-descritivas-12}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-12}}
+
+\hypertarget{testes-de-hipotese-12}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-12}}
+
+\hypertarget{inovacao-i}{%
+\section{Inovação I}\label{inovacao-i}}
+
+\hypertarget{estatisticas-descritivas-13}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-13}}
+
+\hypertarget{testes-de-hipotese-13}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-13}}
+
+\hypertarget{inovacao-ii}{%
+\section{Inovação II}\label{inovacao-ii}}
+
+\hypertarget{estatisticas-descritivas-14}{%
+\subsection{Estatísticas Descritivas}\label{estatisticas-descritivas-14}}
+
+\hypertarget{testes-de-hipotese-14}{%
+\subsection{Testes de Hipótese}\label{testes-de-hipotese-14}}
+
+\bibliography{book.bib,packages.bib}
+
+
+\end{document}
